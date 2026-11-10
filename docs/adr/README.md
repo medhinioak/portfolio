@@ -11,3 +11,4 @@ Start from [`0000-template.md`](0000-template.md).
 | [0003](0003-github-pages-first-then-aws.md) | Launch on GitHub Pages, then move to AWS with Terraform | Accepted |
 | [0004](0004-no-third-party-requests-and-no-analytics-at-launch.md) | No third-party requests and no analytics at launch | Accepted |
 | [0005](0005-deduction-game-with-board-packs.md) | Build a "guess that animal" deduction game on board packs | Accepted |
+| [0006](0006-ai-assisted-development-with-human-review.md) | Use AI assistants as author and reviewers, with the owner deciding | Accepted |

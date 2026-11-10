@@ -3,6 +3,7 @@
 - Status: Proposed | Accepted | Superseded by ADR-NNNN
 - Date: YYYY-MM-DD
 - Decider: Medhini
+- Review: who reviewed the decision (for example Claude project chat, Gemini app), YYYY-MM-DD
 
 ## Context
 

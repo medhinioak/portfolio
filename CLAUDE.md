@@ -1,7 +1,8 @@
 # Project
 
 Personal site and blog (Astro 6, React islands) plus a standalone game package.
-Plan: docs/plan.md. Decisions: docs/adr/.
+Plan: docs/plan.md. Decisions: docs/adr/. Process: docs/process.md.
+AI roles and reviews: docs/ai-usage.md.
 
 # Commands
 
@@ -12,6 +13,8 @@ Plan: docs/plan.md. Decisions: docs/adr/.
 - Type check: pnpm -r typecheck
 - Lint: pnpm lint
 - Build: pnpm build
+- GitHub: use the gh CLI for issues, PRs and CI
+  (gh issue view N, gh pr create --fill, gh pr checks, gh run view --log-failed)
 
 # Rules
 
@@ -22,6 +25,9 @@ Plan: docs/plan.md. Decisions: docs/adr/.
 - Never invent facts about the author's projects. Unknown content is written as
   PLACEHOLDER: ... and the production build fails if it is published.
 - Conventional Commits. One topic per pull request.
+- Work on a branch, never on main. PR bodies start with "Closes #N" and fill in
+  the template's AI involvement block. Keep the Co-Authored-By trailer.
+- Rules here are mirrored in GEMINI.md for the Gemini reviewer: change both together.
 
 # Gotchas
 

@@ -14,7 +14,8 @@ not only what was built but how and why.
 | Launch quality gate | [`launch-checklist.md`](launch-checklist.md) |
 | Wireframes and design notes | `design/` |
 | Releases | GitHub Releases, one per phase gate (v0.1 = launch) |
-| Instructions for Claude Code | [`../CLAUDE.md`](../CLAUDE.md) |
+| Which AI tool does what, and how work is reviewed | [`ai-usage.md`](ai-usage.md) |
+| Instructions for Claude Code / review rules for Gemini | [`../CLAUDE.md`](../CLAUDE.md) / [`../GEMINI.md`](../GEMINI.md) |
 
 ## The flow for every change
 
@@ -29,8 +30,11 @@ not only what was built but how and why.
 5. **Checks.** CI must be green: lint, type check, tests, build, Lighthouse CI, axe.
    The deploy workflow additionally fails if the word `PLACEHOLDER` appears on a
    published page; pull requests are never blocked by it.
-6. **Review.** Read the diff yourself, then run an independent review
-   (`/code-review` in Claude Code) before merging.
+6. **Review.** Run `/code-review` before opening the PR. Gemini reviews the PR
+   automatically when it is opened; ask again after changes with
+   `@gemini-cli /review`. Read the full diff yourself, and fix or answer every
+   comment. What each kind of work needs is in the review matrix in
+   [`ai-usage.md`](ai-usage.md#review-matrix).
 7. **Squash-merge.** The branch is deleted automatically; the issue closes.
 8. **Decision made?** Add or update an ADR in the same pull request.
 
@@ -47,6 +51,12 @@ At the end of each phase:
 Copy [`adr/0000-template.md`](adr/0000-template.md), number it next in sequence and
 keep it to one page. ADRs are not edited after acceptance; a changed decision gets a
 new ADR that marks the old one "Superseded by ADR-NNNN".
+
+## Decisions made outside a PR
+
+Decisions discussed in a chat are not final until they are an ADR merged through a
+PR. Get a second opinion from the other model first (see
+[`ai-usage.md`](ai-usage.md#decisions)) and record it in the ADR's "Review" line.
 
 ## Working with Claude Code
 
