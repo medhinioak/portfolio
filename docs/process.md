@@ -5,16 +5,16 @@ not only what was built but how and why.
 
 ## Where things live
 
-| What | Where |
-|---|---|
-| Goals, phases, definitions of done | [`plan.md`](plan.md) |
-| Decisions and their reasons | [`adr/`](adr/), one file per decision |
-| Tasks | GitHub Issues, one milestone per phase |
-| Ideas not in the plan | [`parking-lot.md`](parking-lot.md) |
-| Launch quality gate | [`launch-checklist.md`](launch-checklist.md) |
-| Wireframes and design notes | `design/` |
-| Releases | GitHub Releases, one per phase gate (v0.1 = launch) |
-| Which AI tool does what, and how work is reviewed | [`ai-usage.md`](ai-usage.md) |
+| What                                                   | Where                                                           |
+| ------------------------------------------------------ | --------------------------------------------------------------- |
+| Goals, phases, definitions of done                     | [`plan.md`](plan.md)                                            |
+| Decisions and their reasons                            | [`adr/`](adr/), one file per decision                           |
+| Tasks                                                  | GitHub Issues, one milestone per phase                          |
+| Ideas not in the plan                                  | [`parking-lot.md`](parking-lot.md)                              |
+| Launch quality gate                                    | [`launch-checklist.md`](launch-checklist.md)                    |
+| Wireframes and design notes                            | `design/`                                                       |
+| Releases                                               | GitHub Releases, one per phase gate (v0.1 = launch)             |
+| Which AI tool does what, and how work is reviewed      | [`ai-usage.md`](ai-usage.md)                                    |
 | Instructions for Claude Code / review rules for Gemini | [`../CLAUDE.md`](../CLAUDE.md) / [`../GEMINI.md`](../GEMINI.md) |
 
 ## The flow for every change
