@@ -51,14 +51,18 @@ it gets cut to its cut line.
 - [x] Register medhinioak.dev; verify it for GitHub Pages
 - [x] Create the repository, licences and repository settings
 - [x] Install Claude Code; add `CLAUDE.md`
-- [ ] Add `docs/` (this plan, process, ADRs, launch checklist, parking lot)
-- [ ] Scaffold the pnpm workspace, Astro site and empty game package
-- [ ] Theme tokens, light and dark mode, self-hosted fonts
-- [ ] CI (install, lint, type check, test, build) and deploy to GitHub Pages
+- [x] Add `docs/` (this plan, process, ADRs, launch checklist, parking lot)
+- [x] Scaffold the pnpm workspace, Astro site and empty game package
+- [x] Theme tokens, light and dark mode, self-hosted fonts
+- [x] CI (install, lint, type check, test, build) and deploy to GitHub Pages
 - [x] Low-fidelity wireframes for Home, About, a case study, a blog post and 404 in `docs/design/` (time-box: 2 hours)
 
 **Done when:** a styled, mostly empty page is live at the github.io address, the theme
 toggle works without a flash, and CI is green.
+
+**Outcome (2026-11-11):** all items done. The site went live on https://medhinioak.dev
+instead of the github.io address: the custom domain and HTTPS enforcement (#23) were
+done early, ahead of Phase 1.
 
 ### Phase 1: Content and launch (Nov 13–22)
 
@@ -66,7 +70,7 @@ toggle works without a flash, and CI is green.
 - [ ] Blog with RSS, and Post 1: "Building my portfolio site in two weeks"
 - [ ] Impressum and privacy policy
 - [ ] SEO basics: titles, descriptions, canonical URLs, sitemap, Open Graph images
-- [ ] Work through [`launch-checklist.md`](launch-checklist.md); point medhinioak.dev at GitHub Pages and enforce HTTPS
+- [ ] Work through [`launch-checklist.md`](launch-checklist.md) (medhinioak.dev already points at GitHub Pages with HTTPS enforced, done early in Phase 0)
 - [ ] Link the site from CV, LinkedIn and GitHub profile
 
 **Done when:** the site is live on medhinioak.dev over HTTPS; Lighthouse (mobile) is
