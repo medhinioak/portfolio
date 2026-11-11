@@ -9,6 +9,13 @@ const siteImports = {
   message: 'packages/game must not import from apps/site (ADR-0002).',
 };
 
+// ADR-0002: the site imports the game only through its entry point (packages/game/src/index.ts).
+const gameInternals = {
+  group: ['game/*', '**/packages/game/**'],
+  message:
+    "Import the game only as 'game' (packages/game/src/index.ts), per ADR-0002.",
+};
+
 // ADR-0002: the engine imports no React.
 const reactImports = {
   group: ['react', 'react/*', 'react-dom', 'react-dom/*'],
@@ -16,13 +23,19 @@ const reactImports = {
 };
 
 export default tseslint.config(
-  { ignores: ['**/dist/', '**/.astro/', 'coverage/'] },
+  { ignores: ['**/dist/', '**/.astro/', '**/coverage/'] },
   js.configs.recommended,
   tseslint.configs.recommended,
   astro.configs.recommended,
   {
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'error',
+    },
+  },
+  {
+    files: ['apps/site/**'],
+    rules: {
+      'no-restricted-imports': ['error', { patterns: [gameInternals] }],
     },
   },
   {

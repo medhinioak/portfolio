@@ -16,11 +16,13 @@ Keep these rules in step with `CLAUDE.md`.
 - **Docstrings:** All exported functions, interfaces, types, and module boundaries must have a concise one-line JSDoc comment (`/** ... */`).
 - **Strict Typing:** All exported functions must specify explicit return types. Flag any usage of `any` (require `unknown` with type guards).
 - **Documentation First:** Features and architectural changes must be backed by a corresponding spec or ADR in `docs/`.
+- **Linting:** All files must pass ESLint and Prettier. Flag rule suppressions (`eslint-disable`, `@ts-ignore`, `@ts-expect-error`) that lack a clear reason.
 - No invented facts about the author's projects or experience. Unknown content is
   written as `PLACEHOLDER: ...`.
 - No secrets, tokens or personal data in the repository. Photos must have EXIF data stripped.
-- Accessibility target is WCAG 2.2 AA: keyboard use, visible focus, alt text,
-  contrast in both light and dark themes, `prefers-reduced-motion`.
+- Accessibility target is WCAG 2.2 AA for every interactive UI component: keyboard
+  navigation, visible focus states, screen reader labels, alt text, contrast in both
+  light and dark themes, `prefers-reduced-motion`.
 - Conventional Commit titles; one topic per pull request.
 
 ## What to look for, in order

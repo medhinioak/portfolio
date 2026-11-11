@@ -21,4 +21,12 @@ describe('clamp', () => {
   it('throws when min is greater than max', () => {
     expect(() => clamp(1, 10, 0)).toThrow(RangeError);
   });
+
+  it.each([
+    [NaN, 0, 10],
+    [5, NaN, 10],
+    [5, 0, NaN],
+  ])('throws when an argument is NaN: clamp(%s, %s, %s)', (value, min, max) => {
+    expect(() => clamp(value, min, max)).toThrow(RangeError);
+  });
 });
