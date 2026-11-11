@@ -115,7 +115,8 @@ Order, top to bottom:
 2. **Things I love.** A grid of cards, two columns on desktop and one on a phone: Puzzle
    games, Cats, Anime, K-pop, 90s aesthetic, Cooking (plant-based), Culture. Each
    card has a pixel-type label and one or two lines. A card may have an optional photo
-   (Cats shows one). The last card spans both columns on desktop.
+   (Cats shows one). The last card spans both columns on desktop. The topics are
+   placeholders: in the build each label is `PLACEHOLDER:` until the owner confirms it.
 3. **How I use AI.** A short paragraph on principles, and a button to a plain link to
    how the site was built with AI (`docs/ai-usage.md`).
 4. **What I do.** A short paragraph and three buttons: "Read my CV" (primary),
@@ -204,6 +205,7 @@ Screenshots: [light desktop](wireframes/404-light-desktop.png),
 | The CV link appears only in the hero (and in "What I do" on About) | The header link and the hero button did the same job. The plan only needs the CV one click from Home. |
 | One hero button | "See my work" scrolled to the list directly below it. |
 | A single-row desktop header | It fits once the CV link is gone. |
+| The wordmark is "Medhini Oak" in pixel type, replacing `medhinioak.dev` | A design decision for the visual look. |
 | The phone menu is a left drawer | It frees the top of the screen. It needs a small amount of JavaScript. |
 | Images are optional everywhere | Backend and cloud projects often have a diagram, not a screenshot. |
 | Long titles use Atkinson bold | Real case-study titles read badly in 22 px pixel type. |
