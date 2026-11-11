@@ -1,6 +1,6 @@
 # ADR-0001: Use Astro 6 with React islands for the site
 
-- Status: Accepted
+- Status: Accepted; version superseded by [ADR-0008](0008-upgrade-to-astro-7.md)
 - Date: 2026-11-10
 - Decider: Medhini
 

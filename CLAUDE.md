@@ -1,6 +1,6 @@
 # Project
 
-Personal site and blog (Astro 6, React islands) plus a standalone game package.
+Personal site and blog (Astro 7, React islands) plus a standalone game package.
 Plan: docs/plan.md. Decisions: docs/adr/. Process: docs/process.md.
 AI roles and reviews: docs/ai-usage.md.
 
@@ -54,7 +54,7 @@ AI roles and reviews: docs/ai-usage.md.
 
 # Gotchas
 
-- Astro 6 needs Node 22 or newer and uses the Content Layer API. The nvm default here
+- Astro 7 needs Node 22.23.4 or newer and uses the Content Layer API. The nvm default here
   may be older: run `nvm use` (reads .nvmrc) before pnpm.
 - TypeScript stays on 6.x until typescript-eslint and @astrojs/check support 7.
 - pnpm 12 blocks dependency build scripts; approve new ones with
