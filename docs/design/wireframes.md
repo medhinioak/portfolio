@@ -25,9 +25,10 @@ How to read them:
 
 Every page uses the same frame.
 
-**Column.** One column of text at the `68ch` measure from `tokens.md` (about 736 px
-on desktop), centred. On a phone the column
-is the screen width minus a 16 px gutter on each side.
+**Column.** One centred column, 736 px wide on desktop (`--column` in `tokens.md`).
+Paragraphs inside keep the `68ch` measure, which in the body font is a little wider, so
+on desktop the column sets the line length. On a phone the column is the screen width
+minus a 16 px gutter on each side.
 
 **Header, desktop.** One row: the wordmark "Medhini Oak" (pixel type, `--text-lg`) on the
 left, then the nav (Home, About, Projects, Blog, Contact), then the theme toggle on

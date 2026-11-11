@@ -40,6 +40,8 @@
 
   --radius: 4px;
   --measure: 68ch;
+  /* Width of the page column (736px), from the wireframes. Text inside keeps --measure. */
+  --column: 46rem;
 
   /* Heights of buttons and other controls. */
   --control-height: 3rem;
@@ -163,10 +165,10 @@ button {
   color: var(--color-muted);
 }
 
-/* Content column: the text measure plus a gutter on each side. */
+/* Content column plus a gutter on each side; header, main and footer align with it. */
 .wrap {
   width: 100%;
-  max-width: calc(var(--measure) + 2 * var(--space-4));
+  max-width: calc(var(--column) + 2 * var(--space-4));
   margin-inline: auto;
   padding-inline: var(--space-4);
 }

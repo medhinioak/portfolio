@@ -118,6 +118,9 @@ Any new colour pair gets a row here before it is used.
 - Spacing on a 4px base: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px,
   `--space-4` 16px, `--space-5` 24px, `--space-6` 32px, `--space-7` 48px.
 - `--radius`: 4px. Small and square, in keeping with the pixel feel.
+- `--column`: 46rem (736px), the width of the page column from the wireframes. Header,
+  main and footer align with it, with a `--space-4` gutter on each side. (`68ch` in the
+  body font is about 790px, so the column, not `--measure`, limits lines on desktop.)
 - Control heights: `--control-height` 48px (buttons), `--control-height-small` 44px
   (small buttons, the menu, Close and theme buttons). Both are above the 24 × 24 px
   minimum target size of WCAG 2.2.
