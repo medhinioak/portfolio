@@ -23,7 +23,8 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
   `/pr-code-review REPOSITORY=… PULL_REQUEST_NUMBER=… ADDITIONAL_CONTEXT=…` (PR #10). The
   action hands the prompt to the CLI through an environment variable, so comment text never
   reaches a shell.
-- **Status:** _open_ until PR #10 is merged and a review is posted.
+- **Status:** _open_. PR #10 is merged; the first run with it (42986021710) hit the daily
+  quota after one request, so it is not verified yet.
 
 ### Green run, no review posted
 
@@ -80,10 +81,15 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
 - **Seen:** 2026-11-11.
 - **Symptom:** slow model calls (about 35 s each on `gemini-3.8-flash`) and a risk of running
   out of requests partway through a review.
-- **Cause:** Gemini API free-tier quotas are small and change often. A forum report puts
-  Flash at about 20 requests a day; one review can take up to 25 turns
-  (`maxSessionTurns`). Check the real limit for the key in Google AI Studio.
+- **Cause:** Gemini API free-tier quotas are small and change often. Confirmed on
+  2026-11-11 (run 42986021710): the API answered `429` with
+  `generate_content_free_tier_requests, limit: 20, model: gemini-3-flash`, that is
+  20 requests a day per model. One review can take up to 25 turns (`maxSessionTurns`),
+  and every test run of a workflow fix spends from the same budget. The job fails (red)
+  when this happens.
 - **Fix:** keep re-runs to a minimum; review once the PR is ready, not after every push.
+  The quota is per model, so a run that hits it can be retried the next day or with
+  another model in `GEMINI_MODEL`. Usage: https://ai.dev/rate-limit.
 - **Status:** _open_. See the parking lot for alternatives.
 
 ### How to see what Gemini is doing
