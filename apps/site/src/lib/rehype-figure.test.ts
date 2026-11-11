@@ -47,6 +47,11 @@ describe('rehypeFigure', () => {
     expect(node).toMatchObject({ tagName: 'p' });
   });
 
+  it('leaves an image with an empty title as it is', () => {
+    const [node] = run(p(img('  '))).children;
+    expect(node).toMatchObject({ tagName: 'p' });
+  });
+
   it('leaves an image inside running text as it is', () => {
     const [node] = run(p(text('See '), img('Caption'))).children;
     expect(node).toMatchObject({ tagName: 'p' });

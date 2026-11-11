@@ -45,7 +45,7 @@ const details = [
         <div class="stack">
           <dt class="label muted">Stack</dt>
           <dd>
-            <ul class="chips">
+            <ul class="chips" role="list">
               {stack.map((item) => (
                 <li class="chip">{item}</li>
               ))}
@@ -92,19 +92,19 @@ const details = [
           <a
             class="button button-secondary button-small"
             href={`/projects/${previous.id}/`}
+            aria-label={`Previous project: ${previous.data.title}`}
           >
             <Arrow direction="left" />
             Previous project
-            <span class="visually-hidden">: {previous.data.title}</span>
           </a>
         )}
         {next && (
           <a
             class="button button-secondary button-small next"
             href={`/projects/${next.id}/`}
+            aria-label={`Next project: ${next.data.title}`}
           >
             Next project
-            <span class="visually-hidden">: {next.data.title}</span>
             <Arrow direction="right" />
           </a>
         )}
@@ -143,8 +143,12 @@ const details = [
     gap: var(--space-2);
   }
 
-  .case-study :global(figure img) {
+  /* Images keep their natural size up to the column width; the hero fills it. */
+  .hero :global(img) {
     width: 100%;
+  }
+
+  .case-study :global(figure img) {
     height: auto;
     border-radius: var(--radius);
   }

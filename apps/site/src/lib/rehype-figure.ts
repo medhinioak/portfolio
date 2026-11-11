@@ -25,6 +25,7 @@ function toFigure(paragraph: Element): Element | undefined {
   if (content.length !== 1 || image.type !== 'element') return undefined;
   const caption = image.properties.title;
   if (image.tagName !== 'img' || typeof caption !== 'string') return undefined;
+  if (caption.trim() === '') return undefined;
 
   // The caption replaces the title, so screen readers do not read it twice.
   delete image.properties.title;

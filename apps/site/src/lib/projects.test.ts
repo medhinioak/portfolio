@@ -32,7 +32,7 @@ describe('neighbours', () => {
   const list = [entry('a', 1), entry('b', 2), entry('c', 3)];
 
   it('gives no previous or next when there is only one case study', () => {
-    expect(neighbours([entry('a', 1)], 'a')).toEqual({
+    expect(neighbours([entry('a', 1)], 'a')).toStrictEqual({
       previous: undefined,
       next: undefined,
     });

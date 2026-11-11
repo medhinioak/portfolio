@@ -30,7 +30,7 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
       <a href={`/projects/${project.id}/`}>{title}</a>
     </Heading>
     <p>{summary}</p>
-    <ul class="chips" aria-label="Stack">
+    <ul class="chips" role="list" aria-label="Stack">
       {stack.map((item) => (
         <li class="chip">{item}</li>
       ))}
