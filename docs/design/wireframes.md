@@ -25,9 +25,10 @@ How to read them:
 
 Every page uses the same frame.
 
-**Column.** One column of text at the `68ch` measure from `tokens.md` (about 736 px
-on desktop), centred. On a phone the column
-is the screen width minus a 16 px gutter on each side.
+**Column.** One centred column, 736 px wide on desktop (`--column` in `tokens.md`).
+Paragraphs inside keep the `68ch` measure, which in the body font is a little wider, so
+on desktop the column sets the line length. On a phone the column is the screen width
+minus a 16 px gutter on each side.
 
 **Header, desktop.** One row: the wordmark "Medhini Oak" (pixel type, `--text-lg`) on the
 left, then the nav (Home, About, Projects, Blog, Contact), then the theme toggle on
@@ -231,10 +232,8 @@ checklist expects one that receives mail).
 
 - **Not drawn.** The Projects list (`/projects`), the Blog list (`/blog`), Impressum
   and Privacy. They reuse the frame and the card styles above.
-- **Breakpoint.** The wireframes show 1280 px and 390 px only. The width at which the
-  header switches from the single row to the menu button is set in the build.
-- **Wordmark.** The current layout still shows `medhinioak.dev`; the layout build
-  changes it to "Medhini Oak".
+- **Breakpoint.** The wireframes show 1280 px and 390 px only. The build switches to the
+  menu button below 48em ([`tokens.md`](tokens.md#breakpoint)).
 
 ## Review
 
