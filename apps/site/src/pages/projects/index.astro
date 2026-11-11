@@ -1,0 +1,28 @@
+---
+/** Projects list: every published case study as a card, in order (issue #30). */
+import ProjectCard from '../../components/ProjectCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedProjects } from '../../lib/get-projects';
+
+const projects = await getPublishedProjects();
+---
+
+<BaseLayout
+  title="Projects · Medhini Oak"
+  description="Case studies of projects I worked on: the problem, what I did and what I learned."
+>
+  <h1>Projects</h1>
+  <div class="cards">
+    {projects.map((project) => (
+      <ProjectCard project={project} headingLevel={2} />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+  }
+</style>

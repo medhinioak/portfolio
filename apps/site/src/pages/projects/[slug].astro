@@ -1,0 +1,23 @@
+---
+/** One case study per published entry in src/content/projects (issue #30). */
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import { getPublishedProjects } from '../../lib/get-projects';
+import { neighbours } from '../../lib/projects';
+
+export const getStaticPaths = (async () => {
+  const projects = await getPublishedProjects();
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project, ...neighbours(projects, project.id) },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project, previous, next } = Astro.props;
+const { Content } = await render(project);
+---
+
+<CaseStudyLayout project={project} previous={previous} next={next}>
+  <Content />
+</CaseStudyLayout>
