@@ -39,3 +39,4 @@ Keep these rules in step with `CLAUDE.md`.
 - Formatting that Prettier or ESLint already enforce.
 - Matters of taste without a concrete problem.
 - Wording of blog posts beyond clarity and factual errors: the voice is the author's.
+- Generated files: skip `pnpm-lock.yaml` entirely; do not read or comment on it.
