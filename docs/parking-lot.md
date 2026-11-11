@@ -2,6 +2,8 @@
 
 Ideas that are not in the plan. Reviewed at every phase gate: promote, keep or drop.
 
+Last review: Phase 0 gate, 2026-11-11. All ideas kept as they are.
+
 | Idea | Added | Notes |
 |---|---|---|
 | Prompt-generated game boards (an LLM emits a valid board pack) | 2026-11-10 | Board pack schema already allows it; needs backend, cost and moderation plan |
