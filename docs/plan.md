@@ -62,7 +62,7 @@ toggle works without a flash, and CI is green.
 
 **Outcome (2026-11-11):** all items done. The site went live on https://medhinioak.dev
 instead of the github.io address: the custom domain and HTTPS enforcement (#23) were
-done early, ahead of Phase 1.
+done early, ahead of Phase 1. Parking lot reviewed (all ideas kept); released as v0.0.
 
 ### Phase 1: Content and launch (Nov 13–22)
 

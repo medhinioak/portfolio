@@ -13,7 +13,7 @@ not only what was built but how and why.
 | Ideas not in the plan                                  | [`parking-lot.md`](parking-lot.md)                              |
 | Launch quality gate                                    | [`launch-checklist.md`](launch-checklist.md)                    |
 | Wireframes, design notes and tokens                    | [`design/`](design/), tokens in [`design/tokens.md`](design/tokens.md) |
-| Releases                                               | GitHub Releases, one per phase gate (v0.1 = launch)             |
+| Releases                                               | GitHub Releases, one per phase gate (v0.0 = Phase 0, v0.1 = launch) |
 | Which AI tool does what, and how work is reviewed      | [`ai-usage.md`](ai-usage.md)                                    |
 | Instructions for Claude Code / review rules for Gemini | [`../CLAUDE.md`](../CLAUDE.md) / [`../GEMINI.md`](../GEMINI.md) |
 | Problems hit, their causes and fixes                   | [`troubleshooting.md`](troubleshooting.md)                      |
