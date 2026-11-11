@@ -1,0 +1,7 @@
+dist
+.astro
+coverage
+pnpm-lock.yaml
+.claude
+# Docs are hand-formatted (compact tables); Prettier covers code and config only.
+**/*.md
