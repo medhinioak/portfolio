@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm:*)",
+      "Bash(node:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git switch:*)",
+      "Bash(git checkout -b:*)",
+      "Bash(git push -u origin:*)",
+      "Bash(git push origin:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh issue develop:*)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Read(./.env*)"
+    ]
+  },
+  "enabledPlugins": {
+    "feature-dev@anthropic-plugin-directory": true,
+    "code-review-anthropics@anthropic-plugin-directory": true
+  }
+}

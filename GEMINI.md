@@ -12,6 +12,10 @@ Keep these rules in step with `CLAUDE.md`.
   (`packages/game/src/engine`) imports no React and no DOM.
 - The site makes no third-party requests: no CDN fonts, embeds, analytics or
   trackers. Links to YouTube, Twitch and similar are plain links.
+- **Simplicity:** Code must be human-readable with zero over-engineering. Flag premature abstractions or code written for hypothetical future requirements.
+- **Docstrings:** All exported functions, interfaces, types, and module boundaries must have a concise one-line JSDoc comment (`/** ... */`).
+- **Strict Typing:** All exported functions must specify explicit return types. Flag any usage of `any` (require `unknown` with type guards).
+- **Documentation First:** Features and architectural changes must be backed by a corresponding spec or ADR in `docs/`.
 - No invented facts about the author's projects or experience. Unknown content is
   written as `PLACEHOLDER: ...`.
 - No secrets, tokens or personal data in the repository. Photos must have EXIF data stripped.
@@ -21,10 +25,10 @@ Keep these rules in step with `CLAUDE.md`.
 
 ## What to look for, in order
 
-1. Correctness and broken project rules above.
+1. Correctness, over-engineering, and broken project rules above (including missing docstrings on exports or explicit return types).
 2. Security: secrets, workflow permissions, GitHub Actions injection, IAM scope in Terraform.
 3. Accessibility and performance of pages (JavaScript only where an island needs it).
-4. Tests for engine logic and edge cases.
+4. Engine logic tests (~80% target coverage for `packages/game/src/engine`). Flag trivial or low-value tests written solely to pad coverage.
 5. For documentation and ADRs: contradictions with `docs/plan.md` or other ADRs,
    unclear decisions, missing alternatives or consequences.
 
