@@ -9,7 +9,7 @@ Phase 2 adds AWS.
 1. A pull request is squash-merged into `main`.
 2. [`deploy.yml`](../.github/workflows/deploy.yml) runs on the push. Job `build`:
    - installs with `pnpm install --frozen-lockfile` and runs `pnpm build`;
-   - fails if any text file in `apps/site/dist` contains the marker `PLACEHOLDER:`, and lists
+   - fails if any text file in `apps/site/dist` contains the marker `PLACEHOLDER:` (or its URL-encoded form `PLACEHOLDER%3A`), and lists
      those files (the bare word, for example in a post about this rule, is fine);
    - uploads `apps/site/dist` as the Pages artifact.
 3. Job `deploy` (the only job with `pages: write` and `id-token: write`) publishes the artifact with `actions/deploy-pages` to the

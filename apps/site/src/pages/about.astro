@@ -28,12 +28,9 @@ const aiUsageUrl =
 >
   <section class="section" aria-labelledby="about-title">
     <h1 id="about-title">About</h1>
-    <!-- An optional square portrait goes before .intro-text (beside it on desktop). -->
     <div class="intro">
-      <div class="intro-text">
-        <p>PLACEHOLDER: 2–3 sentences on who I am.</p>
-        <p>PLACEHOLDER: 1–2 sentences on what this site is for.</p>
-      </div>
+      <p>PLACEHOLDER: 2–3 sentences on who I am.</p>
+      <p>PLACEHOLDER: 1–2 sentences on what this site is for.</p>
     </div>
   </section>
 
@@ -92,14 +89,7 @@ const aiUsageUrl =
     margin-top: var(--space-7);
   }
 
-  /* Portrait above the text on a phone, beside it on desktop. */
   .intro {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-  }
-
-  .intro-text {
     display: grid;
     gap: var(--space-4);
   }
@@ -113,11 +103,6 @@ const aiUsageUrl =
   }
 
   @media (width >= 48em) {
-    .intro {
-      flex-direction: row;
-      align-items: flex-start;
-    }
-
     .topics {
       grid-template-columns: 1fr 1fr;
     }
@@ -131,11 +116,5 @@ const aiUsageUrl =
   .topics li {
     max-width: none;
     align-content: start;
-  }
-
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
   }
 </style>

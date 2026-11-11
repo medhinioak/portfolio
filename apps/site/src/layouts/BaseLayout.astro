@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
 // Projects and Blog go between About and Contact.
 const navItems: NavItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
+  { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/#contact' },
 ];
 
@@ -224,11 +224,12 @@ const current = (href: string): 'page' | undefined =>
       if (!event.matches || !drawer.open) return;
       returnFocus = false;
       drawer.close();
-      document
-        .querySelector<HTMLAnchorElement>(
-          '.site-nav a[aria-current="page"], .site-nav a',
-        )
-        ?.focus();
+      const nav = '.site-nav a';
+      (
+        document.querySelector<HTMLAnchorElement>(
+          `${nav}[aria-current="page"]`,
+        ) ?? document.querySelector<HTMLAnchorElement>(nav)
+      )?.focus();
     });
   }
 
