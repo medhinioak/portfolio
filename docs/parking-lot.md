@@ -10,3 +10,8 @@ Ideas that are not in the plan. Reviewed at every phase gate: promote, keep or d
 | Post: accessibility checks in CI | 2026-11-10 | Blog backlog |
 | Post: German legal pages for developers | 2026-11-10 | Blog backlog |
 | Photo post from Magdeburg or Berlin | 2026-11-10 | Blog backlog |
+| Remove the Gemini `tools.core` workaround | 2026-11-11 | When run-gemini-cli#532 is fixed; see `troubleshooting.md` |
+| Gemini Code Assist GitHub app instead of the Action | 2026-11-11 | If free-tier API limits keep breaking reviews |
+| Fail the Gemini job when its output has an `error` | 2026-11-11 | Today a broken review shows green (run-gemini-cli#519) |
+| TypeScript 7 | 2026-11-11 | When typescript-eslint and @astrojs/check support it |
+| Post material: debugging the Gemini review workflow | 2026-11-11 | Notes in `troubleshooting.md`; fits Post 1 |
