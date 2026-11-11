@@ -70,8 +70,11 @@ the left over a dimmed page.
   button.
 - Opening moves focus to the Close button. Escape, the Close button and a tap on the
   dimmed area all close it, and focus returns to the menu button.
+- While it is open, Tab stays inside the drawer and the page behind is inert.
 - The menu button has `aria-expanded` and `aria-controls`.
-- The dimmed area uses a new `--color-scrim` value (see [Open items](#open-items)).
+- Without JavaScript the nav must still be usable; the build decides how
+  ([ADR-0007](../adr/0007-phone-navigation-drawer.md#consequences)).
+- The dimmed area uses the `--color-scrim` token from [`tokens.md`](tokens.md#overlay).
 - Both open states are drawn: [light](wireframes/home-light-phone-menu.png) and
   [dark](wireframes/home-dark-phone-menu.png).
 
@@ -175,7 +178,8 @@ Screenshots: [light desktop](wireframes/blog-post-light-desktop.png),
 Purpose: a friendly dead end with a way out.
 
 - **No site header.** The page is a single centred block between the top of the
-  screen and the footer. With no toggle, it follows the visitor's system theme.
+  screen and the footer. With no toggle, it uses the theme the
+  visitor saved elsewhere on the site, or the system theme if none is saved.
 - **Content.** A small animated GIF, an "Error 404" label, the heading "Page not
   found", one friendly line, three buttons ("Go to Home", "Projects", "Blog") and a
   "Found a broken link? Get in touch" line.
@@ -214,10 +218,6 @@ checklist expects one that receives mail).
 
 ## Open items
 
-- **`--color-scrim`.** The phone drawer needs a dimming colour that is not in
-  `tokens.md`: `rgba(27, 26, 35, 0.5)` in light and `rgba(0, 0, 0, 0.6)` in dark. It
-  is an overlay, and the drawer's text sits on `--color-bg`, not on the scrim, so it
-  needs no contrast row. `tokens.md` still lists the two values.
 - **Drawer behaviour.** Recorded as a proposed decision in
   [ADR-0007](../adr/0007-phone-navigation-drawer.md).
 - **Not drawn.** The Projects list (`/projects`), the Blog list (`/blog`), Impressum

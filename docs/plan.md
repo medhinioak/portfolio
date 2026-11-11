@@ -1,6 +1,6 @@
 # Plan
 
-Status: active · Owner: Medhini · Last updated: 2026-11-10
+Status: active · Owner: Medhini · Last updated: 2026-11-11
 
 This is the working plan for medhinioak.dev. It changes only through pull requests,
 so its history is in git. The reasons behind the main choices are in [`adr/`](adr/).
@@ -55,7 +55,7 @@ it gets cut to its cut line.
 - [ ] Scaffold the pnpm workspace, Astro site and empty game package
 - [ ] Theme tokens, light and dark mode, self-hosted fonts
 - [ ] CI (install, lint, type check, test, build) and deploy to GitHub Pages
-- [ ] Low-fidelity wireframes for Home, About, a case study, a blog post and 404 in `docs/design/` (time-box: 2 hours)
+- [x] Low-fidelity wireframes for Home, About, a case study, a blog post and 404 in `docs/design/` (time-box: 2 hours)
 
 **Done when:** a styled, mostly empty page is live at the github.io address, the theme
 toggle works without a flash, and CI is green.

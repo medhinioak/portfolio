@@ -1,4 +1,4 @@
-# ADR-0007: Phone navigation is a left drawer
+# ADR-0007: Use a left drawer for phone navigation
 
 - Status: Proposed
 - Date: 2026-11-11
@@ -20,8 +20,10 @@ On phone widths the nav sits behind a menu button and opens as a drawer from the
 over a dimmed page. Layouts: [`wireframes.md`](../design/wireframes.md#phone-menu).
 
 - The button has `aria-expanded` and `aria-controls`.
-- Opening moves focus into the drawer. Escape, the Close button and a tap on the
-  dimmed area close it, and focus returns to the menu button.
+- Opening moves focus to the Close button in the drawer. Escape, the Close button and
+  a tap on the dimmed area close it, and focus returns to the menu button.
+- While the drawer is open, Tab stays inside it and the page behind is inert, so
+  keyboard and screen-reader users cannot reach content hidden under the scrim.
 - The current page is marked `aria-current="page"`.
 - The dimming colour is a new token, `--color-scrim`, added to `tokens.md` first. It is
   a plain overlay and needs no contrast row.

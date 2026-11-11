@@ -82,8 +82,8 @@ Not chosen:
 
 ### Overlay
 
-| Role                                  | Variable        | Light                   | Dark                 |
-| ------------------------------------- | --------------- | ----------------------- | -------------------- |
+| Role                                   | Variable        | Light                   | Dark                 |
+| -------------------------------------- | --------------- | ----------------------- | -------------------- |
 | Scrim: dims the page behind the drawer | `--color-scrim` | `rgba(27, 26, 35, 0.5)` | `rgba(0, 0, 0, 0.6)` |
 
 Used only behind the phone menu drawer ([ADR-0007](../adr/0007-phone-navigation-drawer.md)).
