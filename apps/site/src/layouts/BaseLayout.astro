@@ -2,6 +2,7 @@
 /** Page shell: theme script, fonts, skip link, header with phone drawer, main and footer. */
 import { Font } from 'astro:assets';
 import ThemeToggle from '../components/ThemeToggle';
+import { email, mailtoHref } from '../lib/contact';
 import { isCurrentPage, type NavItem } from '../lib/nav';
 import '../styles/global.css';
 
@@ -16,10 +17,15 @@ const { title, description, showHeader = true } = Astro.props;
 const year = new Date().getFullYear();
 
 // Each page issue adds its own link when its route exists (issue #39, "Link rule").
-const navItems: NavItem[] = [{ label: 'Home', href: '/' }];
+// Projects and Blog go between About and Contact.
+const navItems: NavItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/#contact' },
+];
 
 // In this order when filled: Impressum, Privacy, email, RSS.
-const footerLinks: NavItem[] = [];
+const footerLinks: NavItem[] = [{ label: email, href: mailtoHref(email) }];
 
 const current = (href: string): 'page' | undefined =>
   isCurrentPage(href, Astro.url.pathname) ? 'page' : undefined;

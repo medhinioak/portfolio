@@ -1,174 +1,100 @@
 ---
-/** Home page stub until Phase 1 content lands: "Coming soon" plus a type specimen. */
+/** Home page: intro with the CV link, then the Contact section (issue #29). */
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const swatches = [
-  'bg',
-  'surface',
-  'text',
-  'muted',
-  'accent',
-  'on-accent',
-  'highlight',
-] as const;
+import {
+  channels,
+  cvUrl,
+  email,
+  mailSubject,
+  mailtoHref,
+} from '../lib/contact';
 ---
 
 <BaseLayout
-  title="medhinioak.dev"
-  description="Personal site and blog. Coming soon."
+  title="Medhini Oak"
+  description="PLACEHOLDER: one-sentence description of the Home page"
 >
-  <section class="intro">
-    <h1>medhinioak.dev</h1>
-    <p class="lead">
-      Coming soon
-      <span class="cursor" aria-hidden="true">
-        _
-      </span>
+  <section class="intro" aria-labelledby="intro-title">
+    <h1 id="intro-title">PLACEHOLDER: one-line headline</h1>
+    <p class="role">
+      PLACEHOLDER: short role line
+      <span class="role-bar" aria-hidden="true"></span>
     </p>
-  </section>
-
-  <section class="specimen" aria-labelledby="specimen-title">
-    <p class="label muted" id="specimen-title">
-      Type specimen
-    </p>
-    <h2>Heading two</h2>
-    <h3>Heading three</h3>
-    <h4>Heading four</h4>
     <p>
-      Body text is set in Atkinson Hyperlegible, designed for readers with low
-      vision. It has <strong>bold</strong>, <em>italic</em>,{' '}
-      <a href="#specimen-title">a link</a> and
-      <code>inline_code()</code> in the system monospace font.
+      PLACEHOLDER: 2–3 sentences on who I am, what I do and what I am looking
+      for.
     </p>
-    <p class="muted">
-      Muted text is for dates, captions and other secondary details.
-    </p>
-
-    <ul class="swatches" aria-label="Colour tokens">
-      {swatches.map((name) => (
-        <li class="swatch">
-          <span
-            class="swatch-colour"
-            style={`background: var(--color-${name})`}
-          />
-          <code>--color-{name}</code>
-        </li>
-      ))}
-    </ul>
+    <a class="button button-primary" href={cvUrl}>
+      Read my CV
+    </a>
   </section>
 
-  <section class="ui" aria-labelledby="ui-title">
-    <h2 class="label muted" id="ui-title">
-      UI specimen
-    </h2>
+  <!-- Projects (#30) and Blog (#32) go here. The game teaser waits for Phase 3. -->
+
+  <section id="contact" class="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Contact</h2>
+    <p>PLACEHOLDER: one line inviting people to get in touch.</p>
     <div class="row">
-      <a class="button button-primary" href="#ui-title">
-        Primary button
+      <a class="button button-primary" href={mailtoHref(email, mailSubject)}>
+        Email me
       </a>
-      <a class="button button-secondary" href="#ui-title">
-        Secondary button
+      <a class="button button-secondary" href={channels.github.href}>
+        {channels.github.label}
+      </a>
+      <a class="button button-secondary" href={channels.linkedin.href}>
+        {channels.linkedin.label}
       </a>
     </div>
+    <p class="muted">Prefer to copy it? {email}</p>
+
+    <h3>Videos and streams</h3>
     <div class="row">
-      <a class="button button-secondary button-small" href="#ui-title">
-        Small button
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path d="M2 8h11M9 4l4 4-4 4" />
-        </svg>
+      <a class="button button-secondary" href={channels.youtube.href}>
+        {channels.youtube.label}
       </a>
-      <a class="button button-secondary button-small" href="#ui-title">
-        <svg aria-hidden="true" viewBox="0 0 16 16" fill="currentColor">
-          <circle cx="3" cy="13" r="2" />
-          <path d="M1 7a8 8 0 0 1 8 8h-2a6 6 0 0 0-6-6zM1 2a13 13 0 0 1 13 13h-2A11 11 0 0 0 1 4z" />
-        </svg>
-        Feed button
+      <a class="button button-secondary" href={channels.twitch.href}>
+        {channels.twitch.label}
       </a>
-    </div>
-    <div class="card">
-      <h3 class="title-long">
-        <a href="#ui-title">Card with a long title</a>
-      </h3>
-      <p>A card holds a title link, a one-line summary and chips.</p>
-      <ul class="chips" aria-label="Tags">
-        <li class="chip">tag</li>
-        <li class="chip">another tag</li>
-      </ul>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .intro {
-    margin-bottom: var(--space-7);
+  .intro,
+  .contact {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-5);
   }
 
-  .lead {
-    margin-top: var(--space-3);
+  .contact {
+    margin-top: var(--space-7);
+  }
+
+  .role {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: calc(-1 * var(--space-2));
     font-family: var(--font-pixel);
     font-size: var(--text-lg);
     color: var(--color-muted);
   }
 
-  .cursor {
-    color: var(--color-highlight);
+  .role-bar {
+    flex: none;
+    width: var(--space-3);
+    height: var(--space-1);
+    background: var(--color-highlight);
   }
 
-  .specimen {
-    display: grid;
-    gap: var(--space-4);
-    padding: var(--space-5);
-    background: var(--color-surface);
-    border-radius: var(--radius);
+  .contact h3 {
+    margin-top: var(--space-4);
   }
 
-  .specimen code {
-    background: var(--color-bg);
-  }
-
-  .ui {
-    display: grid;
-    gap: var(--space-4);
-    margin-top: var(--space-6);
-  }
-
-  .row,
-  .chips {
+  .row {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
-  }
-
-  .chips {
-    gap: var(--space-2);
-    padding: 0;
-    list-style: none;
-  }
-
-  .swatches {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-    gap: var(--space-3);
-    padding: 0;
-    list-style: none;
-  }
-
-  .swatch {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  .swatch-colour {
-    flex: none;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 2px solid var(--color-text);
-    border-radius: var(--radius);
   }
 </style>

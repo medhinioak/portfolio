@@ -1,0 +1,141 @@
+---
+/** About page: intro, things I love, how I use AI and what I do (issue #29). */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { cvUrl } from '../lib/contact';
+
+// The wireframe's topics, as placeholders until the owner confirms the list.
+// A topic may later get an optional photo (astro:assets, EXIF stripped).
+const topics = [
+  'Puzzle games',
+  'Cats',
+  'Anime',
+  'K-pop',
+  '90s aesthetic',
+  'Cooking (plant-based)',
+  'Culture',
+].map((name) => ({
+  label: `PLACEHOLDER: ${name}`,
+  text: 'PLACEHOLDER: one or two lines about this.',
+}));
+
+const aiUsageUrl =
+  'https://github.com/medhinioak/portfolio/blob/main/docs/ai-usage.md';
+---
+
+<BaseLayout
+  title="About · Medhini Oak"
+  description="PLACEHOLDER: one-sentence description of the About page"
+>
+  <section class="section" aria-labelledby="about-title">
+    <h1 id="about-title">About</h1>
+    <!-- An optional square portrait goes before .intro-text (beside it on desktop). -->
+    <div class="intro">
+      <div class="intro-text">
+        <p>PLACEHOLDER: 2–3 sentences on who I am.</p>
+        <p>PLACEHOLDER: 1–2 sentences on what this site is for.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="love-title">
+    <h2 id="love-title">Things I love</h2>
+    <ul class="topics">
+      {topics.map((topic) => (
+        <li class="card">
+          <h3>{topic.label}</h3>
+          <p>{topic.text}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="ai-title">
+    <h2 id="ai-title">How I use AI</h2>
+    <p>PLACEHOLDER: a few lines on my principles for using AI ethically.</p>
+    <a class="button button-secondary button-small" href={aiUsageUrl}>
+      How this site was built with AI
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M2 8h11M9 4l4 4-4 4"></path>
+      </svg>
+    </a>
+  </section>
+
+  <section class="section" aria-labelledby="work-title">
+    <h2 id="work-title">What I do</h2>
+    <p>PLACEHOLDER: a short paragraph on my work and what I am looking for.</p>
+    <!-- "See projects" (/projects) is added by #30. -->
+    <div class="row">
+      <a class="button button-primary" href={cvUrl}>
+        Read my CV
+      </a>
+      <a class="button button-secondary" href="/#contact">
+        Get in touch
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-5);
+  }
+
+  .section + .section {
+    margin-top: var(--space-7);
+  }
+
+  /* Portrait above the text on a phone, beside it on desktop. */
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .intro-text {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .topics {
+    display: grid;
+    gap: var(--space-4);
+    width: 100%;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (width >= 48em) {
+    .intro {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .topics {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* With an odd number of cards the last one spans both columns. */
+    .topics li:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .topics li {
+    max-width: none;
+    align-content: start;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>
