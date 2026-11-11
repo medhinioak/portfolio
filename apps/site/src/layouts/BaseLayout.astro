@@ -321,6 +321,17 @@ const current = (href: string): 'page' | undefined =>
     padding: var(--space-2) var(--space-3);
   }
 
+  /* Only the label of the current mode shows (see ThemeToggle.tsx). */
+  .theme-toggle-mode {
+    display: none;
+  }
+
+  [data-theme='system'] .theme-toggle-mode[data-mode='system'],
+  [data-theme='light'] .theme-toggle-mode[data-mode='light'],
+  [data-theme='dark'] .theme-toggle-mode[data-mode='dark'] {
+    display: inline;
+  }
+
   .icon-button {
     display: inline-flex;
     align-items: center;

@@ -10,6 +10,7 @@ const NEXT: Record<Mode, Mode> = {
   light: 'dark',
   dark: 'system',
 };
+const MODES: Mode[] = ['system', 'light', 'dark'];
 const LABEL: Record<Mode, string> = {
   system: 'System',
   light: 'Light',
@@ -89,7 +90,15 @@ export default function ThemeToggle(): ReactElement {
   return (
     <>
       <button type="button" className="theme-toggle label" onClick={cycle}>
-        Theme: {mode ? LABEL[mode] : '…'}
+        Theme:{' '}
+        {/* All three are in the server markup; CSS shows the one matching data-theme,
+            which the head script sets before first paint. So the label is right on the
+            first frame and does not change (or resize the header) on hydration. */}
+        {MODES.map((m) => (
+          <span key={m} className="theme-toggle-mode" data-mode={m}>
+            {LABEL[m]}
+          </span>
+        ))}
         <span className="visually-hidden">{resolved}. Change theme</span>
       </button>
       <span className="visually-hidden" role="status" aria-live="polite">
