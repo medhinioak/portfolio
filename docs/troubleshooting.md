@@ -8,6 +8,23 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
 
 ## Gemini PR review
 
+### Reviewer asks which PR to review
+
+- **Seen:** 2026-11-11, PR #9, run 42984490621 (the first run with the `tools.core` fix).
+- **Symptom:** green run after about 7 minutes and no review. Gemini's answer in
+  `stdout.log`: "The `$REPOSITORY` and `$PULL_REQUEST_NUMBER` variables are not currently
+  set… please provide these values." `activate_skill` worked; `run_shell_command` was
+  refused, and three `pull_request_read` calls failed.
+- **Cause:** the code-review extension expects `REPOSITORY`, `PULL_REQUEST_NUMBER` and
+  `ADDITIONAL_CONTEXT` as environment variables and checks them with a shell command. The
+  example workflow sets them only in the earlier "Prepare prompt context" step, and the
+  `tools.core` allowlist (correctly) leaves out the shell.
+- **Fix:** pass them as arguments in the prompt:
+  `/pr-code-review REPOSITORY=… PULL_REQUEST_NUMBER=… ADDITIONAL_CONTEXT=…` (PR #10). The
+  action hands the prompt to the CLI through an environment variable, so comment text never
+  reaches a shell.
+- **Status:** _open_ until PR #10 is merged and a review is posted.
+
 ### Green run, no review posted
 
 - **Seen:** 2026-11-11, PR #8, runs 42981788352 and 42982620350.
@@ -25,9 +42,9 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
   (root cause in gemini-cli#28361; green-on-error is run-gemini-cli#519).
 - **Fix:** in `.github/workflows/gemini-review.yml`, allowlist what the review needs:
   `"tools": {"core": ["activate_skill", "mcp_github_*"]}` (PR #8).
-- **Status:** _workaround_. Remove it when #532 is fixed. Not yet verified here, because a
-  review triggered by a comment uses the workflow on `main` (see below); the first PR
-  opened after PR #8 is merged is the test.
+- **Status:** _workaround_. Remove it when #532 is fixed. Verified on PR #9 (run
+  42984490621): the GitHub tools and `activate_skill` were available. The review still
+  failed for the next reason, above.
 - **Also note:** the extension's prompt names tools that no longer exist in
   github-mcp-server v0.27.0 (`create_pending_pull_request_review`,
   `submit_pending_pull_request_review`; upstream run-gemini-cli#510). The model has to map
