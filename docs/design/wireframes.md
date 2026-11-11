@@ -25,10 +25,11 @@ How to read them:
 
 Every page uses the same frame.
 
-**Column.** One column of text, 736 px wide on desktop, centred. On a phone the column
+**Column.** One column of text at the `68ch` measure from `tokens.md` (about 736 px
+on desktop), centred. On a phone the column
 is the screen width minus a 16 px gutter on each side.
 
-**Header, desktop.** One row: the wordmark "Medhini Oak" (pixel type, 22 px) on the
+**Header, desktop.** One row: the wordmark "Medhini Oak" (pixel type, `--text-lg`) on the
 left, then the nav (Home, About, Projects, Blog, Contact), then the theme toggle on
 the right. "Contact" is not a page: it links to the Contact section on Home (`/#contact`)
 from every page. The current page is underlined in the accent colour and marked
@@ -54,7 +55,8 @@ and blog-post titles, and the titles on project and post cards, use Atkinson
 Hyperlegible bold, because real titles are long (`tokens.md` allows the body font for
 long headings).
 
-**Chips.** Small bordered labels for tags and skills, pixel type, 14 px.
+**Chips.** Small bordered labels for tags and skills, pixel type, `--text-sm` (the wireframes draw them at 14 px; the build uses
+the token).
 
 **Images.** Always optional per page, per case study and per card. They have a fixed
 shape so the layout does not jump when they load, and an alt text, or an empty alt if
@@ -122,7 +124,9 @@ Order, top to bottom:
    (Cats shows one). The last card spans both columns on desktop. The topics are
    placeholders: in the build each label is `PLACEHOLDER:` until the owner confirms it.
 3. **How I use AI.** A short paragraph on principles, and a button to a plain link to
-   how the site was built with AI (`docs/ai-usage.md`).
+   how the site was built with AI: `docs/ai-usage.md` on GitHub
+   (`https://github.com/medhinioak/portfolio/blob/main/docs/ai-usage.md`), since the
+   docs are not part of the built site.
 4. **What I do.** A short paragraph and three buttons: "Read my CV" (primary),
    "See projects" and "Get in touch".
 
@@ -190,7 +194,8 @@ Purpose: a friendly dead end with a way out.
   "Found a broken link? Get in touch" line.
 - **The GIF.** Small and decorative (empty alt); the asset comes later. A GIF cannot
   follow `prefers-reduced-motion` by itself, so use a `<picture>` element with a still
-  image for reduced motion, and keep the loop short.
+  image for reduced motion, and keep the loop short. It is the one exception to "no
+  decorative animation" in [`tokens.md`](tokens.md#feel).
 - **Status.** The page must return HTTP status 404 (launch checklist).
 
 Screenshots: [light desktop](wireframes/404-light-desktop.png),

@@ -13,6 +13,8 @@ A tidy game menu, not a startup landing page.
 - Generous whitespace. One column of text, short lines, clear sections.
 - Almost no motion. No decorative animation. With `prefers-reduced-motion: reduce`,
   transitions and animations are switched off.
+- One exception: the small GIF on the 404 page. It keeps a short loop and shows a still
+  image under reduced motion ([`wireframes.md`](wireframes.md#404)).
 
 ## Type
 
