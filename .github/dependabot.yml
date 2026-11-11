@@ -7,6 +7,8 @@ updates:
     schedule:
       interval: weekly
     # pnpm refuses packages published less than a day ago (minimumReleaseAge).
+    # The cooldown covers version updates only: security updates ignore it, so a
+    # security PR for a fresh release can fail install until the next day.
     cooldown:
       default-days: 1
     groups:

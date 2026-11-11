@@ -9,15 +9,19 @@ Phase 2 adds AWS.
 1. A pull request is squash-merged into `main`.
 2. [`deploy.yml`](../.github/workflows/deploy.yml) runs on the push. Job `build`:
    - installs with `pnpm install --frozen-lockfile` and runs `pnpm build`;
-   - fails if any file in `apps/site/dist` contains the word `PLACEHOLDER`, and lists those files;
+   - fails if any text file in `apps/site/dist` contains the marker `PLACEHOLDER:`, and lists
+     those files (the bare word, for example in a post about this rule, is fine);
    - uploads `apps/site/dist` as the Pages artifact.
-3. Job `deploy` publishes the artifact with `actions/deploy-pages` to the
+3. Job `deploy` (the only job with `pages: write` and `id-token: write`) publishes the artifact with `actions/deploy-pages` to the
    `github-pages` environment. The site is served at <https://medhinioak.dev>, with no base path.
-4. Deploys queue in the concurrency group `pages`. A running deploy is never
-   cancelled; a newer one waits for it.
+4. Deploys share the concurrency group `pages`. A running deploy is never cancelled.
+   At most one more waits behind it: if another push arrives meanwhile, the waiting run
+   is cancelled and replaced by the newest one. A cancelled deploy run is expected, not a failure.
 
 [`ci.yml`](../.github/workflows/ci.yml) runs lint, type check, tests and build on every
-pull request and on `main`. It doesn't deploy, and it doesn't check for `PLACEHOLDER`.
+pull request and on `main`. It doesn't deploy, and it doesn't check for `PLACEHOLDER:`.
+Deploy doesn't wait for CI; the main ruleset (below) makes sure only commits that passed
+CI reach `main`.
 
 ## One-time setup
 
@@ -28,6 +32,13 @@ Needed once before the first deploy, and again if the repository is recreated.
    repository: with Actions deployments the domain lives only in the settings.
 3. DNS for the apex points at GitHub Pages (A and AAAA records, as listed in GitHub's docs).
 4. Once the certificate exists, tick **Enforce HTTPS**.
+5. Settings → Rules → Rulesets → new branch ruleset for `main` (after `ci` has run once):
+   - Require a pull request before merging.
+   - Require status checks to pass: add `ci`, and tick
+     **Require branches to be up to date before merging**, so each PR is tested against
+     the `main` it lands on.
+   - Block force pushes.
+   Bypassing the ruleset as admin skips this protection, and that commit deploys anyway.
 
 ## Deploy manually
 
@@ -50,7 +61,8 @@ Choose one:
 - **Re-run an older successful deploy (fast).** `gh run list --workflow deploy.yml`,
   pick the last good run, then `gh run rerun <run-id>`. That rebuilds and deploys
   that run's commit. It is temporary: the next push to `main` deploys `main` again,
-  so follow up with a revert.
+  so follow up with a revert. GitHub only re-runs runs from the last 30 days; for an
+  older good state, revert instead.
 
 ## When a deploy fails
 
