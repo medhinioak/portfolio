@@ -18,7 +18,10 @@ const LABEL: Record<Mode, string> = {
 const darkQuery = '(prefers-color-scheme: dark)';
 
 function readMode(): Mode {
-  const value = document.documentElement.dataset.theme;
+  return parseMode(document.documentElement.dataset.theme);
+}
+
+function parseMode(value: string | null | undefined): Mode {
   return value === 'light' || value === 'dark' ? value : 'system';
 }
 
@@ -43,6 +46,8 @@ export default function ThemeToggle(): ReactElement {
   // null until hydrated, so the server markup and the first client render match.
   const [mode, setMode] = useState<Mode | null>(null);
   const [dark, setDark] = useState(false);
+  // Announced by a polite live region after a click; empty on load so nothing is read out.
+  const [announcement, setAnnouncement] = useState('');
 
   useEffect(() => {
     setMode(readMode());
@@ -51,7 +56,20 @@ export default function ThemeToggle(): ReactElement {
     const onChange = (event: MediaQueryListEvent): void =>
       setDark(event.matches);
     query.addEventListener('change', onChange);
-    return () => query.removeEventListener('change', onChange);
+
+    // Another tab changed the theme: follow it.
+    const onStorage = (event: StorageEvent): void => {
+      if (event.key !== STORAGE_KEY && event.key !== null) return;
+      const next = parseMode(event.newValue);
+      document.documentElement.dataset.theme = next;
+      setMode(next);
+    };
+    window.addEventListener('storage', onStorage);
+
+    return () => {
+      query.removeEventListener('change', onChange);
+      window.removeEventListener('storage', onStorage);
+    };
   }, []);
 
   function cycle(): void {
@@ -59,14 +77,24 @@ export default function ThemeToggle(): ReactElement {
     document.documentElement.dataset.theme = next;
     saveMode(next);
     setMode(next);
+    const shown =
+      next === 'system'
+        ? `system (${systemIsDark() ? 'dark' : 'light'})`
+        : next;
+    setAnnouncement(`Theme set to ${shown}`);
   }
 
   const resolved = mode === 'system' ? ` (${dark ? 'dark' : 'light'})` : '';
 
   return (
-    <button type="button" className="theme-toggle label" onClick={cycle}>
-      Theme: {mode ? LABEL[mode] : '…'}
-      <span className="visually-hidden">{resolved}. Change theme</span>
-    </button>
+    <>
+      <button type="button" className="theme-toggle label" onClick={cycle}>
+        Theme: {mode ? LABEL[mode] : '…'}
+        <span className="visually-hidden">{resolved}. Change theme</span>
+      </button>
+      <span className="visually-hidden" role="status" aria-live="polite">
+        {announcement}
+      </span>
+    </>
   );
 }

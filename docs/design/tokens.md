@@ -29,6 +29,8 @@ A tidy game menu, not a startup landing page.
 - Fallbacks end in a generic family (`sans-serif`). Astro then generates
   metric-adjusted fallback faces, so text shifts very little when the web font arrives.
 - Scale: base `1.125rem` (18px), line height `1.6`, text measure about `68ch`.
+  Variables: `--text-sm` 1rem (labels), `--text-base` 1.125rem (body, h4),
+  `--text-lg` 1.4rem (h3), `--text-xl` 1.75rem (h2), `--text-2xl` 2.25rem (h1).
   Headings step up modestly (about 1.25× per level) and keep Pixelify at sizes where the
   pixel shapes stay readable. Long headings may use the body font instead.
 
@@ -91,6 +93,10 @@ text); the focus ring is a non-text indicator and needs 3:1. All pairs pass.
 | Highlight on background / surface    | 5.40 / 4.86   | 12.46 / 11.19 | 4.5    |
 | Label on accent                      | 6.83          | 7.74          | 4.5    |
 | Focus ring (accent) vs background    | 6.44          | 7.74          | 3      |
+| Divider lines (surface on background) | 1.11         | 1.11          | none   |
+
+Divider lines (header and footer borders) are decorative: they carry no information,
+so WCAG sets no minimum. They are meant to be quiet.
 
 Any new colour pair gets a row here before it is used.
 
@@ -109,14 +115,18 @@ Any new colour pair gets a row here before it is used.
 - **No flash:** a tiny inline script at the top of `<head>` runs before first paint. It reads
   `localStorage["theme"]` inside `try/catch` and sets `data-theme` on `<html>` to
   `light`, `dark` or `system`.
-- **CSS:** light tokens on `:root`. Dark tokens apply under `[data-theme="dark"]`, and
-  under `@media (prefers-color-scheme: dark)` for `:root:not([data-theme="light"])`.
-  `color-scheme` follows, so form controls and scrollbars match. Without JavaScript the
-  page simply follows the system setting.
+- **CSS:** each colour variable is written once as `light-dark(light, dark)`. `:root` has
+  `color-scheme: light dark`, so the system setting picks the value;
+  `[data-theme="light"]` and `[data-theme="dark"]` force `color-scheme` to one of them.
+  Form controls and scrollbars follow too. Without JavaScript the page simply follows
+  the system setting.
 - **Toggle:** one button that cycles system → light → dark. It's a React island
   ([ADR-0001](../adr/0001-astro-with-react-islands.md)), a real `<button>`, keyboard
   operable, with the accent focus ring. Its accessible name states the current mode, for
-  example "Theme: system (dark). Change theme", and its visible label matches.
+  example "Theme: system (dark). Change theme", and its visible label matches. After a
+  click, a polite live region announces the new mode ("Theme set to dark"), because screen
+  readers don't always re-read a focused button whose name changed. Other open tabs follow
+  the change through the `storage` event.
 - **Storage:** nothing is stored until the visitor clicks the toggle. Light or dark is then
   saved as `localStorage["theme"]`; choosing system removes the key. Every storage access is
   wrapped in `try/catch`, so a blocked storage (private mode, strict settings) only means

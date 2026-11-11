@@ -61,7 +61,8 @@ AI roles and reviews: docs/ai-usage.md.
   `pnpm approve-builds <pkg>` (writes allowBuilds) only after checking them.
 - Gemini review workflow changes only take effect once merged to main.
   Problems and fixes so far: docs/troubleshooting.md.
-- Colours, fonts and spacing come only from the CSS variables in
-  apps/site/src/styles/global.css. A new colour pair needs a contrast row in
-  docs/design/tokens.md first. Fonts are listed file by file in astro.config.mjs.
+- Colours, fonts, type sizes and spacing come only from the CSS variables in
+  `apps/site/src/styles/global.css`; no hard-coded colour values in components. A new
+  colour pair needs a contrast row in `docs/design/tokens.md` first. Font files are
+  listed one by one in `apps/site/astro.config.mjs`.
 - Strip EXIF data from every photo before committing.

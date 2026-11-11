@@ -1,22 +1,32 @@
 /*
  * Design tokens and base styles. Values and contrast table: docs/design/tokens.md.
- * Use colours and fonts only through these variables.
+ * Use colours, fonts, type sizes and spacing only through these variables.
  * --font-pixel and --font-body are defined by Astro's <Font> component.
  */
 
+/*
+ * Each colour is written once as light-dark(light, dark). The value used follows
+ * color-scheme: both by default (system setting), or one when data-theme forces it.
+ */
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
-  --color-bg: #fbf8f3;
-  --color-surface: #f1ece2;
-  --color-text: #1b1a23;
-  --color-muted: #5a5766;
-  --color-accent: #5b3fd1;
-  --color-on-accent: #ffffff;
-  --color-highlight: #b93a00;
+  --color-bg: light-dark(#fbf8f3, #14131c);
+  --color-surface: light-dark(#f1ece2, #1f1d2b);
+  --color-text: light-dark(#1b1a23, #f1eee6);
+  --color-muted: light-dark(#5a5766, #a8a4b5);
+  --color-accent: light-dark(#5b3fd1, #a99bff);
+  --color-on-accent: light-dark(#ffffff, #14131c);
+  --color-highlight: light-dark(#b93a00, #5eead4);
 
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --text-sm: 1rem;
+  --text-base: 1.125rem;
+  --text-lg: 1.4rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -30,31 +40,12 @@
   --measure: 68ch;
 }
 
-/* Dark: chosen explicitly, or following the system unless light was chosen. */
-:root[data-theme='dark'] {
-  color-scheme: dark;
-
-  --color-bg: #14131c;
-  --color-surface: #1f1d2b;
-  --color-text: #f1eee6;
-  --color-muted: #a8a4b5;
-  --color-accent: #a99bff;
-  --color-on-accent: #14131c;
-  --color-highlight: #5eead4;
+:root[data-theme='light'] {
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    color-scheme: dark;
-
-    --color-bg: #14131c;
-    --color-surface: #1f1d2b;
-    --color-text: #f1eee6;
-    --color-muted: #a8a4b5;
-    --color-accent: #a99bff;
-    --color-on-accent: #14131c;
-    --color-highlight: #5eead4;
-  }
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 /* Reset */
@@ -79,12 +70,13 @@ html {
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   line-height: 1.6;
 }
 
@@ -99,19 +91,19 @@ h4 {
 }
 
 h1 {
-  font-size: 2.25rem;
+  font-size: var(--text-2xl);
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: var(--text-xl);
 }
 
 h3 {
-  font-size: 1.4rem;
+  font-size: var(--text-lg);
 }
 
 h4 {
-  font-size: 1.125rem;
+  font-size: var(--text-base);
 }
 
 p,
@@ -157,7 +149,7 @@ button {
 /* Small pixel-font labels: navigation, buttons, tags. */
 .label {
   font-family: var(--font-pixel);
-  font-size: 1rem;
+  font-size: var(--text-sm);
   letter-spacing: 0.02em;
 }
 
