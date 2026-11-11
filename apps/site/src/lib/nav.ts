@@ -6,11 +6,7 @@ export interface NavItem {
   href: string;
 }
 
-/**
- * True if `href` is the nav item for the page at `pathname` (docs/design/wireframes.md).
- * Home matches only `/`; a section links such as `/#contact` never match; other items
- * match their own path and every page below it.
- */
+/** True if `href` marks the page at `pathname`: Home only on `/`, `#` links never, others on their path and below. */
 export function isCurrentPage(href: string, pathname: string): boolean {
   if (href.includes('#')) return false;
   const path = trimSlash(pathname);

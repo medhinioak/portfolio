@@ -168,10 +168,11 @@ const current = (href: string): 'page' | undefined =>
   const closeButton = drawer?.querySelector<HTMLButtonElement>('.drawer-close');
 
   if (menuButton && drawer && closeButton) {
-    let closedByLink = false;
+    // Where focus goes on close: the menu button, unless a link or a widening closed it.
+    let returnFocus = true;
 
     menuButton.addEventListener('click', () => {
-      closedByLink = false;
+      returnFocus = true;
       drawer.showModal();
       menuButton.setAttribute('aria-expanded', 'true');
       closeButton.focus();
@@ -180,31 +181,39 @@ const current = (href: string): 'page' | undefined =>
     closeButton.addEventListener('click', () => drawer.close());
 
     drawer.addEventListener('click', (event) => {
-      // The drawer's content fills the dialog box, so a click on the dialog
-      // itself is a tap on the dimmed backdrop.
-      if (event.target === drawer) {
+      // A click outside the drawer's box is a tap on the dimmed backdrop. (Comparing
+      // coordinates, not the target, so dragging the drawer's scrollbar doesn't close it.)
+      const box = drawer.getBoundingClientRect();
+      if (event.clientX > box.right || event.clientY > box.bottom) {
         drawer.close();
         return;
       }
       if (!(event.target instanceof Element)) return;
       const link = event.target.closest('a');
-      if (!link) return;
-      closedByLink = true;
+      // Modifier clicks open a new tab: leave the drawer open.
+      if (!link || event.metaKey || event.ctrlKey || event.shiftKey) return;
+      returnFocus = false;
       drawer.close();
       focusSamePageTarget(link);
     });
 
     drawer.addEventListener('close', () => {
       menuButton.setAttribute('aria-expanded', 'false');
-      if (!closedByLink) menuButton.focus();
+      if (returnFocus) menuButton.focus();
     });
 
-    // Widening past the breakpoint (rotation, resize) hides the menu button.
-    window
-      .matchMedia('(min-width: 48em)')
-      .addEventListener('change', (event) => {
-        if (event.matches && drawer.open) drawer.close();
-      });
+    // Widening past the breakpoint (rotation, resize) hides the menu button, so
+    // focus goes to the same item in the now visible header nav.
+    window.matchMedia('(width >= 48em)').addEventListener('change', (event) => {
+      if (!event.matches || !drawer.open) return;
+      returnFocus = false;
+      drawer.close();
+      document
+        .querySelector<HTMLAnchorElement>(
+          '.site-nav a[aria-current="page"], .site-nav a',
+        )
+        ?.focus();
+    });
   }
 
   /** For a link such as /#contact on Home: the browser scrolls, this moves focus too. */
@@ -273,10 +282,10 @@ const current = (href: string): 'page' | undefined =>
     display: none;
   }
 
-  .theme-toggle {
-    min-width: 11ch;
+  /* Header controls share the secondary button look. */
+  .theme-toggle,
+  .icon-button {
     min-height: var(--control-height-small);
-    padding: var(--space-2) var(--space-3);
     background: var(--color-surface);
     color: var(--color-text);
     border: 2px solid var(--color-text);
@@ -284,8 +293,14 @@ const current = (href: string): 'page' | undefined =>
     cursor: pointer;
   }
 
-  .theme-toggle:hover {
+  .theme-toggle:hover,
+  .icon-button:hover {
     border-color: var(--color-accent);
+  }
+
+  .theme-toggle {
+    min-width: 11ch;
+    padding: var(--space-2) var(--space-3);
   }
 
   .icon-button {
@@ -294,22 +309,12 @@ const current = (href: string): 'page' | undefined =>
     justify-content: center;
     flex: none;
     width: var(--control-height-small);
-    height: var(--control-height-small);
     padding: 0;
-    background: var(--color-surface);
-    color: var(--color-text);
-    border: 2px solid var(--color-text);
-    border-radius: var(--radius);
-    cursor: pointer;
-  }
-
-  .icon-button:hover {
-    border-color: var(--color-accent);
   }
 
   .icon-button svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: var(--space-5);
+    height: var(--space-5);
   }
 
   /* Breakpoint 48em: docs/design/tokens.md#breakpoint. Media queries cannot read variables. */
@@ -317,7 +322,7 @@ const current = (href: string): 'page' | undefined =>
     display: none;
   }
 
-  @media (max-width: 47.99em) {
+  @media (width < 48em) {
     /* Without JavaScript the nav stays a plain wrapped list under the wordmark. */
     .site-nav {
       order: 1;
@@ -383,7 +388,7 @@ const current = (href: string): 'page' | undefined =>
     align-items: center;
     min-height: var(--control-height);
     padding-inline: var(--space-5);
-    border-left: 4px solid transparent;
+    border-left: var(--space-1) solid transparent;
     color: var(--color-text);
     font-family: var(--font-pixel);
     font-size: var(--text-lg);
@@ -401,7 +406,7 @@ const current = (href: string): 'page' | undefined =>
 
   /* Inside the drawer the ring would be clipped at the edges, so draw it inside. */
   .drawer-nav a:focus-visible {
-    outline-offset: -4px;
+    outline-offset: calc(-1 * var(--space-1));
   }
 
   @media (prefers-reduced-motion: no-preference) {
