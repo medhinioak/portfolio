@@ -215,7 +215,7 @@ Screenshots: [light desktop](wireframes/404-light-desktop.png),
 | One hero button | "See my work" scrolled to the list directly below it. |
 | A single-row desktop header | It fits once the CV link is gone. |
 | The wordmark is "Medhini Oak" in pixel type, replacing `medhinioak.dev` | A design decision for the visual look. |
-| The phone menu is a left drawer | It frees the top of the screen. It needs a small amount of JavaScript. |
+| The phone menu is a left drawer ([ADR-0007](../adr/0007-phone-navigation-drawer.md)) | It frees the top of the screen. It needs a small amount of JavaScript. |
 | Images are optional everywhere | Backend and cloud projects often have a diagram, not a screenshot. |
 | Long titles use Atkinson bold | Real case-study titles read badly in 22 px pixel type. |
 | About is a personal page, with "What I do" as one block | The audience is friends first. Experience and skills live in the CV and the case studies. |
@@ -229,8 +229,6 @@ checklist expects one that receives mail).
 
 ## Open items
 
-- **Drawer behaviour.** Recorded as a proposed decision in
-  [ADR-0007](../adr/0007-phone-navigation-drawer.md).
 - **Not drawn.** The Projects list (`/projects`), the Blog list (`/blog`), Impressum
   and Privacy. They reuse the frame and the card styles above.
 - **Breakpoint.** The wireframes show 1280 px and 390 px only. The width at which the

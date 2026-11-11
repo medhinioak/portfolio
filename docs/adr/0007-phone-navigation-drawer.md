@@ -1,9 +1,9 @@
 # ADR-0007: Use a left drawer for phone navigation
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-11-11
 - Decider: Medhini
-- Review: Claude (project chat), 2026-11-11
+- Review: Claude (project chat), Gemini (app), 2026-11-11
 
 ## Context
 
