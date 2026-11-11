@@ -155,7 +155,10 @@ a plain wrapped list under the wordmark. The page then follows the system theme.
 - **Toggle:** one button that cycles system → light → dark. It's a React island
   ([ADR-0001](../adr/0001-astro-with-react-islands.md)), a real `<button>`, keyboard
   operable, with the accent focus ring. Its accessible name states the current mode, for
-  example "Theme: system (dark). Change theme", and its visible label matches. After a
+  example "Theme: system (dark). Change theme", and its visible label matches. The label
+  is right on the first frame: the server markup holds all three mode names and CSS shows
+  the one matching `data-theme`, so hydration doesn't change its text or width (which used
+  to make the header wrap and the page jump on phones). After a
   click, a polite live region announces the new mode ("Theme set to dark"), because screen
   readers don't always re-read a focused button whose name changed. Other open tabs follow
   the change through the `storage` event.
