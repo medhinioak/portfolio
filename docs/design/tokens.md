@@ -90,8 +90,8 @@ Not chosen:
 
 Used only behind the phone menu drawer ([ADR-0007](../adr/0007-phone-navigation-drawer.md)).
 It is a plain overlay: the drawer's text sits on `--color-bg`, never on the scrim, so it
-has no contrast row. Not yet in `global.css`: the drawer build adds it there, written
-once as `light-dark()` like the other colours.
+has no contrast row. In `global.css` it is written once as `light-dark()` like the other
+colours.
 
 ### Contrast
 
@@ -118,9 +118,25 @@ Any new colour pair gets a row here before it is used.
 - Spacing on a 4px base: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px,
   `--space-4` 16px, `--space-5` 24px, `--space-6` 32px, `--space-7` 48px.
 - `--radius`: 4px. Small and square, in keeping with the pixel feel.
+- Control heights: `--control-height` 48px (buttons), `--control-height-small` 44px
+  (small buttons, the menu, Close and theme buttons). Both are above the 24 × 24 px
+  minimum target size of WCAG 2.2.
 - Focus: `outline: 2px solid var(--color-accent); outline-offset: 2px` on
   `:focus-visible`, for every interactive element, in both themes. Never removed without
   a replacement.
+
+## Breakpoint
+
+The header switches from one row (wordmark, nav, theme toggle) to the phone layout
+(menu button, wordmark, theme toggle) below **48em** (768 px at the default text size).
+Media queries cannot read CSS variables, so the value is written in the media queries in
+`apps/site/src/layouts/BaseLayout.astro` and the drawer script there; change all of them
+together. It is in `em`, not `px`, so zooming in also switches to the phone layout: at
+200 % zoom a 1280 px window is 640 CSS px wide and shows the menu button.
+
+**Without JavaScript.** The inline theme script also adds a `js` class to `<html>`. Without
+it, the menu button and the theme toggle stay hidden and on phone widths the nav shows as
+a plain wrapped list under the wordmark. The page then follows the system theme.
 
 ## Theme
 
@@ -151,7 +167,9 @@ Any new colour pair gets a row here before it is used.
 
 ## Not covered yet
 
-Components beyond the page layout (cards, post lists, game UI) and illustrations.
+Components beyond the shared styles in `global.css` (`.button`, `.button-small`, `.chip`,
+`.card`, `.title-long`; see [`wireframes.md`](wireframes.md#the-shared-frame)): post lists,
+game UI and illustrations.
 Page layouts are in [`wireframes.md`](wireframes.md).
 
 ## Screenshots

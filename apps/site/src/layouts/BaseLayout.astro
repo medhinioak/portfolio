@@ -1,25 +1,42 @@
 ---
-/** Page shell: theme script, fonts, skip link, header, main and footer. */
+/** Page shell: theme script, fonts, skip link, header with phone drawer, main and footer. */
 import { Font } from 'astro:assets';
 import ThemeToggle from '../components/ThemeToggle';
+import { isCurrentPage, type NavItem } from '../lib/nav';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description?: string;
+  /** False hides the header (the 404 page); everything else stays. */
+  showHeader?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, showHeader = true } = Astro.props;
 const year = new Date().getFullYear();
+
+// Each page issue adds its own link when its route exists (issue #39, "Link rule").
+const navItems: NavItem[] = [{ label: 'Home', href: '/' }];
+
+// In this order when filled: Impressum, Privacy, email, RSS.
+const footerLinks: NavItem[] = [];
+
+const current = (href: string): 'page' | undefined =>
+  isCurrentPage(href, Astro.url.pathname) ? 'page' : undefined;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Sets data-theme before first paint, so there is no flash. See docs/design/tokens.md. -->
+    <!--
+      Runs before first paint: sets data-theme, so there is no flash (docs/design/tokens.md),
+      and the js class, which swaps the plain phone nav for the menu button.
+    -->
     <script is:inline>
       (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
         let mode = 'system';
         try {
           const saved = localStorage.getItem('theme');
@@ -27,7 +44,7 @@ const year = new Date().getFullYear();
         } catch {
           // Storage blocked: follow the system setting.
         }
-        document.documentElement.dataset.theme = mode;
+        root.dataset.theme = mode;
       })();
     </script>
     <title>{title}</title>
@@ -45,33 +62,165 @@ const year = new Date().getFullYear();
     <a class="skip-link label" href="#main">
       Skip to content
     </a>
-    <header class="site-header">
-      <div class="wrap header-row">
-        <a class="site-name label" href="/">
-          medhinioak.dev
-        </a>
-        <ThemeToggle client:load />
-      </div>
-    </header>
+    {showHeader && (
+      <>
+        <header class="site-header">
+          <div class="wrap header-row">
+            <button
+              type="button"
+              class="menu-button icon-button"
+              aria-expanded="false"
+              aria-controls="site-menu"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <span class="visually-hidden">Menu</span>
+            </button>
+            <a class="wordmark" href="/">
+              Medhini Oak
+            </a>
+            <nav class="site-nav" aria-label="Main">
+              <ul>
+                {navItems.map((item) => (
+                  <li>
+                    <a
+                      class="label"
+                      href={item.href}
+                      aria-current={current(item.href)}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div class="header-toggle">
+              <ThemeToggle client:load />
+            </div>
+          </div>
+        </header>
+        <dialog id="site-menu" class="drawer" aria-labelledby="drawer-title">
+          <div class="drawer-inner">
+            <div class="drawer-head">
+              <p id="drawer-title" class="label muted">
+                Menu
+              </p>
+              <button type="button" class="drawer-close icon-button">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+                <span class="visually-hidden">Close menu</span>
+              </button>
+            </div>
+            <nav class="drawer-nav" aria-label="Main">
+              <ul>
+                {navItems.map((item) => (
+                  <li>
+                    <a href={item.href} aria-current={current(item.href)}>
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </dialog>
+      </>
+    )}
     <main id="main" class="wrap" tabindex="-1">
       <slot />
     </main>
     <footer class="site-footer">
       <div class="wrap">
+        {footerLinks.length > 0 && (
+          <ul class="footer-links">
+            {footerLinks.map((item) => (
+              <li>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        )}
         <p class="muted">© {year} medhinioak.dev</p>
       </div>
     </footer>
   </body>
 </html>
 
-<style is:global>
-  .wrap {
-    width: 100%;
-    max-width: 48rem;
-    margin-inline: auto;
-    padding-inline: var(--space-4);
+<script>
+  // Phone menu drawer (ADR-0007). The native modal <dialog> makes the page inert,
+  // keeps Tab inside and closes on Escape; this adds the rest of the behaviour.
+  const menuButton = document.querySelector<HTMLButtonElement>('.menu-button');
+  const drawer = document.querySelector<HTMLDialogElement>('#site-menu');
+  const closeButton = drawer?.querySelector<HTMLButtonElement>('.drawer-close');
+
+  if (menuButton && drawer && closeButton) {
+    let closedByLink = false;
+
+    menuButton.addEventListener('click', () => {
+      closedByLink = false;
+      drawer.showModal();
+      menuButton.setAttribute('aria-expanded', 'true');
+      closeButton.focus();
+    });
+
+    closeButton.addEventListener('click', () => drawer.close());
+
+    drawer.addEventListener('click', (event) => {
+      // The drawer's content fills the dialog box, so a click on the dialog
+      // itself is a tap on the dimmed backdrop.
+      if (event.target === drawer) {
+        drawer.close();
+        return;
+      }
+      if (!(event.target instanceof Element)) return;
+      const link = event.target.closest('a');
+      if (!link) return;
+      closedByLink = true;
+      drawer.close();
+      focusSamePageTarget(link);
+    });
+
+    drawer.addEventListener('close', () => {
+      menuButton.setAttribute('aria-expanded', 'false');
+      if (!closedByLink) menuButton.focus();
+    });
+
+    // Widening past the breakpoint (rotation, resize) hides the menu button.
+    window
+      .matchMedia('(min-width: 48em)')
+      .addEventListener('change', (event) => {
+        if (event.matches && drawer.open) drawer.close();
+      });
   }
 
+  /** For a link such as /#contact on Home: the browser scrolls, this moves focus too. */
+  function focusSamePageTarget(link: HTMLAnchorElement): void {
+    const url = new URL(link.href);
+    if (url.pathname !== window.location.pathname || !url.hash) return;
+    const target = document.getElementById(
+      decodeURIComponent(url.hash.slice(1)),
+    );
+    if (!target) return;
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    requestAnimationFrame(() => target.focus());
+  }
+</script>
+
+<style is:global>
   .site-header {
     border-bottom: 2px solid var(--color-surface);
   }
@@ -80,18 +229,53 @@ const year = new Date().getFullYear();
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
+    gap: var(--space-3) var(--space-5);
     padding-block: var(--space-4);
   }
 
-  .site-name {
+  .wordmark {
+    font-family: var(--font-pixel);
+    font-size: var(--text-lg);
+    line-height: 1.2;
     color: var(--color-text);
     text-decoration: none;
   }
 
+  .site-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-nav a {
+    display: inline-block;
+    padding-block: var(--space-2);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .site-nav a:hover,
+  .site-nav a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+
+  .header-toggle {
+    margin-left: auto;
+  }
+
+  /* The toggle needs JavaScript; without it the page follows the system theme. */
+  html:not(.js) .header-toggle {
+    display: none;
+  }
+
   .theme-toggle {
     min-width: 11ch;
+    min-height: var(--control-height-small);
     padding: var(--space-2) var(--space-3);
     background: var(--color-surface);
     color: var(--color-text);
@@ -102,6 +286,144 @@ const year = new Date().getFullYear();
 
   .theme-toggle:hover {
     border-color: var(--color-accent);
+  }
+
+  .icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: var(--control-height-small);
+    height: var(--control-height-small);
+    padding: 0;
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 2px solid var(--color-text);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+
+  .icon-button:hover {
+    border-color: var(--color-accent);
+  }
+
+  .icon-button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* Breakpoint 48em: docs/design/tokens.md#breakpoint. Media queries cannot read variables. */
+  .menu-button {
+    display: none;
+  }
+
+  @media (max-width: 47.99em) {
+    /* Without JavaScript the nav stays a plain wrapped list under the wordmark. */
+    .site-nav {
+      order: 1;
+      flex-basis: 100%;
+    }
+
+    .js .site-nav {
+      display: none;
+    }
+
+    .js .menu-button {
+      display: inline-flex;
+    }
+  }
+
+  /* Phone menu drawer */
+  .drawer {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(20rem, 85vw);
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-right: 2px solid var(--color-text);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .drawer::backdrop {
+    background: var(--color-scrim);
+  }
+
+  html:has(.drawer[open]) {
+    overflow: hidden;
+  }
+
+  .drawer-inner {
+    min-height: 100%;
+  }
+
+  .drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    border-bottom: 2px solid var(--color-surface);
+  }
+
+  .drawer-nav ul {
+    padding: var(--space-2) 0;
+    list-style: none;
+  }
+
+  .drawer-nav li {
+    max-width: none;
+  }
+
+  .drawer-nav a {
+    display: flex;
+    align-items: center;
+    min-height: var(--control-height);
+    padding-inline: var(--space-5);
+    border-left: 4px solid transparent;
+    color: var(--color-text);
+    font-family: var(--font-pixel);
+    font-size: var(--text-lg);
+    text-decoration: none;
+  }
+
+  .drawer-nav a:hover {
+    background: var(--color-surface);
+  }
+
+  .drawer-nav a[aria-current='page'] {
+    background: var(--color-surface);
+    border-left-color: var(--color-accent);
+  }
+
+  /* Inside the drawer the ring would be clipped at the edges, so draw it inside. */
+  .drawer-nav a:focus-visible {
+    outline-offset: -4px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .drawer[open] {
+      animation: drawer-in 200ms ease-out;
+    }
+
+    .drawer[open]::backdrop {
+      animation: scrim-in 200ms ease-out;
+    }
+  }
+
+  @keyframes drawer-in {
+    from {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes scrim-in {
+    from {
+      opacity: 0;
+    }
   }
 
   main {
@@ -116,5 +438,19 @@ const year = new Date().getFullYear();
   .site-footer {
     border-top: 2px solid var(--color-surface);
     padding-block: var(--space-5);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin-bottom: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-links a {
+    display: inline-block;
+    padding-block: var(--space-1);
   }
 </style>

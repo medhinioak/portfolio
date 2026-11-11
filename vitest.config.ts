@@ -3,6 +3,6 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    projects: ['packages/game'],
+    projects: ['packages/game', 'apps/site'],
   },
 });

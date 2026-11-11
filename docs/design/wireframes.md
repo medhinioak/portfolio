@@ -231,10 +231,8 @@ checklist expects one that receives mail).
 
 - **Not drawn.** The Projects list (`/projects`), the Blog list (`/blog`), Impressum
   and Privacy. They reuse the frame and the card styles above.
-- **Breakpoint.** The wireframes show 1280 px and 390 px only. The width at which the
-  header switches from the single row to the menu button is set in the build.
-- **Wordmark.** The current layout still shows `medhinioak.dev`; the layout build
-  changes it to "Medhini Oak".
+- **Breakpoint.** The wireframes show 1280 px and 390 px only. The build switches to the
+  menu button below 48em ([`tokens.md`](tokens.md#breakpoint)).
 
 ## Review
 
