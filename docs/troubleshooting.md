@@ -1,0 +1,130 @@
+# Troubleshooting log
+
+Problems hit while building this repository, what caused them and how they were fixed.
+Newest first. Each entry has the same fields so it can be skimmed:
+**Seen** (date, PR, runs), **Symptom**, **Cause**, **Fix**, **Status**.
+
+Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _open_.
+
+## Gemini PR review
+
+### Green run, no review posted
+
+- **Seen:** 2026-11-11, PR #8, runs 42981788352 and 42982620350.
+- **Symptom:** the "Gemini Review" job succeeds in under three minutes, but no review or
+  comment appears on the PR. With debug on, Gemini CLI's JSON output ends with
+  `"error": {"type": "INVALID_STREAM", "message": "Model stream ended with malformed function call."}`
+  and `"tools": {"totalCalls": 0}`. It happened with both `gemini-3.8-flash` and
+  `gemini-3-flash-preview`, so the model was not the cause.
+- **Cause:** the upstream example workflow sets `"tools": {"core": []}`. Since gemini-cli
+  v0.41.0 any `tools.core` value, including an empty list, also excludes every MCP tool.
+  The model gets no GitHub tools and cannot run `activate_skill`, which the code-review
+  extension's prompt requires, so its tool calls are malformed. The CLI still exits 0, so
+  the job is green. Reported upstream as
+  [run-gemini-cli#532](https://github.com/google-github-actions/run-gemini-cli/issues/532)
+  (root cause in gemini-cli#28361; green-on-error is run-gemini-cli#519).
+- **Fix:** in `.github/workflows/gemini-review.yml`, allowlist what the review needs:
+  `"tools": {"core": ["activate_skill", "mcp_github_*"]}` (PR #8).
+- **Status:** _workaround_. Remove it when #532 is fixed. Not yet verified here, because a
+  review triggered by a comment uses the workflow on `main` (see below); the first PR
+  opened after PR #8 is merged is the test.
+- **Also note:** the extension's prompt names tools that no longer exist in
+  github-mcp-server v0.27.0 (`create_pending_pull_request_review`,
+  `submit_pending_pull_request_review`; upstream run-gemini-cli#510). The model has to map
+  them to `pull_request_review_write`, which can cost extra turns.
+
+### Review times out after 7 minutes
+
+- **Seen:** 2026-11-11, PR #8, run 42975886803.
+- **Symptom:** the job is cancelled at 7 minutes. "Run Gemini CLI" prints nothing for the
+  whole time, and nothing is uploaded, so the log gives no reason.
+- **Cause (most likely):** with no `GEMINI_MODEL` variable, the CLI used its default Pro
+  model, which has no free tier in the Gemini API. On a free-tier key the CLI retries quota
+  errors with growing back-off and prints nothing until the job's `timeout-minutes: 7`
+  (the upstream default) cancels it. The PR's diff was also large: 5,848 of its 6,246 added
+  lines were `pnpm-lock.yaml`.
+- **Fix:** set the repository variable `GEMINI_MODEL=gemini-3-flash-preview` (a model with a
+  free tier). Raise `timeout-minutes` to 15. Tell the reviewer in `GEMINI.md` to skip
+  `pnpm-lock.yaml`.
+- **Status:** _fixed_ (later runs finished in under three minutes).
+
+### A fix to the review workflow cannot be tested from its own PR
+
+- **Seen:** 2026-11-11, PR #8.
+- **Symptom:** after pushing a workflow change, `@gemini-cli /review` still behaves the old way.
+- **Cause:** `issue_comment` workflows always run the workflow files from the default branch
+  (`main`), not from the PR branch. A `pull_request` run uses the PR's merge commit, but
+  the dispatch workflow only reacts to `opened`.
+- **Fix:** merge the workflow change first, then open a new PR (or comment on one) to test it.
+- **Status:** _fixed_ (how GitHub works; keep in mind).
+
+### Free-tier limits
+
+- **Seen:** 2026-11-11.
+- **Symptom:** slow model calls (about 35 s each on `gemini-3.8-flash`) and a risk of running
+  out of requests partway through a review.
+- **Cause:** Gemini API free-tier quotas are small and change often. A forum report puts
+  Flash at about 20 requests a day; one review can take up to 25 turns
+  (`maxSessionTurns`). Check the real limit for the key in Google AI Studio.
+- **Fix:** keep re-runs to a minimum; review once the PR is ready, not after every push.
+- **Status:** _open_. See the parking lot for alternatives.
+
+### How to see what Gemini is doing
+
+Gemini CLI writes its output to temporary files and uploads them only when the step
+finishes. A cancelled run leaves nothing to read. To diagnose:
+
+1. Set the repository variable `UPLOAD_ARTIFACTS=true` (already set). Each run then has a
+   `gemini-output` artifact with `stdout.log`, `stderr.log` and `telemetry.log`:
+   `gh run download <run-id>`.
+2. For one run only, set `GEMINI_DEBUG=true` to stream the output into the Actions log.
+   The repository is public and debug output can include model responses, so delete the
+   variable afterwards: `gh variable delete GEMINI_DEBUG`.
+3. A green run is not proof of a review. Check the `error` field in `stdout.log`.
+
+## Workspace and tooling
+
+### Astro 6 needs Node 22; the local machine had Node 21
+
+- **Seen:** 2026-11-11, issue #2.
+- **Symptom:** local `node -v` printed v21.7.3, and pnpm was not installed.
+- **Cause:** Astro 6.4.8 requires Node `>=22.12.0`.
+- **Fix:** `nvm install 22 && corepack enable`. Corepack provides the pnpm version pinned in
+  `packageManager`. `.nvmrc` says `22` and the root `engines.node` says `>=22.12.0`. The nvm
+  default stays on 21, so run `nvm use` in this repository.
+- **Status:** _fixed_.
+
+### pnpm 12 refuses to install: `ERR_PNPM_IGNORED_BUILDS`
+
+- **Seen:** 2026-11-11, issue #2.
+- **Symptom:** `pnpm install` fails with "Ignored build scripts: esbuild, sharp".
+- **Cause:** pnpm 12 blocks dependency install scripts unless they are approved.
+- **Fix:** `pnpm approve-builds esbuild sharp`, which writes `allowBuilds` to
+  `pnpm-workspace.yaml`. Approve only packages you recognise.
+- **Status:** _fixed_.
+
+### TypeScript pinned to 6.x, not 7
+
+- **Seen:** 2026-11-11, issue #2.
+- **Symptom:** TypeScript 7.0.2 is the latest release, but the tooling does not accept it.
+- **Cause:** typescript-eslint 8.72.2 supports `typescript <6.1.0` and @astrojs/check 0.9.12
+  supports `^5 || ^6`.
+- **Fix:** pin `typescript` to 6.0.3.
+- **Status:** _workaround_. Revisit when both packages support TypeScript 7.
+
+### Prettier would rewrite the Markdown docs
+
+- **Seen:** 2026-11-11, issue #2.
+- **Symptom:** `prettier --check .` failed on 8 existing files, mostly Markdown, where it
+  pads compact tables into wide aligned columns.
+- **Fix:** Prettier covers code and config only: `**/*.md` and `.claude` are in
+  `.prettierignore`.
+- **Status:** _fixed_ (a deliberate choice).
+
+### Astro CLI telemetry
+
+- **Seen:** 2026-11-11, issue #2.
+- **Symptom:** `astro check` and `astro build` print "Astro collects anonymous usage data".
+- **Fix:** the site scripts run with `ASTRO_TELEMETRY_DISABLED=1`. This is in line with
+  ADR-0004, although that ADR is about visitors, not tooling.
+- **Status:** _fixed_.

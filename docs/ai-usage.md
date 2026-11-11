@@ -86,5 +86,12 @@ merged without it.
   and `gemini-review.yml`). It needs a repository secret `GEMINI_API_KEY` from Google AI Studio.
   The key is separate from the Google AI Plus subscription. Review rules for Gemini are in `GEMINI.md`.
   Reviews run only for PRs from this repository, not from forks, and comment commands only from the owner or collaborators.
+  - The key is on the free tier, so the repository variable `GEMINI_MODEL` selects a model with a free tier
+    (`gemini-3-flash-preview`). Keep re-runs few: one review can take up to 25 requests.
+  - `gemini-review.yml` differs from Google's example in two places: a 15-minute timeout, and
+    `tools.core` allowlisting `activate_skill` and `mcp_github_*` (the example's empty list disables the GitHub tools).
+  - A green run is not proof of a review. `UPLOAD_ARTIFACTS=true` keeps Gemini's output as a run artifact;
+    see [`troubleshooting.md`](troubleshooting.md#gemini-pr-review) for how to diagnose a run.
+  - Workflow changes take effect only once merged: comment-triggered runs use the files on `main`.
 - **Claude PR review** is set up with `/install-github-app` in Claude Code once CI exists.
 - **Keep `CLAUDE.md` and `GEMINI.md` in step.** When a rule changes in one, change it in the other in the same PR.
