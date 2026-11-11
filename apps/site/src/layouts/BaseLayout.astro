@@ -1,0 +1,120 @@
+---
+/** Page shell: theme script, fonts, skip link, header, main and footer. */
+import { Font } from 'astro:assets';
+import ThemeToggle from '../components/ThemeToggle';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Sets data-theme before first paint, so there is no flash. See docs/design/tokens.md. -->
+    <script is:inline>
+      (() => {
+        let mode = 'system';
+        try {
+          const saved = localStorage.getItem('theme');
+          if (saved === 'light' || saved === 'dark') mode = saved;
+        } catch {
+          // Storage blocked: follow the system setting.
+        }
+        document.documentElement.dataset.theme = mode;
+      })();
+    </script>
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <Font
+      cssVariable="--font-body"
+      preload={[{ weight: 400, style: 'normal' }]}
+    />
+    <Font
+      cssVariable="--font-pixel"
+      preload={[{ weight: 400, style: 'normal' }]}
+    />
+  </head>
+  <body>
+    <a class="skip-link label" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header">
+      <div class="wrap header-row">
+        <a class="site-name label" href="/">
+          medhinioak.dev
+        </a>
+        <ThemeToggle client:load />
+      </div>
+    </header>
+    <main id="main" class="wrap" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="muted">© {year} medhinioak.dev</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  .wrap {
+    width: 100%;
+    max-width: 48rem;
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+  }
+
+  .site-header {
+    border-bottom: 2px solid var(--color-surface);
+  }
+
+  .header-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-4);
+  }
+
+  .site-name {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .theme-toggle {
+    min-width: 11ch;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 2px solid var(--color-text);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--color-accent);
+  }
+
+  main {
+    flex: 1;
+    padding-block: var(--space-7);
+  }
+
+  main:focus {
+    outline: none;
+  }
+
+  .site-footer {
+    border-top: 2px solid var(--color-surface);
+    padding-block: var(--space-5);
+  }
+</style>

@@ -20,6 +20,10 @@ Keep these rules in step with `CLAUDE.md`.
 - No invented facts about the author's projects or experience. Unknown content is
   written as `PLACEHOLDER: ...`.
 - No secrets, tokens or personal data in the repository. Photos must have EXIF data stripped.
+- Colours, fonts, type sizes and spacing come only from the CSS variables in
+  `apps/site/src/styles/global.css`; no hard-coded colour values in components. A new
+  colour pair needs a contrast row in `docs/design/tokens.md` first. Font files are
+  listed one by one in `apps/site/astro.config.mjs`.
 - Accessibility target is WCAG 2.2 AA for every interactive UI component: keyboard
   navigation, visible focus states, screen reader labels, alt text, contrast in both
   light and dark themes, `prefers-reduced-motion`.
