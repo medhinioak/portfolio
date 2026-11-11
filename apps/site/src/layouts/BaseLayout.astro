@@ -181,17 +181,26 @@ const current = (href: string): 'page' | undefined =>
     closeButton.addEventListener('click', () => drawer.close());
 
     drawer.addEventListener('click', (event) => {
-      // A click outside the drawer's box is a tap on the dimmed backdrop. (Comparing
-      // coordinates, not the target, so dragging the drawer's scrollbar doesn't close it.)
-      const box = drawer.getBoundingClientRect();
-      if (event.clientX > box.right || event.clientY > box.bottom) {
-        drawer.close();
+      // A tap on the dimmed backdrop targets the dialog itself, outside its box. The box
+      // comes from offset*, which ignores the slide-in transform, so a quick tap during
+      // the animation still counts as inside; a drag on the dialog's scrollbar is inside too.
+      if (event.target === drawer) {
+        const left = drawer.offsetLeft;
+        const top = drawer.offsetTop;
+        const inside =
+          event.clientX >= left &&
+          event.clientX <= left + drawer.offsetWidth &&
+          event.clientY >= top &&
+          event.clientY <= top + drawer.offsetHeight;
+        if (!inside) drawer.close();
         return;
       }
       if (!(event.target instanceof Element)) return;
       const link = event.target.closest('a');
-      // Modifier clicks open a new tab: leave the drawer open.
-      if (!link || event.metaKey || event.ctrlKey || event.shiftKey) return;
+      // Modifier clicks open a new tab or window, or download: leave the drawer open.
+      const modified =
+        event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+      if (!link || modified) return;
       returnFocus = false;
       drawer.close();
       focusSamePageTarget(link);
@@ -203,7 +212,8 @@ const current = (href: string): 'page' | undefined =>
     });
 
     // Widening past the breakpoint (rotation, resize) hides the menu button, so
-    // focus goes to the same item in the now visible header nav.
+    // focus goes to the same item in the now visible header nav. Keep 48em in step with
+    // the media query below (docs/design/tokens.md#breakpoint).
     window.matchMedia('(width >= 48em)').addEventListener('change', (event) => {
       if (!event.matches || !drawer.open) return;
       returnFocus = false;

@@ -155,7 +155,9 @@ button {
 }
 
 /* Small pixel-font labels: navigation, buttons, tags. */
-.label {
+.label,
+.button,
+.chip {
   font-family: var(--font-pixel);
   font-size: var(--text-sm);
   letter-spacing: 0.02em;
@@ -209,9 +211,6 @@ button {
   padding: 0 var(--space-5);
   border: 2px solid var(--color-text);
   border-radius: var(--radius);
-  font-family: var(--font-pixel);
-  font-size: var(--text-sm);
-  letter-spacing: 0.02em;
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
@@ -255,9 +254,6 @@ button {
   border: 1px solid var(--color-muted);
   border-radius: var(--radius);
   color: var(--color-text);
-  font-family: var(--font-pixel);
-  font-size: var(--text-sm);
-  letter-spacing: 0.02em;
 }
 
 .card {
