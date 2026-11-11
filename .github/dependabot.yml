@@ -1,0 +1,22 @@
+# Weekly version updates. Minor and patch updates are grouped into one PR per
+# ecosystem; major updates arrive as separate PRs. Security updates are separate.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # pnpm refuses packages published less than a day ago (minimumReleaseAge).
+    cooldown:
+      default-days: 1
+    groups:
+      npm-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions-minor-patch:
+        update-types: [minor, patch]

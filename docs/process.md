@@ -17,6 +17,7 @@ not only what was built but how and why.
 | Which AI tool does what, and how work is reviewed      | [`ai-usage.md`](ai-usage.md)                                    |
 | Instructions for Claude Code / review rules for Gemini | [`../CLAUDE.md`](../CLAUDE.md) / [`../GEMINI.md`](../GEMINI.md) |
 | Problems hit, their causes and fixes                   | [`troubleshooting.md`](troubleshooting.md)                      |
+| How deploys work, rollback, manual deploy              | [`runbook.md`](runbook.md)                                      |
 
 ## The flow for every change
 
