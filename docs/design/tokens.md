@@ -180,3 +180,14 @@ Page layouts are in [`wireframes.md`](wireframes.md).
 The Phase 0 home page with these tokens, taken with headless Chrome:
 [light](screenshots/light.png), [dark](screenshots/dark.png),
 [390 px light](screenshots/phone-390.png), [390 px dark](screenshots/phone-390-dark.png).
+
+The shared frame from issue #39 (header, phone drawer, footer, button, chip and card
+styles on the Home stub), taken with headless Chrome:
+[desktop light](screenshots/site-frame/desktop-light.png),
+[desktop dark](screenshots/site-frame/desktop-dark.png),
+[390 px light](screenshots/site-frame/phone-light.png),
+[390 px dark](screenshots/site-frame/phone-dark.png),
+[drawer light](screenshots/site-frame/drawer-light.png),
+[drawer dark](screenshots/site-frame/drawer-dark.png),
+[320 px](screenshots/site-frame/phone320-light.png),
+[390 px without JavaScript](screenshots/site-frame/nojs-phone.png).
