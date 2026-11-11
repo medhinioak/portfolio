@@ -80,6 +80,16 @@ Not chosen:
   show meaning, and never for large areas.
 - Links are accent-coloured and underlined in body text, so they don't rely on colour alone.
 
+### Overlay
+
+| Role                                  | Variable        | Light                   | Dark                 |
+| ------------------------------------- | --------------- | ----------------------- | -------------------- |
+| Scrim: dims the page behind the drawer | `--color-scrim` | `rgba(27, 26, 35, 0.5)` | `rgba(0, 0, 0, 0.6)` |
+
+Used only behind the phone menu drawer ([ADR-0007](../adr/0007-phone-navigation-drawer.md)).
+It is a plain overlay: the drawer's text sits on `--color-bg`, never on the scrim, so it
+has no contrast row.
+
 ### Contrast
 
 Computed with the WCAG 2.x relative-luminance formula. Text needs 4.5:1 (AA, normal
@@ -139,7 +149,7 @@ Any new colour pair gets a row here before it is used.
 ## Not covered yet
 
 Components beyond the page layout (cards, post lists, game UI) and illustrations.
-Wireframes are issue #5.
+Page layouts are in [`wireframes.md`](wireframes.md).
 
 ## Screenshots
 

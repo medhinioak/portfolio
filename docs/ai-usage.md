@@ -20,6 +20,7 @@ The decision behind it is [ADR-0006](adr/0006-ai-assisted-development-with-human
 |---|---|---|---|
 | **Claude Code** (local CLI) | Author | Anything that changes files: scaffolding, features, fixes, tests, ADR and doc files, opening PRs, reading CI failures with `gh` | Final decisions; facts about my work |
 | **Claude, Portfolio project chat** (claude.ai) | Thinking partner | Decisions and trade-offs, phase planning, feature specs, drafts of posts and page copy, interview framing | Editing the repository |
+| **Claude Design** (claude.ai) | Wireframing | Low-fidelity layouts and page mockups for review, in light and dark; exported as PNGs into `docs/design/` | Editing the repository; final copy |
 | **`/code-review` in Claude Code** | Reviewer 1 (fresh context) | Self-check of every branch before the PR is opened | Replacing an independent review |
 | **Claude PR review** (GitHub Action, planned) | Reviewer 2 | Automatic inline review on PRs; `@claude` for follow-up questions | Pushing commits to someone else's branch |
 | **Gemini PR review** (`run-gemini-cli` GitHub Action) | Independent reviewer (different model) | Automatic review when a PR is opened; `@gemini-cli /review <focus>` to re-run with a focus | Writing code |

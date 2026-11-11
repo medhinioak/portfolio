@@ -36,8 +36,9 @@ lives in its own package so it can become a standalone project later.
 
 ## Launch scope
 
-Home, About, Projects with two case studies, Blog with one post and RSS, Elsewhere
-(plain links to my channels), Impressum, Privacy, 404. The game page (`/play`)
+Home, About, Projects with two case studies, Blog with one post and RSS, Contact (a
+section on Home with an email button and plain links to my channels, reached from the
+nav), Impressum, Privacy, 404. The game page (`/play`)
 ships in Phase 3, not before.
 
 ## Phases
