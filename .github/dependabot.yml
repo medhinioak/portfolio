@@ -1,5 +1,10 @@
-# Weekly version updates. Minor and patch updates are grouped into one PR per
-# ecosystem; major updates arrive as separate PRs. Security updates are separate.
+# Weekly version updates.
+# npm: the Astro stack (astro, @astrojs/*, vite, @vitejs/*) arrives as one PR,
+# majors included, because its packages break each other when merged one at a
+# time. Other minor and patch updates are grouped; other majors arrive alone.
+# Actions: minor and patch updates are one PR, majors are another.
+# Version-update groups don't apply to security updates, so each ecosystem has
+# a matching security group too (see issue #28).
 version: 2
 updates:
   - package-ecosystem: npm
@@ -12,8 +17,14 @@ updates:
     cooldown:
       default-days: 1
     groups:
+      # Must come before npm-minor-patch: a dependency joins the first group it matches.
+      astro-stack:
+        patterns: ['astro', '@astrojs/*', 'vite', '@vitejs/*']
       npm-minor-patch:
         update-types: [minor, patch]
+      astro-stack-security:
+        applies-to: security-updates
+        patterns: ['astro', '@astrojs/*', 'vite', '@vitejs/*']
 
   - package-ecosystem: github-actions
     directory: /
@@ -22,3 +33,8 @@ updates:
     groups:
       actions-minor-patch:
         update-types: [minor, patch]
+      actions-major:
+        update-types: [major]
+      actions-security:
+        applies-to: security-updates
+        patterns: ['*']
