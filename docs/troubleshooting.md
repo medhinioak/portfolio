@@ -23,8 +23,9 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
   `/pr-code-review REPOSITORY=… PULL_REQUEST_NUMBER=… ADDITIONAL_CONTEXT=…` (PR #10). The
   action hands the prompt to the CLI through an environment variable, so comment text never
   reaches a shell.
-- **Status:** _open_. PR #10 is merged; the first run with it (42986021710) hit the daily
-  quota after one request, so it is not verified yet.
+- **Status:** _open_. PR #10 is merged and the prompt now carries the values (run
+  42986490166 log: `PULL_REQUEST_NUMBER=9`). A posted review has not been seen yet: run
+  42986021710 hit the daily quota and run 42986490166 hit a Google outage (503).
 
 ### Green run, no review posted
 
@@ -76,6 +77,19 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
 - **Fix:** merge the workflow change first, then open a new PR (or comment on one) to test it.
 - **Status:** _fixed_ (how GitHub works; keep in mind).
 
+### Long run that ends in `503 UNAVAILABLE`
+
+- **Seen:** 2026-11-11, PR #9, run 42986490166 (`gemini-3.8-flash`).
+- **Symptom:** the Gemini step runs for about 10 minutes with no output, then fails (red)
+  with `fetch failed sending request`. The log shows repeated
+  `Attempt N failed with status 503 … This model is currently experiencing high demand`.
+- **Cause:** the model was overloaded on Google's side. Gemini CLI retries with growing
+  back-off, which fills most of the 15-minute timeout. Nothing in this repository.
+- **Fix:** none needed; retry later, or switch `GEMINI_MODEL` to another model. The action
+  uploads the `gemini-output` artifact only when the step succeeds, so a failed run leaves
+  only the Actions log (`gh run view <run-id> --log-failed`).
+- **Status:** _fixed_ (transient).
+
 ### Free-tier limits
 
 - **Seen:** 2026-11-11.
@@ -97,8 +111,8 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
 Gemini CLI writes its output to temporary files and uploads them only when the step
 finishes. A cancelled run leaves nothing to read. To diagnose:
 
-1. Set the repository variable `UPLOAD_ARTIFACTS=true` (already set). Each run then has a
-   `gemini-output` artifact with `stdout.log`, `stderr.log` and `telemetry.log`:
+1. Set the repository variable `UPLOAD_ARTIFACTS=true` (already set). Each run that gets
+   through the Gemini step then has a `gemini-output` artifact with `stdout.log`, `stderr.log` and `telemetry.log`:
    `gh run download <run-id>`.
 2. For one run only, set `GEMINI_DEBUG=true` to stream the output into the Actions log.
    The repository is public and debug output can include model responses, so delete the
