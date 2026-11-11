@@ -17,6 +17,7 @@ not only what was built but how and why.
 | Which AI tool does what, and how work is reviewed      | [`ai-usage.md`](ai-usage.md)                                    |
 | Instructions for Claude Code / review rules for Gemini | [`../CLAUDE.md`](../CLAUDE.md) / [`../GEMINI.md`](../GEMINI.md) |
 | Problems hit, their causes and fixes                   | [`troubleshooting.md`](troubleshooting.md)                      |
+| How deploys work, rollback, manual deploy              | [`runbook.md`](runbook.md)                                      |
 
 ## The flow for every change
 
@@ -29,7 +30,7 @@ not only what was built but how and why.
    [Conventional Commit](https://www.conventionalcommits.org/) (`feat: add RSS feed`),
    because it becomes the squash commit message. Link the issue with `Closes #12`.
 5. **Checks.** CI must be green: lint, type check, tests, build, Lighthouse CI, axe.
-   The deploy workflow additionally fails if the word `PLACEHOLDER` appears on a
+   The deploy workflow additionally fails if the marker `PLACEHOLDER:` appears on a
    published page; pull requests are never blocked by it.
 6. **Review.** Run `/code-review` before opening the PR. Gemini reviews the PR
    automatically when it is opened; ask again after changes with

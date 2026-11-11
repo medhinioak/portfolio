@@ -42,7 +42,7 @@ AI roles and reviews: docs/ai-usage.md.
 ## Site & Content
 
 - Never invent facts about the author's projects. Unknown content is written as
-  PLACEHOLDER: ... and the production build fails if it is published.
+  PLACEHOLDER: ... and the deploy fails if it is in the built site (PRs are not blocked).
 - Ensure all interactive UI components follow WCAG 2.2 AA accessibility standards (keyboard navigation, visible focus states, screen reader labels).
 
 ## Workflow & Git
