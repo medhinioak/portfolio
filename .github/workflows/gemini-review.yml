@@ -2,7 +2,8 @@
 # Needs the GEMINI_API_KEY repository secret. Review rules: GEMINI.md. See docs/ai-usage.md.
 # Deviations from upstream: timeout 15 min; tools.core allowlists activate_skill and the
 # GitHub MCP tools, because "core": [] disables all MCP tools since gemini-cli v0.41.0
-# (google-github-actions/run-gemini-cli#532).
+# (google-github-actions/run-gemini-cli#532); the prompt passes the repository and PR
+# number as arguments, because the extension cannot read them from the environment.
 name: '🔎 Gemini Review'
 
 on:
@@ -127,4 +128,7 @@ jobs:
             [
               "https://github.com/gemini-cli-extensions/code-review"
             ]
-          prompt: '/pr-code-review'
+          # The extension expects these as environment variables and checks them with a shell
+          # command, which tools.core does not allow; pass them as command arguments instead.
+          prompt: |-
+            /pr-code-review REPOSITORY=${{ github.repository }} PULL_REQUEST_NUMBER=${{ github.event.pull_request.number || github.event.issue.number }} ADDITIONAL_CONTEXT=${{ inputs.additional_context }}
