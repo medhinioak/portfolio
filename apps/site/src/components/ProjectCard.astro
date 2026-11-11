@@ -1,0 +1,72 @@
+---
+/** Case-study card shared by /projects and Home: optional image, title link, summary, stack, role and year. */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  /** 2 under the page's h1 (/projects), 3 under a section's h2 (Home). */
+  headingLevel: 2 | 3;
+}
+
+const { project, headingLevel } = Astro.props;
+const { title, summary, stack, role, year, hero } = project.data;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+---
+
+<article class:list={['card', 'project-card', { 'has-image': hero }]}>
+  {hero && (
+    // Empty alt: on a card the image repeats the title link next to it.
+    <Image
+      class="thumb"
+      src={hero.image}
+      alt=""
+      widths={[320, 640]}
+      sizes="(min-width: 48em) 10rem, calc(100vw - 5rem)"
+    />
+  )}
+  <div class="text">
+    <Heading class="title-long title">
+      <a href={`/projects/${project.id}/`}>{title}</a>
+    </Heading>
+    <p>{summary}</p>
+    <ul class="chips" aria-label="Stack">
+      {stack.map((item) => (
+        <li class="chip">{item}</li>
+      ))}
+    </ul>
+    <p class="muted">
+      {role}, {year}
+    </p>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    gap: var(--space-4);
+  }
+
+  .thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  .text {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .title {
+    font-size: var(--text-lg);
+  }
+
+  @media (width >= 48em) {
+    .has-image {
+      grid-template-columns: 10rem 1fr;
+    }
+  }
+</style>

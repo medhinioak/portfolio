@@ -1,6 +1,9 @@
 ---
-/** Home page: intro with the CV link, then the Contact section (issue #29). */
+/** Home page: intro with the CV link, Projects, then the Contact section (issues #29, #30). */
+import Arrow from '../components/Arrow.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedProjects } from '../lib/get-projects';
 import {
   channels,
   cvUrl,
@@ -8,6 +11,8 @@ import {
   mailSubject,
   mailtoHref,
 } from '../lib/contact';
+
+const projects = (await getPublishedProjects()).slice(0, 2);
 ---
 
 <BaseLayout
@@ -29,7 +34,22 @@ import {
     </a>
   </section>
 
-  <!-- Projects (#30) and Blog (#32) go here. The game teaser waits for Phase 3. -->
+  {projects.length > 0 && (
+    <section class="projects" aria-labelledby="projects-title">
+      <div class="section-head">
+        <h2 id="projects-title">Projects</h2>
+        <a class="button button-secondary button-small" href="/projects/">
+          All projects
+          <Arrow direction="right" />
+        </a>
+      </div>
+      {projects.map((project) => (
+        <ProjectCard project={project} headingLevel={3} />
+      ))}
+    </section>
+  )}
+
+  <!-- Blog (#32) goes here. The game teaser waits for Phase 3. -->
 
   <section id="contact" class="contact" aria-labelledby="contact-title">
     <h2 id="contact-title">Contact</h2>
@@ -67,8 +87,22 @@ import {
     gap: var(--space-5);
   }
 
+  .projects {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .projects,
   .contact {
     margin-top: var(--space-7);
+  }
+
+  .section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
   }
 
   .role {

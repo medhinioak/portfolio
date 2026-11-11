@@ -17,10 +17,11 @@ const { title, description, showHeader = true } = Astro.props;
 const year = new Date().getFullYear();
 
 // Each page issue adds its own link when its route exists (issue #39, "Link rule").
-// Projects and Blog go between About and Contact.
+// Blog goes between Projects and Contact.
 const navItems: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about/' },
+  { label: 'Projects', href: '/projects/' },
   { label: 'Contact', href: '/#contact' },
 ];
 
