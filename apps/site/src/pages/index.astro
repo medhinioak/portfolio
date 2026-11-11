@@ -1,17 +1,107 @@
 ---
-/** Home page stub until Phase 1 content lands. */
+/** Home page stub until Phase 1 content lands: "Coming soon" plus a type specimen. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const swatches = [
+  'bg',
+  'surface',
+  'text',
+  'muted',
+  'accent',
+  'on-accent',
+  'highlight',
+] as const;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>medhinioak.dev</title>
-  </head>
-  <body>
-    <main>
-      <h1>medhinioak.dev</h1>
-      <p>Site under construction.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title="medhinioak.dev"
+  description="Personal site and blog. Coming soon."
+>
+  <section class="intro">
+    <h1>medhinioak.dev</h1>
+    <p class="lead">
+      Coming soon
+      <span class="cursor" aria-hidden="true">
+        _
+      </span>
+    </p>
+  </section>
+
+  <section class="specimen" aria-labelledby="specimen-title">
+    <p class="label muted" id="specimen-title">
+      Type specimen
+    </p>
+    <h2>Heading two</h2>
+    <h3>Heading three</h3>
+    <h4>Heading four</h4>
+    <p>
+      Body text is set in Atkinson Hyperlegible, designed for readers with low
+      vision. It has <strong>bold</strong>, <em>italic</em>,{' '}
+      <a href="#specimen-title">a link</a> and
+      <code>inline_code()</code> in the system monospace font.
+    </p>
+    <p class="muted">
+      Muted text is for dates, captions and other secondary details.
+    </p>
+
+    <ul class="swatches" aria-label="Colour tokens">
+      {swatches.map((name) => (
+        <li class="swatch">
+          <span class="chip" style={`background: var(--color-${name})`} />
+          <code>--color-{name}</code>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    margin-bottom: var(--space-7);
+  }
+
+  .lead {
+    margin-top: var(--space-3);
+    font-family: var(--font-pixel);
+    font-size: 1.4rem;
+    color: var(--color-muted);
+  }
+
+  .cursor {
+    color: var(--color-highlight);
+  }
+
+  .specimen {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border-radius: var(--radius);
+  }
+
+  .specimen code {
+    background: var(--color-bg);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .chip {
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--color-text);
+    border-radius: var(--radius);
+  }
+</style>

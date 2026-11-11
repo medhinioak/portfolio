@@ -1,0 +1,203 @@
+/*
+ * Design tokens and base styles. Values and contrast table: docs/design/tokens.md.
+ * Use colours and fonts only through these variables.
+ * --font-pixel and --font-body are defined by Astro's <Font> component.
+ */
+
+:root {
+  color-scheme: light;
+
+  --color-bg: #fbf8f3;
+  --color-surface: #f1ece2;
+  --color-text: #1b1a23;
+  --color-muted: #5a5766;
+  --color-accent: #5b3fd1;
+  --color-on-accent: #ffffff;
+  --color-highlight: #b93a00;
+
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  --radius: 4px;
+  --measure: 68ch;
+}
+
+/* Dark: chosen explicitly, or following the system unless light was chosen. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-bg: #14131c;
+  --color-surface: #1f1d2b;
+  --color-text: #f1eee6;
+  --color-muted: #a8a4b5;
+  --color-accent: #a99bff;
+  --color-on-accent: #14131c;
+  --color-highlight: #5eead4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --color-bg: #14131c;
+    --color-surface: #1f1d2b;
+    --color-text: #f1eee6;
+    --color-muted: #a8a4b5;
+    --color-accent: #a99bff;
+    --color-on-accent: #14131c;
+    --color-highlight: #5eead4;
+  }
+}
+
+/* Reset */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+/* Base */
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: 2.25rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+p,
+li {
+  max-width: var(--measure);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+code {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 0.1em 0.3em;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Small pixel-font labels: navigation, buttons, tags. */
+.label {
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+/* Skip link: hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  z-index: 10;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-radius: var(--radius);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

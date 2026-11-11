@@ -20,6 +20,9 @@ Keep these rules in step with `CLAUDE.md`.
 - No invented facts about the author's projects or experience. Unknown content is
   written as `PLACEHOLDER: ...`.
 - No secrets, tokens or personal data in the repository. Photos must have EXIF data stripped.
+- Colours, fonts and spacing only through the CSS variables in
+  `apps/site/src/styles/global.css`; a new colour pair needs a contrast row in
+  `docs/design/tokens.md`. No hard-coded hex values in components.
 - Accessibility target is WCAG 2.2 AA for every interactive UI component: keyboard
   navigation, visible focus states, screen reader labels, alt text, contrast in both
   light and dark themes, `prefers-reduced-motion`.

@@ -165,3 +165,15 @@ finishes. A cancelled run leaves nothing to read. To diagnose:
 - **Fix:** the site scripts run with `ASTRO_TELEMETRY_DISABLED=1`. This is in line with
   ADR-0004, although that ADR is about visitors, not tooling.
 - **Status:** _fixed_.
+
+### Astro's `npm` font provider loads the wrong font files
+
+- **Seen:** 2026-11-11, issue #3.
+- **Symptom:** with `fontProviders.npm({ remote: false })` and `subsets: ['latin']`, the build
+  emitted Latin Extended and Cyrillic files too, preloaded all of them, and had no bold or
+  italic faces.
+- **Cause:** in astro 6.4.8 the `npm` provider only parses the package's `index.css`
+  (all subsets, weight 400) and doesn't apply `subsets`.
+- **Fix:** use `fontProviders.local()` with the exact Latin `.woff2` files from the
+  `@fontsource/*` packages (`apps/site/astro.config.mjs`). See `docs/design/tokens.md`.
+- **Status:** _workaround_. Recheck after the Astro 7 upgrade (#24).
