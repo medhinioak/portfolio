@@ -21,10 +21,12 @@ over a dimmed page. Layouts: [`wireframes.md`](../design/wireframes.md#phone-men
 
 - The button has `aria-expanded` and `aria-controls`.
 - Opening moves focus to the Close button in the drawer. Escape, the Close button and
-  a tap on the dimmed area close it, and focus returns to the menu button.
+  a tap on the dimmed area close it, and focus returns to the menu button. Following a
+  nav link also closes it, including same-page links such as `/#contact` on Home.
 - While the drawer is open, Tab stays inside it and the page behind is inert, so
   keyboard and screen-reader users cannot reach content hidden under the scrim.
-- The current page is marked `aria-current="page"`.
+- The current page is marked `aria-current="page"`, as set out in
+  [`wireframes.md`](../design/wireframes.md#the-shared-frame).
 - The dimming colour is a new token, `--color-scrim`, added to `tokens.md` first. It is
   a plain overlay and needs no contrast row.
 

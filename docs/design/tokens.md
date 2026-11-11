@@ -88,7 +88,8 @@ Not chosen:
 
 Used only behind the phone menu drawer ([ADR-0007](../adr/0007-phone-navigation-drawer.md)).
 It is a plain overlay: the drawer's text sits on `--color-bg`, never on the scrim, so it
-has no contrast row.
+has no contrast row. Not yet in `global.css`: the drawer build adds it there, written
+once as `light-dark()` like the other colours.
 
 ### Contrast
 

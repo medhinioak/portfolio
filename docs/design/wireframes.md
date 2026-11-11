@@ -32,7 +32,9 @@ is the screen width minus a 16 px gutter on each side.
 left, then the nav (Home, About, Projects, Blog, Contact), then the theme toggle on
 the right. "Contact" is not a page: it links to the Contact section on Home (`/#contact`)
 from every page. The current page is underlined in the accent colour and marked
-`aria-current="page"`. The toggle reads "Theme: System", "Theme: Light" or
+`aria-current="page"`: Home on `/`, Projects on `/projects` and every case study, Blog
+on `/blog` and every post, About on `/about`. Contact is never marked, and no item is
+marked on other pages. The toggle reads "Theme: System", "Theme: Light" or
 "Theme: Dark" and announces its state.
 
 **Header, phone.** A menu button, the wordmark and the theme toggle. The menu button
@@ -70,6 +72,8 @@ the left over a dimmed page.
   button.
 - Opening moves focus to the Close button. Escape, the Close button and a tap on the
   dimmed area all close it, and focus returns to the menu button.
+- Following a nav link also closes it, including same-page links such as Contact
+  (`/#contact`) on Home; focus then goes to the link's target, not the menu button.
 - While it is open, Tab stays inside the drawer and the page behind is inert.
 - The menu button has `aria-expanded` and `aria-controls`.
 - Without JavaScript the nav must still be usable; the build decides how
@@ -226,6 +230,8 @@ checklist expects one that receives mail).
   and Privacy. They reuse the frame and the card styles above.
 - **Breakpoint.** The wireframes show 1280 px and 390 px only. The width at which the
   header switches from the single row to the menu button is set in the build.
+- **Wordmark.** The current layout still shows `medhinioak.dev`; the layout build
+  changes it to "Medhini Oak".
 
 ## Review
 
