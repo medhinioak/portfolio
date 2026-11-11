@@ -247,6 +247,13 @@ button {
   flex: none;
 }
 
+/* A wrapping row of buttons. */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
 /* Small bordered label for tags and skills. */
 .chip {
   display: inline-block;

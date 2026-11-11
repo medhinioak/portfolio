@@ -42,7 +42,8 @@ jobs:
 
       - name: Fail if a PLACEHOLDER marker is in the built site
         run: |
-          if grep -rlI 'PLACEHOLDER:' apps/site/dist; then
+          # PLACEHOLDER%3A is the marker URL-encoded, as in a mailto: subject.
+          if grep -rlIE 'PLACEHOLDER(:|%3A)' apps/site/dist; then
             echo "::error::'PLACEHOLDER:' found in the files listed above"
             exit 1
           fi

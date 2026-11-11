@@ -1,0 +1,47 @@
+---
+/** 404 page: no header, one centred block with a way home, and the footer (issue #29). */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// The small GIF (with a still image under reduced motion) is added when the asset exists.
+---
+
+<BaseLayout
+  title="Page not found · Medhini Oak"
+  description="PLACEHOLDER: one-sentence description of the 404 page"
+  showHeader={false}
+>
+  <div class="not-found">
+    <p class="label muted">Error 404</p>
+    <h1>Page not found</h1>
+    <p>
+      PLACEHOLDER: one friendly line saying this page does not exist or has
+      moved.
+    </p>
+    <!-- "Projects" and "Blog" buttons are added by #30 and #32. -->
+    <a class="button button-primary" href="/">
+      Go to Home
+    </a>
+    <p class="muted">
+      Found a broken link? <a href="/#contact">Get in touch</a>.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Fill the space above the footer and centre the block in it. */
+  :global(main):has(.not-found) {
+    display: grid;
+    place-items: center;
+  }
+
+  .not-found {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .not-found .button {
+    margin-top: var(--space-2);
+  }
+</style>
