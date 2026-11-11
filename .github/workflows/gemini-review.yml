@@ -1,5 +1,8 @@
 # Copy of google-github-actions/run-gemini-cli examples/workflows/pr-review/gemini-review.yml.
 # Needs the GEMINI_API_KEY repository secret. Review rules: GEMINI.md. See docs/ai-usage.md.
+# Deviations from upstream: timeout 15 min; tools.core allowlists activate_skill and the
+# GitHub MCP tools, because "core": [] disables all MCP tools since gemini-cli v0.41.0
+# (google-github-actions/run-gemini-cli#532).
 name: '🔎 Gemini Review'
 
 on:
@@ -21,7 +24,7 @@ defaults:
 jobs:
   review:
     runs-on: 'ubuntu-latest'
-    timeout-minutes: 7
+    timeout-minutes: 15
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -114,7 +117,10 @@ jobs:
                 }
               },
               "tools": {
-                "core": []
+                "core": [
+                  "activate_skill",
+                  "mcp_github_*"
+                ]
               }
             }
           extensions: |

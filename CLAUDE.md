@@ -18,12 +18,35 @@ AI roles and reviews: docs/ai-usage.md.
 
 # Rules
 
+## Architectural Boundaries
+
 - packages/game must never import from apps/site (lint enforces it).
   The engine (packages/game/src/engine) imports no React and no DOM.
 - No third-party requests from the site: no CDN fonts, embeds, analytics or
   trackers. Links to YouTube, Twitch and so on are plain links.
+
+## Code Quality & Engineering
+
+- **Simplicity:** Code must be human-readable with zero over-engineering. Do not create premature abstractions or write code for hypothetical future needs.
+- **Docstrings:** Write a concise one-line JSDoc comment (`/** ... */`) above every exported function, interface, type, and module boundary.
+- **Strict Typing:** Declare explicit return types on all exported functions. Avoid `any`; use `unknown` with type guards.
+- **Documentation-First:** Verify or draft the corresponding spec or ADR in `docs/` before implementing any new feature or architectural module.
+- **Linting:** All files must strictly pass ESLint and Prettier without suppressing rules unnecessarily.
+
+## Testing & Coverage
+
+- Target ~80% test coverage for pure logic and engine modules (`packages/game/src/engine`).
+- Focus tests on business logic, edge cases, state transitions, and entropy calculations.
+- Never write trivial, low-value tests (e.g., testing simple getters or React boilerplate) solely to pad coverage metrics.
+
+## Site & Content
+
 - Never invent facts about the author's projects. Unknown content is written as
   PLACEHOLDER: ... and the production build fails if it is published.
+- Ensure all interactive UI components follow WCAG 2.2 AA accessibility standards (keyboard navigation, visible focus states, screen reader labels).
+
+## Workflow & Git
+
 - Conventional Commits. One topic per pull request.
 - Work on a branch, never on main. PR bodies start with "Closes #N" and fill in
   the template's AI involvement block. Keep the Co-Authored-By trailer.

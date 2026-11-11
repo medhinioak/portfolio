@@ -1,0 +1,51 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install)",
+      "Bash(pnpm lint)",
+      "Bash(pnpm format)",
+      "Bash(pnpm test)",
+      "Bash(pnpm build)",
+      "Bash(pnpm -r typecheck)",
+      "Bash(pnpm vitest run:*)",
+      "Bash(pnpm --filter game dev)",
+      "Bash(pnpm --filter game test)",
+      "Bash(pnpm --filter game typecheck)",
+      "Bash(pnpm --filter game build)",
+      "Bash(pnpm --filter site dev)",
+      "Bash(pnpm --filter site build)",
+      "Bash(node -v)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git switch:*)",
+      "Bash(git checkout -b:*)",
+      "Bash(git push -u origin feat/:*)",
+      "Bash(git push -u origin fix/:*)",
+      "Bash(git push -u origin chore/:*)",
+      "Bash(git push -u origin docs/:*)",
+      "Bash(git push -u origin ci/:*)",
+      "Bash(git push -u origin refactor/:*)",
+      "Bash(git push -u origin test/:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh issue develop:*)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push *--force*)",
+      "Bash(git push * -f*)",
+      "Bash(git push *+*)",
+      "Bash(git push * main)",
+      "Bash(git push *:main*)",
+      "Read(./.env*)"
+    ]
+  },
+  "enabledPlugins": {
+    "feature-dev@anthropic-plugin-directory": true,
+    "code-review-anthropics@anthropic-plugin-directory": true
+  }
+}
