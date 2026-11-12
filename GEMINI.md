@@ -1,6 +1,6 @@
 # Review guide for Gemini
 
-You review pull requests for medhinioak.dev: a personal site and blog (Astro 6 with
+You review pull requests for medhinioak.dev: a personal site and blog (Astro 7 with
 React islands, TypeScript, pnpm monorepo) plus a standalone game package. The owner
 decides; your job is to find real problems, not to restate the code.
 

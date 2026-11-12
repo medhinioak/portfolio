@@ -121,6 +121,19 @@ finishes. A cancelled run leaves nothing to read. To diagnose:
 
 ## Workspace and tooling
 
+### Dependabot security PR fails install (pnpm minimumReleaseAge)
+
+- **Seen:** 2026-11-11, Dependabot PR #11 (issue #24).
+- **Symptom:** a Dependabot security PR's CI fails at `pnpm install` with
+  `ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION`.
+- **Cause:** pnpm refuses packages published less than a day ago (`minimumReleaseAge`).
+  Dependabot's `cooldown` in `.github/dependabot.yml` delays version updates by a day, but
+  security updates ignore the cooldown, so a security PR can point at a release that is
+  only hours old.
+- **Fix:** wait a day and re-run the PR's checks, or upgrade by hand to the newest version
+  that is more than a day old (`npm view <pkg> time` shows publish times), as #24 did.
+- **Status:** _workaround_. Both behaviours are by design, so this can happen again.
+
 ### Astro 6 needs Node 22; the local machine had Node 21
 
 - **Seen:** 2026-11-11, issue #2.
@@ -176,4 +189,5 @@ finishes. A cancelled run leaves nothing to read. To diagnose:
   (all subsets, weight 400) and doesn't apply `subsets`.
 - **Fix:** use `fontProviders.local()` with the exact Latin `.woff2` files from the
   `@fontsource/*` packages (`apps/site/astro.config.mjs`). See `docs/design/tokens.md`.
-- **Status:** _workaround_. Recheck after the Astro 7 upgrade (#24).
+- **Status:** _workaround_. Rechecked with astro 7.4.10 (#24): the `npm` provider still
+  ignores `subsets`; the build fails fetching `pixelify-sans-cyrillic-400-normal.woff2`.

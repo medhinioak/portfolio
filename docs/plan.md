@@ -27,7 +27,7 @@ lives in its own package so it can become a standalone project later.
 
 | Layer | Choice | Decision |
 |---|---|---|
-| Site | Astro 6 with React islands, TypeScript, Markdown blog | [ADR-0001](adr/0001-astro-with-react-islands.md) |
+| Site | Astro 7 with React islands, TypeScript, Markdown blog | [ADR-0001](adr/0001-astro-with-react-islands.md), [ADR-0008](adr/0008-upgrade-to-astro-7.md) |
 | Repository | pnpm monorepo; the game is its own package | [ADR-0002](adr/0002-monorepo-with-standalone-game-package.md) |
 | Hosting | GitHub Pages at launch, then S3 + CloudFront + Route 53 via Terraform | [ADR-0003](adr/0003-github-pages-first-then-aws.md) |
 | Privacy | No analytics, cookies or third-party requests at launch | [ADR-0004](adr/0004-no-third-party-requests-and-no-analytics-at-launch.md) |
