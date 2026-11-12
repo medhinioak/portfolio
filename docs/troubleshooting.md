@@ -17,11 +17,11 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
 - **Cause:** workflow runs triggered by Dependabot get only Dependabot secrets, not the
   repository's Actions secrets. This repository has no Dependabot secrets, so
   `GEMINI_API_KEY` is empty.
-- **Fix:** the `dispatch` job in `gemini-dispatch.yml` skips PRs opened by
-  `dependabot[bot]` (issue #25). To review one, comment `@gemini-cli /review` on it: a
-  comment runs as the commenter, with the repository's secrets. Copying the key into
-  Dependabot secrets would also work, but it would hand the key to dependency-update runs.
-- **Status:** _fixed_ once merged to `main`.
+- **Fix:** the review no longer runs automatically on PR open (ADR-0009), so Dependabot's
+  PRs don't trigger it. To review one, comment `@gemini-cli /review` on it: a comment
+  runs as the commenter, with the repository's secrets. Copying the key into Dependabot
+  secrets would also work, but it would hand the key to dependency-update runs.
+- **Status:** _fixed_.
 
 ### Reviewer asks which PR to review
 
@@ -38,8 +38,9 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
   `/pr-code-review REPOSITORY=… PULL_REQUEST_NUMBER=… ADDITIONAL_CONTEXT=…` (PR #10). The
   action hands the prompt to the CLI through an environment variable, so comment text never
   reaches a shell.
-- **Status:** _open_. PR #10 is merged and the prompt now carries the values (run
-  42986490166 log: `PULL_REQUEST_NUMBER=9`). A posted review has not been seen yet: run
+- **Status:** _open_, not pursued further: the review now runs only on request
+  (ADR-0009) and is verified the first time it is used. PR #10 is merged and the prompt
+  now carries the values (run 42986490166 log: `PULL_REQUEST_NUMBER=9`). A posted review has not been seen yet: run
   42986021710 hit the daily quota and run 42986490166 hit a Google outage (503).
   - 2026-11-12, issue #25: switched `GEMINI_MODEL` to `gemini-3-flash-preview` and commented
     `@gemini-cli /review` once on PR #49 (run 43127182869, 00:25 UTC). The run started and
@@ -130,7 +131,8 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
   `GEMINI_MODEL` doesn't always help: on 2026-11-12 `gemini-3-flash-preview` failed
   on the `model: gemini-3-flash` quota after the day's runs on `gemini-3.8-flash`
   (run 43127182869), so the two names seem to share one quota. Usage: https://ai.dev/rate-limit.
-- **Status:** _open_. See the parking lot for alternatives.
+- **Status:** _workaround_. Since ADR-0009 the review runs only on request, about once a
+  day at most.
 
 ### How to see what Gemini is doing
 

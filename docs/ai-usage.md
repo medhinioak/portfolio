@@ -23,7 +23,7 @@ The decision behind it is [ADR-0006](adr/0006-ai-assisted-development-with-human
 | **Claude Design** (claude.ai) | Wireframing | Low-fidelity layouts and page mockups for review, in light and dark; exported as PNGs into `docs/design/` | Editing the repository; final copy |
 | **`/code-review` in Claude Code** | Reviewer 1 (fresh context) | Self-check of every branch before the PR is opened | Replacing an independent review |
 | **Claude PR review** (GitHub Action, planned) | Reviewer 2 | Automatic inline review on PRs; `@claude` for follow-up questions | Pushing commits to someone else's branch |
-| **Gemini PR review** (`run-gemini-cli` GitHub Action) | Independent reviewer (different model) | Automatic review when a PR is opened (not Dependabot's PRs); `@gemini-cli /review <focus>` to re-run with a focus | Writing code |
+| **Gemini PR review** (`run-gemini-cli` GitHub Action) | Independent reviewer (different model) | On request only ([ADR-0009](adr/0009-gemini-pr-review-on-request.md)): `@gemini-cli /review <focus>` on workflow and security changes, ADRs and engine logic | Writing code; routine PRs (free-tier quota) |
 | **Gemini app** (Google AI Plus) | Second opinion | Decisions, ADR drafts, UI screenshots and wireframes, blog drafts | Anything containing private notes |
 | **Antigravity** (Google AI Plus, limited quota) | Deep reviewer | Optional local review of large or risky PRs (game engine, Terraform, deploy workflows) | Routine PRs |
 | **Friends** (primary audience) | Human reviewers | UI and copy: "does this feel like me, is it clear, does it work on your phone?" | Code |
@@ -35,9 +35,9 @@ merged without it.
 
 | Work | Required | Recommended | Where it is recorded |
 |---|---|---|---|
-| Code (site, game) | CI green, `/code-review`, Gemini PR review, my read of the diff | Claude PR review; Antigravity for engine changes | PR checks and comments |
-| Infrastructure (Terraform, workflows) | As code, plus `terraform plan` output in the PR | Antigravity review focused on security and cost | PR comments |
-| Docs and ADRs | Gemini PR review, my read | Claude PR review | PR comments |
+| Code (site, game) | CI green (including the `quality` job), `/code-review`, my read of the diff | Gemini PR review on request for engine logic; Claude PR review; Antigravity for engine changes | PR checks and comments |
+| Infrastructure (Terraform, workflows) | As code, plus `terraform plan` output in the PR | Gemini PR review on request; Antigravity review focused on security and cost | PR comments |
+| Docs and ADRs | `/code-review`, my read | Gemini PR review on request for ADRs; Claude PR review | PR comments |
 | Decisions (before an ADR exists) | Discussed in a project chat; second opinion from the Gemini app | Ask each model to argue the opposite option | The ADR's "Review" line |
 | UI and design | Lighthouse and axe in CI; contrast and keyboard check | Screenshots reviewed in the Gemini app; two friends try it on their phones | PR description (screenshots + feedback summary) |
 | Blog posts and page copy | My own voice; facts checked by me | AI comments on clarity and structure only, never a rewrite | PR comments |
@@ -47,8 +47,8 @@ merged without it.
 ### Code, docs and ADRs (every PR)
 
 1. Before opening the PR: run `/code-review` in Claude Code and fix what is valid.
-2. Open the PR. Gemini reviews automatically when the PR is opened.
-3. After further pushes, ask again with a comment: `@gemini-cli /review` (add a focus, for example `@gemini-cli /review focus on accessibility`).
+2. Open the PR. CI runs, including the `quality` job.
+3. For workflow and security changes, ADRs and engine logic, ask Gemini with a comment: `@gemini-cli /review` (add a focus, for example `@gemini-cli /review focus on security`). It isn't automatic: the free tier allows about one review a day ([ADR-0009](adr/0009-gemini-pr-review-on-request.md)).
 4. Answer every comment: fix it, or reply why not. The ruleset requires all conversations to be resolved before merging.
 5. Tick the "AI involvement" box in the PR template.
 
@@ -88,7 +88,9 @@ merged without it.
   The key is separate from the Google AI Plus subscription. Review rules for Gemini are in `GEMINI.md`.
   Reviews run only for PRs from this repository, not from forks, and comment commands only from the owner or collaborators.
   - The key is on the free tier, so the repository variable `GEMINI_MODEL` selects a model with a free tier
-    (`gemini-3-flash-preview`). Keep re-runs few: one review can take up to 25 requests.
+    (`gemini-3-flash-preview`). The free tier allows 20 requests a day and one review can take up to 25,
+    so reviews run only on request ([ADR-0009](adr/0009-gemini-pr-review-on-request.md)). Not yet verified:
+    no review has been posted so far (issue #25).
   - `gemini-review.yml` differs from Google's example in two places: a 15-minute timeout, and
     `tools.core` allowlisting `activate_skill` and `mcp_github_*` (the example's empty list disables the GitHub tools).
   - A green run is not proof of a review. `UPLOAD_ARTIFACTS=true` keeps Gemini's output as a run artifact;

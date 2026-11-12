@@ -32,9 +32,9 @@ not only what was built but how and why.
 5. **Checks.** CI must be green: lint, type check, tests, build, Lighthouse CI, axe.
    The deploy workflow additionally fails if the marker `PLACEHOLDER:` appears on a
    published page; pull requests are never blocked by it.
-6. **Review.** Run `/code-review` before opening the PR. Gemini reviews the PR
-   automatically when it is opened; ask again after changes with
-   `@gemini-cli /review`. Read the full diff yourself, and fix or answer every
+6. **Review.** Run `/code-review` before opening the PR. For workflow and security
+   changes, ADRs and engine logic, ask Gemini with `@gemini-cli /review`; it doesn't
+   run automatically (ADR-0009). Read the full diff yourself, and fix or answer every
    comment. What each kind of work needs is in the review matrix in
    [`ai-usage.md`](ai-usage.md#review-matrix).
 7. **Squash-merge.** The branch is deleted automatically; the issue closes.
