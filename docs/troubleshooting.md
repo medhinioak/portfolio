@@ -8,6 +8,21 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
 
 ## Gemini PR review
 
+### Review fails on every Dependabot PR: "No authentication method provided"
+
+- **Seen:** 2026-11-12, Dependabot PRs #49 and #50, runs 43125761494 and 43125780952.
+- **Symptom:** the automatic "Gemini Review" job fails on PRs opened by Dependabot. The
+  log shows `Secret source: Dependabot`, then "No authentication method provided. Please
+  provide one of 'gemini_api_key', 'google_api_key', or 'gcp_workload_identity_provider'."
+- **Cause:** workflow runs triggered by Dependabot get only Dependabot secrets, not the
+  repository's Actions secrets. This repository has no Dependabot secrets, so
+  `GEMINI_API_KEY` is empty.
+- **Fix:** the `dispatch` job in `gemini-dispatch.yml` skips PRs opened by
+  `dependabot[bot]` (issue #25). To review one, comment `@gemini-cli /review` on it: a
+  comment runs as the commenter, with the repository's secrets. Copying the key into
+  Dependabot secrets would also work, but it would hand the key to dependency-update runs.
+- **Status:** _fixed_ once merged to `main`.
+
 ### Reviewer asks which PR to review
 
 - **Seen:** 2026-11-11, PR #9, run 42984490621 (the first run with the `tools.core` fix).

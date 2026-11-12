@@ -1,5 +1,6 @@
 # Trimmed copy of google-github-actions/run-gemini-cli examples/workflows/gemini-dispatch.
-# Only PR review is enabled: automatic on PR open, or comment '@gemini-cli /review [focus]'.
+# Only PR review is enabled: automatic on PR open (not for Dependabot's PRs), or comment
+# '@gemini-cli /review [focus]'.
 # See docs/ai-usage.md.
 name: '🔀 Gemini Dispatch'
 
@@ -42,12 +43,15 @@ jobs:
           env | grep '^DEBUG_'
 
   dispatch:
-    # For PRs: only if not from a fork
+    # For PRs: only if not from a fork and not opened by Dependabot. Dependabot's runs
+    # get Dependabot secrets only, so GEMINI_API_KEY is empty and the review fails
+    # (docs/troubleshooting.md). Comment '@gemini-cli /review' to review one.
     # For comments: only '@gemini-cli /review' from OWNER/MEMBER/COLLABORATOR
     if: |-
       (
         github.event_name == 'pull_request' &&
-        github.event.pull_request.head.repo.fork == false
+        github.event.pull_request.head.repo.fork == false &&
+        github.event.pull_request.user.login != 'dependabot[bot]'
       ) || (
         github.event.sender.type == 'User' &&
         startsWith(github.event.comment.body || github.event.review.body || github.event.issue.body, '@gemini-cli') &&

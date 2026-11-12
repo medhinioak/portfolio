@@ -23,7 +23,7 @@ The decision behind it is [ADR-0006](adr/0006-ai-assisted-development-with-human
 | **Claude Design** (claude.ai) | Wireframing | Low-fidelity layouts and page mockups for review, in light and dark; exported as PNGs into `docs/design/` | Editing the repository; final copy |
 | **`/code-review` in Claude Code** | Reviewer 1 (fresh context) | Self-check of every branch before the PR is opened | Replacing an independent review |
 | **Claude PR review** (GitHub Action, planned) | Reviewer 2 | Automatic inline review on PRs; `@claude` for follow-up questions | Pushing commits to someone else's branch |
-| **Gemini PR review** (`run-gemini-cli` GitHub Action) | Independent reviewer (different model) | Automatic review when a PR is opened; `@gemini-cli /review <focus>` to re-run with a focus | Writing code |
+| **Gemini PR review** (`run-gemini-cli` GitHub Action) | Independent reviewer (different model) | Automatic review when a PR is opened (not Dependabot's PRs); `@gemini-cli /review <focus>` to re-run with a focus | Writing code |
 | **Gemini app** (Google AI Plus) | Second opinion | Decisions, ADR drafts, UI screenshots and wireframes, blog drafts | Anything containing private notes |
 | **Antigravity** (Google AI Plus, limited quota) | Deep reviewer | Optional local review of large or risky PRs (game engine, Terraform, deploy workflows) | Routine PRs |
 | **Friends** (primary audience) | Human reviewers | UI and copy: "does this feel like me, is it clear, does it work on your phone?" | Code |
