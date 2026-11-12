@@ -86,7 +86,9 @@ merged without it.
 - **Gemini PR review** runs Google's `run-gemini-cli` action (`.github/workflows/gemini-dispatch.yml`
   and `gemini-review.yml`). It needs a repository secret `GEMINI_API_KEY` from Google AI Studio.
   The key is separate from the Google AI Plus subscription. Review rules for Gemini are in `GEMINI.md`.
-  Reviews run only for PRs from this repository, not from forks, and comment commands only from the owner or collaborators.
+  Reviews run only on a `@gemini-cli /review` comment from the owner or a collaborator. The workflow checks out `main`,
+  not the PR's code, and reads the PR through the GitHub tools; on a fork's PR, only ask when the fork is trusted,
+  because the run holds the repository's secrets while it reads the fork's diff.
   - The key is on the free tier, so the repository variable `GEMINI_MODEL` selects a model with a free tier
     (`gemini-3-flash-preview`). The free tier allows 20 requests a day and one review can take up to 25,
     so reviews run only on request ([ADR-0009](adr/0009-gemini-pr-review-on-request.md)). Not yet verified:
