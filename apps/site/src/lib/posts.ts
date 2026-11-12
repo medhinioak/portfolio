@@ -27,10 +27,13 @@ const wordsPerMinute = 200;
 
 // A fence line (``` or ~~~, with or without a language) is Markdown syntax, not a word.
 const fenceLine = /^\s*(`{3,}|~{3,})/;
+// HTML comments are notes to the author, never shown.
+const htmlComment = /<!--[\s\S]*?-->/g;
 
 /** Minutes to read a Markdown body: words ÷ 200, rounded up, at least 1. Code counts like prose. */
 export function readingMinutes(markdown: string): number {
   const words = markdown
+    .replace(htmlComment, ' ')
     .split('\n')
     .filter((line) => !fenceLine.test(line))
     .join(' ')

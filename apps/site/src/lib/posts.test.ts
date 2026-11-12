@@ -54,6 +54,10 @@ describe('readingMinutes', () => {
     expect(readingMinutes(`## ${words(200)}\n\n- one`)).toBe(2);
   });
 
+  it('ignores HTML comments, also across lines', () => {
+    expect(readingMinutes(`${words(200)}\n<!-- a note\nto self -->`)).toBe(1);
+  });
+
   it('counts code inside a block but not its fence lines', () => {
     const block = (fence: string): string =>
       `${words(150)}\n\n${fence}ts\n${words(50)}\n${fence}\n`;
@@ -64,9 +68,18 @@ describe('readingMinutes', () => {
 });
 
 describe('formatPostDate and isoDay', () => {
-  it('formats a front-matter date the same in every time zone', () => {
-    const date = new Date('2026-11-01');
-    expect(formatPostDate(date)).toBe('1 November 2026');
-    expect(isoDay(date)).toBe('2026-11-01');
+  it('shows the front-matter day even west of UTC', () => {
+    // A date-only value is UTC midnight, which is the evening before in Los Angeles.
+    const previousZone = process.env.TZ;
+    process.env.TZ = 'America/Los_Angeles';
+    try {
+      const date = new Date('2026-11-01');
+      expect(date.getDate()).toBe(31);
+      expect(formatPostDate(date)).toBe('1 November 2026');
+      expect(isoDay(date)).toBe('2026-11-01');
+    } finally {
+      if (previousZone === undefined) delete process.env.TZ;
+      else process.env.TZ = previousZone;
+    }
   });
 });

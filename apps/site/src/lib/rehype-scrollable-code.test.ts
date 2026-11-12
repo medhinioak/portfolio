@@ -10,7 +10,7 @@ const el = (tagName: string, ...children: Element[]): Element => ({
 });
 
 describe('rehypeScrollableCode', () => {
-  it('makes code blocks focusable, also when nested, and leaves other elements alone', () => {
+  it('makes code blocks named, focusable regions, also when nested, and leaves other elements alone', () => {
     const top = el('pre', el('code'));
     const nested = el('pre', el('code'));
     const paragraph = el('p', el('code'));
@@ -19,7 +19,11 @@ describe('rehypeScrollableCode', () => {
       children: [top, el('blockquote', nested), paragraph],
     };
     rehypeScrollableCode()(tree);
-    expect(top.properties.tabIndex).toBe(0);
+    expect(top.properties).toEqual({
+      tabIndex: 0,
+      role: 'region',
+      ariaLabel: 'Code sample',
+    });
     expect(nested.properties.tabIndex).toBe(0);
     expect(paragraph.properties.tabIndex).toBeUndefined();
   });

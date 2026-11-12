@@ -10,6 +10,7 @@ import { getPublishedPosts } from '../../lib/get-posts';
 import { formatPostDate, isoDay, readingMinutes } from '../../lib/posts';
 import { neighbours } from '../../lib/projects';
 
+/** One path per published post, with the newer and older post for previous/next. */
 export const getStaticPaths = (async () => {
   const posts = await getPublishedPosts();
   return posts.map((post) => {

@@ -44,7 +44,9 @@ const blog = defineCollection({
       title: z.string(),
       /** One or two sentences: the summary under the title, also for SEO and RSS. */
       description: z.string(),
+      /** Date only (YYYY-MM-DD): it is read as UTC midnight and shown as that day. */
       pubDate: z.coerce.date(),
+      /** Date only, like pubDate. */
       updatedDate: z.coerce.date().optional(),
       tags: z.array(z.string()),
       cover: z.object({ image: image(), alt: z.string() }).optional(),
