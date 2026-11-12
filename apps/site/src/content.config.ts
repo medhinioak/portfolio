@@ -1,4 +1,4 @@
-/** Content collections (Content Layer API, ADR-0001): case studies in src/content/projects. */
+/** Content collections (Content Layer API, ADR-0001): case studies and blog posts. */
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
@@ -36,4 +36,23 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { projects };
+/** Blog posts in src/content/blog; the file name is the slug. */
+const blog = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/blog' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      /** One or two sentences: the summary under the title, also for SEO and RSS. */
+      description: z.string(),
+      /** Date only (YYYY-MM-DD): it is read as UTC midnight and shown as that day. */
+      pubDate: z.coerce.date(),
+      /** Date only, like pubDate. */
+      updatedDate: z.coerce.date().optional(),
+      tags: z.array(z.string()),
+      cover: z.object({ image: image(), alt: z.string() }).optional(),
+      /** Drafts are built in dev only. */
+      draft: z.boolean().default(false),
+    }),
+});
+
+export const collections = { projects, blog };

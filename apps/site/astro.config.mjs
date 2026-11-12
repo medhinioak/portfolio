@@ -3,6 +3,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import react from '@astrojs/react';
 import { rehypeFigure } from './src/lib/rehype-figure.ts';
+import { rehypeScrollableCode } from './src/lib/rehype-scrollable-code.ts';
 
 // Fonts are the Latin .woff2 files from the @fontsource packages in node_modules,
 // served from this site. The build needs no network. See docs/design/tokens.md.
@@ -22,8 +23,13 @@ export default defineConfig({
   site: 'https://medhinioak.dev',
   output: 'static',
   integrations: [react()],
-  // A Markdown image with a title on its own line becomes a captioned figure.
-  markdown: { processor: unified({ rehypePlugins: [rehypeFigure] }) },
+  markdown: {
+    // A Markdown image with a title on its own line becomes a captioned figure;
+    // code blocks get tabindex="0" so they scroll with the keyboard.
+    processor: unified({ rehypePlugins: [rehypeFigure, rehypeScrollableCode] }),
+    // Shiki writes colours inline, which the token rule forbids (ADR-0010).
+    syntaxHighlight: false,
+  },
   fonts: [
     {
       provider: fontProviders.local(),

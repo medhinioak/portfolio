@@ -1,8 +1,11 @@
 ---
-/** Home page: intro with the CV link, Projects, then the Contact section (issues #29, #30). */
+/** Home page: intro with the CV link, Projects, the latest post, then Contact (issues #29, #30, #32). */
 import Arrow from '../components/Arrow.astro';
+import FeedIcon from '../components/FeedIcon.astro';
+import PostCard from '../components/PostCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../lib/get-posts';
 import { getPublishedProjects } from '../lib/get-projects';
 import {
   channels,
@@ -13,6 +16,7 @@ import {
 } from '../lib/contact';
 
 const projects = (await getPublishedProjects()).slice(0, 2);
+const [latestPost] = await getPublishedPosts();
 ---
 
 <BaseLayout
@@ -49,7 +53,26 @@ const projects = (await getPublishedProjects()).slice(0, 2);
     </section>
   )}
 
-  <!-- Blog (#32) goes here. The game teaser waits for Phase 3. -->
+  {latestPost && (
+    <section class="blog" aria-labelledby="blog-title">
+      <div class="section-head">
+        <h2 id="blog-title">Blog</h2>
+        <div class="row">
+          <a class="button button-secondary button-small" href="/blog/">
+            All posts
+            <Arrow direction="right" />
+          </a>
+          <a class="button button-secondary button-small" href="/rss.xml">
+            <FeedIcon />
+            RSS
+          </a>
+        </div>
+      </div>
+      <PostCard post={latestPost} headingLevel={3} />
+    </section>
+  )}
+
+  <!-- The game teaser waits for Phase 3. -->
 
   <section id="contact" class="contact" aria-labelledby="contact-title">
     <h2 id="contact-title">Contact</h2>
@@ -87,12 +110,14 @@ const projects = (await getPublishedProjects()).slice(0, 2);
     gap: var(--space-5);
   }
 
-  .projects {
+  .projects,
+  .blog {
     display: grid;
     gap: var(--space-4);
   }
 
   .projects,
+  .blog,
   .contact {
     margin-top: var(--space-7);
   }

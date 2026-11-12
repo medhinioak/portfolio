@@ -1,0 +1,35 @@
+---
+/** Blog post card shared by /blog and Home: date, title link and summary. */
+import type { CollectionEntry } from 'astro:content';
+import { formatPostDate, isoDay } from '../lib/posts';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  /** 2 under the page's h1 (/blog), 3 under a section's h2 (Home). */
+  headingLevel: 2 | 3;
+}
+
+const { post, headingLevel } = Astro.props;
+const { title, description, pubDate } = post.data;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+---
+
+<article class="card post-card">
+  <p class="muted">
+    <time datetime={isoDay(pubDate)}>{formatPostDate(pubDate)}</time>
+  </p>
+  <Heading class="title-long title">
+    <a href={`/blog/${post.id}/`}>{title}</a>
+  </Heading>
+  <p>{description}</p>
+</article>
+
+<style>
+  .post-card {
+    gap: var(--space-2);
+  }
+
+  .title {
+    font-size: var(--text-lg);
+  }
+</style>
