@@ -17,3 +17,4 @@ Last review: Phase 0 gate, 2026-11-11. All ideas kept as they are.
 | TypeScript 7 | 2026-11-11 | When typescript-eslint and @astrojs/check support it |
 | Post material: debugging the Gemini review workflow | 2026-11-11 | Notes in `troubleshooting.md`; fits Post 1 |
 | Share the Markdown body and pager styles between posts and case studies | 2026-11-12 | Copied in `blog/[slug].astro` and `CaseStudyLayout.astro` (#32 review); one `.prose` rule set |
+| Per-post Open Graph images | 2026-11-12 | Every page uses `og-default.png` at launch (#34); a post could pass its cover image |

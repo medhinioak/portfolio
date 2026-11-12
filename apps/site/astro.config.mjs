@@ -2,6 +2,7 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import { rehypeFigure } from './src/lib/rehype-figure.ts';
 import { rehypeScrollableCode } from './src/lib/rehype-scrollable-code.ts';
 
@@ -22,7 +23,13 @@ const atkinson = (weight, style) => ({
 export default defineConfig({
   site: 'https://medhinioak.dev',
   output: 'static',
-  integrations: [react()],
+  // Pages are directories (/about/); GitHub Pages redirects /about to /about/ (issue #34).
+  trailingSlash: 'always',
+  integrations: [
+    react(),
+    // The 404 page is served for missing URLs and does not belong in the sitemap.
+    sitemap({ filter: (page) => !/\/404\/?$/.test(page) }),
+  ],
   markdown: {
     // A Markdown image with a title on its own line becomes a captioned figure;
     // code blocks get tabindex="0" so they scroll with the keyboard.

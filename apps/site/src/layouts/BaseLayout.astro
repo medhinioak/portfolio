@@ -1,20 +1,45 @@
 ---
-/** Page shell: theme script, fonts, skip link, header with phone drawer, main and footer. */
+/** Page shell: head metadata (SEO, Open Graph), theme script, fonts, skip link, header with phone drawer, main and footer. */
 import { Font } from 'astro:assets';
 import ThemeToggle from '../components/ThemeToggle';
 import { email, mailtoHref } from '../lib/contact';
 import { isCurrentPage, type NavItem } from '../lib/nav';
 import { feedTitle } from '../lib/posts';
+import {
+  canonicalUrl,
+  jsonLdScript,
+  ogImage,
+  siteName,
+  type JsonLd,
+} from '../lib/seo';
 import '../styles/global.css';
 
 interface Props {
+  /** The full title, under about 60 characters: "Page · Medhini Oak", or the site name on Home. */
   title: string;
-  description?: string;
+  /** About 150 characters, unique per page. */
+  description: string;
+  /** Open Graph type: 'article' for blog posts. */
+  type?: 'website' | 'article';
+  /** Structured data for this page, printed as JSON-LD. */
+  jsonLd?: JsonLd;
   /** False hides the header (the 404 page); everything else stays. */
   showHeader?: boolean;
+  /** False for the 404 page: it is served at any missing URL, so it gets no canonical or og:url. */
+  hasOwnUrl?: boolean;
 }
 
-const { title, description, showHeader = true } = Astro.props;
+const {
+  title,
+  description,
+  type = 'website',
+  jsonLd,
+  showHeader = true,
+  hasOwnUrl = true,
+} = Astro.props;
+if (!Astro.site) throw new Error('Set `site` in astro.config.mjs.');
+const canonical = canonicalUrl(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage.path, Astro.site).href;
 const year = new Date().getFullYear();
 
 // Each page issue adds its own link when its route exists (issue #39, "Link rule").
@@ -61,7 +86,26 @@ const current = (href: string): 'page' | undefined =>
       })();
     </script>
     <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    <meta name="description" content={description} />
+    {hasOwnUrl && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    {hasOwnUrl && <meta property="og:url" content={canonical} />}
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content={String(ogImage.width)} />
+    <meta property="og:image:height" content={String(ogImage.height)} />
+    <meta property="og:image:alt" content={ogImage.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonLd && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={jsonLdScript(jsonLd)}
+      />
+    )}
     <link
       rel="alternate"
       type="application/rss+xml"

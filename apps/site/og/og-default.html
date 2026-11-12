@@ -1,0 +1,88 @@
+<!doctype html>
+<!--
+  Source of public/og-default.png, the 1200 × 630 Open Graph image (issue #34).
+  Render it with `pnpm --filter site og-image` (og/render.ts). Colours, fonts and spacing
+  come from the design tokens in src/styles/global.css; the root font size scales them up.
+-->
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <title>Open Graph image</title>
+    <link rel="stylesheet" href="../src/styles/global.css" />
+    <style>
+      /* The same self-hosted files as astro.config.mjs; nothing loads from the network. */
+      @font-face {
+        font-family: 'Pixelify Sans';
+        src: url('../node_modules/@fontsource/pixelify-sans/files/pixelify-sans-latin-400-normal.woff2')
+          format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Atkinson Hyperlegible';
+        src: url('../node_modules/@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-400-normal.woff2')
+          format('woff2');
+      }
+
+      :root {
+        --font-pixel: 'Pixelify Sans', sans-serif;
+        --font-body: 'Atkinson Hyperlegible', sans-serif;
+      }
+
+      /* 1rem = 40px, so the token scale fits a 1200 px wide card. */
+      html {
+        font-size: 250%;
+      }
+
+      body {
+        width: 1200px;
+        height: 630px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: var(--space-6) var(--space-7);
+        border: var(--space-2) solid var(--color-surface);
+        background: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-body);
+      }
+
+      .name {
+        font-family: var(--font-pixel);
+        font-size: var(--text-2xl);
+        line-height: 1.1;
+      }
+
+      .role {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-top: var(--space-4);
+        color: var(--color-muted);
+        font-size: var(--text-base);
+      }
+
+      .role-bar {
+        width: var(--space-3);
+        height: var(--space-1);
+        background: var(--color-highlight);
+      }
+
+      .domain {
+        font-family: var(--font-pixel);
+        font-size: var(--text-sm);
+        color: var(--color-accent);
+      }
+    </style>
+  </head>
+  <body>
+    <span></span>
+    <div>
+      <p class="name">Medhini Oak</p>
+      <p class="role">
+        Software engineer
+        <span class="role-bar"></span>
+      </p>
+    </div>
+    <p class="domain">medhinioak.dev</p>
+  </body>
+</html>

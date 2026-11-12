@@ -14,14 +14,20 @@ import {
   mailSubject,
   mailtoHref,
 } from '../lib/contact';
+import { personJsonLd } from '../lib/seo';
 
 const projects = (await getPublishedProjects()).slice(0, 2);
 const [latestPost] = await getPublishedPosts();
+const person = personJsonLd(
+  new URL('/', Astro.site).href,
+  Object.values(channels).map((channel) => channel.href),
+);
 ---
 
 <BaseLayout
   title="Medhini Oak"
-  description="PLACEHOLDER: one-sentence description of the Home page"
+  description="I'm Medhini Oak, a software engineer. Here you'll find case studies of my projects, my blog and how to get in touch."
+  jsonLd={person}
 >
   <section class="intro" aria-labelledby="intro-title">
     <h1 id="intro-title">PLACEHOLDER: one-line headline</h1>
