@@ -1,0 +1,148 @@
+---
+/** Privacy policy: hosting logs, no cookies or third parties, the theme preference (issue #33). */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { email, legalName, mailtoHref } from '../lib/contact';
+
+// Link GitHub's own wording rather than paraphrasing it (issue #33).
+// Update this page when hosting moves to AWS (Phase 2) or analytics are added (Phase 4).
+const pagesDataUrl =
+  'https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection';
+const githubPrivacyUrl =
+  'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement';
+---
+
+<BaseLayout
+  title="Privacy · Medhini Oak"
+  description="PLACEHOLDER: one-sentence description of the privacy page"
+>
+  <div class="legal">
+    <h1>Privacy policy</h1>
+    <p>
+      This site has no cookies, no analytics, no embeds and no tracking. This
+      page explains the little data that is processed when you visit it.
+    </p>
+
+    <section aria-labelledby="responsible-title">
+      <h2 id="responsible-title">Who is responsible</h2>
+      <p>{legalName}</p>
+      <p>
+        Email: <a href={mailtoHref(email)}>{email}</a>
+      </p>
+      <p>
+        More details are in the <a href="/impressum/">Impressum</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="hosting-title">
+      <h2 id="hosting-title">Hosting and server logs</h2>
+      <p>
+        The site is hosted on GitHub Pages, a service of GitHub, Inc. in the
+        USA. When you open a page, your browser sends a request to GitHub's
+        servers, and GitHub processes your IP address to deliver the page.
+        According to GitHub, the IP address of every visitor is logged and
+        stored for security purposes. I have no access to these logs.
+      </p>
+      <p>
+        GitHub describes this in its documentation on{' '}
+        <a href={pagesDataUrl}>data collection for GitHub Pages</a> and in the{' '}
+        <a href={githubPrivacyUrl}>GitHub General Privacy Statement</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="basis-title">
+      <h2 id="basis-title">Legal basis and retention</h2>
+      <p>
+        The processing is based on legitimate interest (Art. 6(1)(f) GDPR):
+        delivering the site securely and reliably.
+      </p>
+      <p>
+        GitHub does not publish a specific retention period for these logs. Its
+        privacy statement says that retention depends on the purpose and on
+        legal obligations; see the links above.
+      </p>
+    </section>
+
+    <section aria-labelledby="third-title">
+      <h2 id="third-title">No cookies, analytics or third parties</h2>
+      <p>
+        The site sets no cookies and uses no analytics, trackers or embedded
+        content. All fonts, scripts and images come from this site itself; your
+        browser makes no requests to anyone else.
+      </p>
+      <p>
+        Links to other services, such as GitHub, LinkedIn, YouTube or Twitch,
+        are plain links. Those services only receive data from you if you follow
+        a link, and then their own privacy policies apply.
+      </p>
+    </section>
+
+    <section aria-labelledby="email-title">
+      <h2 id="email-title">Email</h2>
+      <p>
+        The "Email me" button is a <code>mailto:</code> link. It opens your own
+        mail app; the site itself receives and stores nothing.
+      </p>
+    </section>
+
+    <section aria-labelledby="theme-title">
+      <h2 id="theme-title">Your theme preference</h2>
+      <p>
+        Nothing is stored until you use the theme toggle. If you choose light or
+        dark, that choice is saved in your browser's local storage under the key{' '}
+        <code>theme</code>, so the site remembers it on your next visit. It
+        stays in your browser and is never sent anywhere.
+      </p>
+      <p>
+        To remove it, choose "system" with the toggle, or clear this site's data
+        in your browser settings.
+      </p>
+    </section>
+
+    <section aria-labelledby="rights-title">
+      <h2 id="rights-title">Your rights</h2>
+      <p>Under the GDPR you have the right to:</p>
+      <ul>
+        <li>access the personal data held about you (Art. 15)</li>
+        <li>have it corrected (Art. 16)</li>
+        <li>have it erased (Art. 17)</li>
+        <li>have its processing restricted (Art. 18)</li>
+        <li>object to its processing (Art. 21)</li>
+        <li>
+          lodge a complaint with a data protection supervisory authority, in
+          particular in the EU member state where you live or work, or where you
+          believe your data was misused (Art. 77)
+        </li>
+      </ul>
+      <p>
+        To use these rights, email me at <a href={mailtoHref(email)}>{email}</a>
+        . For the server logs, you can also contact GitHub directly.
+      </p>
+    </section>
+
+    <section aria-labelledby="changes-title">
+      <h2 id="changes-title">Changes</h2>
+      <p>
+        This policy is updated whenever the site changes how it handles data,
+        for example when it moves to a different host.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal,
+  .legal section {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+  }
+
+  .legal section {
+    margin-top: var(--space-5);
+  }
+
+  .legal ul {
+    display: grid;
+    gap: var(--space-2);
+  }
+</style>

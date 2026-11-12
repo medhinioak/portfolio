@@ -1,6 +1,9 @@
 /** Contact details and links shared by the Home page, About page and footer (issue #29). */
 
-/** The address shown on Home and in the footer. */
+/** The name in the Impressum and privacy policy (issue #33). */
+export const legalName = 'PLACEHOLDER: full name for the Impressum';
+
+/** The address shown on Home, in the footer and on the legal pages. */
 export const email = 'PLACEHOLDER: email address';
 
 /** The subject a visitor's mail app fills in for "Email me". */
