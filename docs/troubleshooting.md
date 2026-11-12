@@ -41,6 +41,15 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
 - **Status:** _open_. PR #10 is merged and the prompt now carries the values (run
   42986490166 log: `PULL_REQUEST_NUMBER=9`). A posted review has not been seen yet: run
   42986021710 hit the daily quota and run 42986490166 hit a Google outage (503).
+  - 2026-11-12, issue #25: switched `GEMINI_MODEL` to `gemini-3-flash-preview` and commented
+    `@gemini-cli /review` once on PR #49 (run 43127182869, 00:25 UTC). The run started and
+    called tools, then failed after 49 s with `429`: `generate_content_free_tier_requests,
+    limit: 20, model: gemini-3-flash`, "retry in 7h33m" (the reset at midnight Pacific). The
+    day's earlier runs were all on `gemini-3.8-flash`, so the two names seem to share one
+    quota. Before the 429,
+    `run_shell_command` was refused (expected, see above) and one
+    `mcp_github_pull_request_read` call "reported an error"; the action skips the
+    `gemini-output` upload when the run fails, so that error's details aren't available.
 
 ### Green run, no review posted
 
@@ -117,8 +126,10 @@ Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _o
   and every test run of a workflow fix spends from the same budget. The job fails (red)
   when this happens.
 - **Fix:** keep re-runs to a minimum; review once the PR is ready, not after every push.
-  The quota is per model, so a run that hits it can be retried the next day or with
-  another model in `GEMINI_MODEL`. Usage: https://ai.dev/rate-limit.
+  A run that hits the quota can be retried after midnight Pacific (08:00 UTC). Switching
+  `GEMINI_MODEL` doesn't always help: on 2026-11-12 `gemini-3-flash-preview` failed
+  on the `model: gemini-3-flash` quota after the day's runs on `gemini-3.8-flash`
+  (run 43127182869), so the two names seem to share one quota. Usage: https://ai.dev/rate-limit.
 - **Status:** _open_. See the parking lot for alternatives.
 
 ### How to see what Gemini is doing
