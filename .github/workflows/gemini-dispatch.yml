@@ -1,6 +1,7 @@
 # Trimmed copy of google-github-actions/run-gemini-cli examples/workflows/gemini-dispatch.
-# Only PR review is enabled: automatic on PR open, or comment '@gemini-cli /review [focus]'.
-# See docs/ai-usage.md.
+# Only PR review is enabled, and only on request: comment '@gemini-cli /review [focus]'.
+# There is no automatic review on PR open: the free tier's 20 requests a day can't cover
+# every PR (ADR-0009). See docs/ai-usage.md.
 name: '🔀 Gemini Dispatch'
 
 on:
@@ -10,9 +11,6 @@ on:
   pull_request_review:
     types:
       - 'submitted'
-  pull_request:
-    types:
-      - 'opened'
   issue_comment:
     types:
       - 'created'
@@ -42,17 +40,12 @@ jobs:
           env | grep '^DEBUG_'
 
   dispatch:
-    # For PRs: only if not from a fork
-    # For comments: only '@gemini-cli /review' from OWNER/MEMBER/COLLABORATOR
+    # Only '@gemini-cli /review' comments from OWNER/MEMBER/COLLABORATOR. A comment runs
+    # as the commenter with the repository's secrets, also on Dependabot's PRs.
     if: |-
-      (
-        github.event_name == 'pull_request' &&
-        github.event.pull_request.head.repo.fork == false
-      ) || (
-        github.event.sender.type == 'User' &&
-        startsWith(github.event.comment.body || github.event.review.body || github.event.issue.body, '@gemini-cli') &&
-        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association || github.event.review.author_association || github.event.issue.author_association)
-      )
+      github.event.sender.type == 'User' &&
+      startsWith(github.event.comment.body || github.event.review.body || github.event.issue.body, '@gemini-cli') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association || github.event.review.author_association || github.event.issue.author_association)
     runs-on: 'ubuntu-latest'
     permissions:
       contents: 'read'
@@ -80,17 +73,13 @@ jobs:
         id: 'extract_command'
         uses: 'actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea' # ratchet:actions/github-script@v7
         env:
-          EVENT_TYPE: '${{ github.event_name }}.${{ github.event.action }}'
           REQUEST: '${{ github.event.comment.body || github.event.review.body || github.event.issue.body }}'
         with:
           script: |
-            const eventType = process.env.EVENT_TYPE;
             const request = process.env.REQUEST;
             core.setOutput('request', request);
 
-            if (eventType === 'pull_request.opened') {
-              core.setOutput('command', 'review');
-            } else if (request.startsWith("@gemini-cli /review")) {
+            if (request.startsWith("@gemini-cli /review")) {
               core.setOutput('command', 'review');
               const additionalContext = request.replace(/^@gemini-cli \/review/, '').trim();
               core.setOutput('additional_context', additionalContext);

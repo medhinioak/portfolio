@@ -1,6 +1,6 @@
 # ADR-0006: Use AI assistants as author and reviewers, with the owner deciding
 
-- Status: Accepted
+- Status: Accepted; the automatic Gemini PR review is superseded by [ADR-0009](0009-gemini-pr-review-on-request.md)
 - Date: 2026-11-10
 - Decider: Medhini
 - Review: Claude (project chat), 2026-11-10

@@ -18,9 +18,11 @@ small single-player game that lives in its own package.
 ## How this was built
 
 Built solo with AI assistants under human review: Claude Code writes code on a branch,
-Claude and Gemini review every pull request independently, and every merge and decision
-is mine. Details in [`docs/ai-usage.md`](docs/ai-usage.md) and
-[ADR-0006](docs/adr/0006-ai-assisted-development-with-human-review.md).
+every pull request gets a fresh-context Claude review, CI checks and my own review,
+Gemini reviews riskier changes on request, and every merge and decision is mine.
+Details in [`docs/ai-usage.md`](docs/ai-usage.md),
+[ADR-0006](docs/adr/0006-ai-assisted-development-with-human-review.md) and
+[ADR-0009](docs/adr/0009-gemini-pr-review-on-request.md).
 
 ## Licence
 
