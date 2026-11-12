@@ -25,8 +25,13 @@ const navItems: NavItem[] = [
   { label: 'Contact', href: '/#contact' },
 ];
 
-// In this order when filled: Impressum, Privacy, email, RSS.
-const footerLinks: NavItem[] = [{ label: email, href: mailtoHref(email) }];
+// Impressum and Privacy first, so both are one click from every page (issue #33).
+// RSS goes after the email when the blog exists.
+const footerLinks: NavItem[] = [
+  { label: 'Impressum', href: '/impressum/' },
+  { label: 'Privacy', href: '/privacy/' },
+  { label: email, href: mailtoHref(email) },
+];
 
 const current = (href: string): 'page' | undefined =>
   isCurrentPage(href, Astro.url.pathname) ? 'page' : undefined;
@@ -152,15 +157,15 @@ const current = (href: string): 'page' | undefined =>
     </main>
     <footer class="site-footer">
       <div class="wrap">
-        {footerLinks.length > 0 && (
-          <ul class="footer-links">
-            {footerLinks.map((item) => (
-              <li>
-                <a href={item.href}>{item.label}</a>
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul class="footer-links">
+          {footerLinks.map((item) => (
+            <li>
+              <a href={item.href} aria-current={current(item.href)}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
         <p class="muted">© {year} medhinioak.dev</p>
       </div>
     </footer>

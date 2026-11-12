@@ -1,0 +1,26 @@
+---
+/** Impressum (legal notice) under § 5 DDG and § 18 MStV (issue #33). */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { email, legalName, mailtoHref } from '../lib/contact';
+---
+
+<BaseLayout
+  title="Impressum · Medhini Oak"
+  description="PLACEHOLDER: one-sentence description of the Impressum page"
+>
+  <div class="legal">
+    <h1>Impressum</h1>
+    <p>
+      Information under § 5 DDG. Responsible for the content under § 18 (2)
+      MStV:
+    </p>
+    <dl>
+      <dt>Name</dt>
+      <dd>{legalName}</dd>
+      <dt>Email</dt>
+      <dd>
+        <a href={mailtoHref(email)}>{email}</a>
+      </dd>
+    </dl>
+  </div>
+</BaseLayout>
