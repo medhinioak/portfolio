@@ -73,6 +73,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build
+        id: build
         run: pnpm build
 
       - name: Install Chromium for Playwright
@@ -81,9 +82,11 @@ jobs:
       - name: Playwright (smoke, axe, drawer)
         run: pnpm --filter site test:e2e
 
-      # Uses the runner's Google Chrome. Reports stay on the runner (upload target
-      # filesystem), not on Google's public temporary storage.
+      # Runs even when Playwright failed, so one run reports both. Uses the runner's
+      # Google Chrome. Reports stay on the runner (upload target filesystem), not on
+      # Google's public temporary storage.
       - name: Lighthouse CI
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: pnpm exec lhci autorun
 
       - name: Upload Playwright report
