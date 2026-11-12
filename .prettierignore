@@ -1,6 +1,9 @@
 dist
 .astro
 coverage
+playwright-report
+test-results
+.lighthouseci
 pnpm-lock.yaml
 .claude
 # Docs are hand-formatted (compact tables); Prettier covers code and config only.
