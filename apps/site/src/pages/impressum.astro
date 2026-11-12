@@ -8,8 +8,8 @@ import { email, legalName, mailtoHref } from '../lib/contact';
   title="Impressum · Medhini Oak"
   description="PLACEHOLDER: one-sentence description of the Impressum page"
 >
-  <section class="legal" aria-labelledby="impressum-title">
-    <h1 id="impressum-title">Impressum</h1>
+  <div class="legal">
+    <h1>Impressum</h1>
     <p>
       Information under § 5 DDG. Responsible for the content under § 18 (2)
       MStV:
@@ -22,21 +22,5 @@ import { email, legalName, mailtoHref } from '../lib/contact';
         <a href={mailtoHref(email)}>{email}</a>
       </dd>
     </dl>
-  </section>
+  </div>
 </BaseLayout>
-
-<style>
-  .legal {
-    display: grid;
-    gap: var(--space-5);
-  }
-
-  dl {
-    display: grid;
-    gap: var(--space-2);
-  }
-
-  dt {
-    font-weight: 700;
-  }
-</style>

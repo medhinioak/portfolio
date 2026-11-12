@@ -47,6 +47,13 @@ const githubPrivacyUrl =
         <a href={pagesDataUrl}>data collection for GitHub Pages</a> and in the{' '}
         <a href={githubPrivacyUrl}>GitHub General Privacy Statement</a>.
       </p>
+      <p>
+        Because GitHub processes data in the USA, your IP address may leave the
+        EU. According to the "International data transfers" section of its
+        privacy statement, GitHub generally relies on the standard contractual
+        clauses of the European Commission (Implementing Decision 2021/914) for
+        such transfers.
+      </p>
     </section>
 
     <section aria-labelledby="basis-title">
@@ -82,6 +89,11 @@ const githubPrivacyUrl =
         The "Email me" button is a <code>mailto:</code> link. It opens your own
         mail app; the site itself receives and stores nothing.
       </p>
+      <p>
+        If you send me an email, I receive your email address and your message.
+        PLACEHOLDER: what emails are used for, the legal basis, how long they
+        are kept and which mail provider hosts them.
+      </p>
     </section>
 
     <section aria-labelledby="theme-title">
@@ -106,7 +118,6 @@ const githubPrivacyUrl =
         <li>have it corrected (Art. 16)</li>
         <li>have it erased (Art. 17)</li>
         <li>have its processing restricted (Art. 18)</li>
-        <li>object to its processing (Art. 21)</li>
         <li>
           lodge a complaint with a data protection supervisory authority, in
           particular in the EU member state where you live or work, or where you
@@ -116,6 +127,11 @@ const githubPrivacyUrl =
       <p>
         To use these rights, email me at <a href={mailtoHref(email)}>{email}</a>
         . For the server logs, you can also contact GitHub directly.
+      </p>
+      <p>
+        <strong>Right to object (Art. 21 GDPR):</strong> because the processing
+        is based on legitimate interest, you can object to it at any time, on
+        grounds relating to your particular situation.
       </p>
     </section>
 
@@ -128,21 +144,3 @@ const githubPrivacyUrl =
     </section>
   </div>
 </BaseLayout>
-
-<style>
-  .legal,
-  .legal section {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-4);
-  }
-
-  .legal section {
-    margin-top: var(--space-5);
-  }
-
-  .legal ul {
-    display: grid;
-    gap: var(--space-2);
-  }
-</style>

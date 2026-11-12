@@ -1,4 +1,4 @@
-/** Contact details and links shared by the Home page, About page and footer (issue #29). */
+/** Contact details and links shared by Home, About, the footer (#29) and the legal pages (#33). */
 
 /** The name in the Impressum and privacy policy (issue #33). */
 export const legalName = 'PLACEHOLDER: full name for the Impressum';

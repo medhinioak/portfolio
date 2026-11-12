@@ -157,15 +157,15 @@ const current = (href: string): 'page' | undefined =>
     </main>
     <footer class="site-footer">
       <div class="wrap">
-        {footerLinks.length > 0 && (
-          <ul class="footer-links">
-            {footerLinks.map((item) => (
-              <li>
-                <a href={item.href}>{item.label}</a>
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul class="footer-links">
+          {footerLinks.map((item) => (
+            <li>
+              <a href={item.href} aria-current={current(item.href)}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
         <p class="muted">© {year} medhinioak.dev</p>
       </div>
     </footer>
