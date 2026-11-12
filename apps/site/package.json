@@ -7,12 +7,14 @@
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "typecheck": "ASTRO_TELEMETRY_DISABLED=1 astro check",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "og-image": "node og/render.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.7",
     "@astrojs/react": "7.1.7",
     "@astrojs/rss": "4.0.19",
+    "@astrojs/sitemap": "3.7.4",
     "@fontsource/atkinson-hyperlegible": "5.3.0",
     "@fontsource/pixelify-sans": "5.3.0",
     "astro": "7.4.10",
