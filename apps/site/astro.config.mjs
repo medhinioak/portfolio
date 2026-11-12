@@ -27,8 +27,8 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     react(),
-    // The 404 page is served for missing URLs and does not belong in the sitemap.
-    sitemap({ filter: (page) => !/\/404\/?$/.test(page) }),
+    // Leaves out the 404 page by itself.
+    sitemap(),
   ],
   markdown: {
     // A Markdown image with a title on its own line becomes a captioned figure;

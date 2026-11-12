@@ -1,26 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { articleJsonLd, canonicalUrl, jsonLdScript } from './seo';
-
-const site = new URL('https://medhinioak.dev');
-
-describe('canonicalUrl', () => {
-  it('keeps the root and paths that already end in a slash', () => {
-    expect(canonicalUrl('/', site)).toBe('https://medhinioak.dev/');
-    expect(canonicalUrl('/blog/post-1/', site)).toBe(
-      'https://medhinioak.dev/blog/post-1/',
-    );
-  });
-
-  it('adds the slash GitHub Pages redirects to for directory pages', () => {
-    expect(canonicalUrl('/about', site)).toBe('https://medhinioak.dev/about/');
-  });
-
-  it('leaves file paths alone', () => {
-    expect(canonicalUrl('/404.html', site)).toBe(
-      'https://medhinioak.dev/404.html',
-    );
-  });
-});
+import { articleJsonLd, jsonLdScript } from './seo';
 
 describe('articleJsonLd', () => {
   const post = {

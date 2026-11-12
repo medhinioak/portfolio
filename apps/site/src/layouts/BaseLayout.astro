@@ -5,13 +5,7 @@ import ThemeToggle from '../components/ThemeToggle';
 import { email, mailtoHref } from '../lib/contact';
 import { isCurrentPage, type NavItem } from '../lib/nav';
 import { feedTitle } from '../lib/posts';
-import {
-  canonicalUrl,
-  jsonLdScript,
-  ogImage,
-  siteName,
-  type JsonLd,
-} from '../lib/seo';
+import { jsonLdScript, ogImage, siteName, type JsonLd } from '../lib/seo';
 import '../styles/global.css';
 
 interface Props {
@@ -38,7 +32,8 @@ const {
   hasOwnUrl = true,
 } = Astro.props;
 if (!Astro.site) throw new Error('Set `site` in astro.config.mjs.');
-const canonical = canonicalUrl(Astro.url.pathname, Astro.site);
+// trailingSlash: 'always' makes every page path end in a slash, as GitHub Pages serves it.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage.path, Astro.site).href;
 const year = new Date().getFullYear();
 

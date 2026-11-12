@@ -1,4 +1,4 @@
-/** Head metadata helpers: site name, canonical URLs and JSON-LD structured data (pure, no Astro imports). */
+/** Head metadata helpers: site name, Open Graph image and JSON-LD structured data (pure, no Astro imports). */
 
 /** The site name: the end of every title and `og:site_name` (owner, issue #34). */
 export const siteName = 'Medhini Oak';
@@ -13,21 +13,6 @@ export const ogImage = {
   height: 630,
   alt: 'Medhini Oak, software engineer, medhinioak.dev',
 } as const;
-
-// A last segment with a dot is a file (rss.xml, 404.html), not a directory.
-const fileSegment = /\/[^/]*\.[^/]*$/;
-
-/**
- * The absolute canonical URL of a page on `site`. Pages are built as directories and
- * GitHub Pages redirects /about to /about/, so directory paths always end in a slash.
- */
-export function canonicalUrl(pathname: string, site: URL): string {
-  const path =
-    pathname.endsWith('/') || fileSegment.test(pathname)
-      ? pathname
-      : `${pathname}/`;
-  return new URL(path, site).href;
-}
 
 /** A JSON-LD object (schema.org vocabulary). */
 export type JsonLd = Record<string, unknown>;

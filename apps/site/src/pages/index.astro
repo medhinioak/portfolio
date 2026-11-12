@@ -18,6 +18,7 @@ import { personJsonLd } from '../lib/seo';
 
 const projects = (await getPublishedProjects()).slice(0, 2);
 const [latestPost] = await getPublishedPosts();
+if (!Astro.site) throw new Error('Set `site` in astro.config.mjs.');
 const person = personJsonLd(
   new URL('/', Astro.site).href,
   Object.values(channels).map((channel) => channel.href),

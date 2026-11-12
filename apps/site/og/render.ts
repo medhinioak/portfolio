@@ -1,9 +1,12 @@
 /** Renders og/og-default.html to public/og-default.png with headless Chromium (issue #34). */
+import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 import sharp from 'sharp';
 
 const source = new URL('og-default.html', import.meta.url);
-const target = new URL('../public/og-default.png', import.meta.url);
+const target = fileURLToPath(
+  new URL('../public/og-default.png', import.meta.url),
+);
 
 const browser = await chromium.launch();
 try {
@@ -23,8 +26,8 @@ try {
   // A palette PNG keeps the flat-colour card well under the 150 KB budget.
   const info = await sharp(png)
     .png({ palette: true, compressionLevel: 9 })
-    .toFile(target.pathname);
-  console.log(`Wrote ${target.pathname} (${Math.round(info.size / 1024)} KB)`);
+    .toFile(target);
+  console.log(`Wrote ${target} (${Math.round(info.size / 1024)} KB)`);
 } finally {
   await browser.close();
 }
