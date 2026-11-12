@@ -19,7 +19,10 @@ Phase 2 adds AWS.
    is cancelled and replaced by the newest one. A cancelled deploy run is expected, not a failure.
 
 [`ci.yml`](../.github/workflows/ci.yml) runs lint, type check, tests and build on every
-pull request and on `main`. It doesn't deploy, and it doesn't check for `PLACEHOLDER:`.
+pull request and on `main` (job `ci`). Job `quality` then builds again and runs the
+Playwright smoke, axe and drawer tests and Lighthouse CI; its reports are the
+`playwright-report` and `lighthouse-reports` artifacts of the run. Neither job deploys
+or checks for `PLACEHOLDER:`.
 Deploy doesn't wait for CI; the main ruleset (below) makes sure only commits that passed
 CI reach `main`.
 

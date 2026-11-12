@@ -1,4 +1,5 @@
-# Lint, type check, test and build on every pull request and push to main.
+# Lint, type check, test and build on every pull request and push to main; then the
+# `quality` job runs Playwright (smoke, axe, drawer) and Lighthouse CI on the build.
 # The job id `ci` is the required status check; do not rename it.
 name: CI
 
@@ -47,3 +48,57 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+  # Playwright smoke, axe and drawer tests, then Lighthouse CI, on the built site (issue #12).
+  quality:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up pnpm (version from packageManager)
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+
+      - name: Set up Node (version from .nvmrc)
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Install Chromium for Playwright
+        run: pnpm --filter site exec playwright install --with-deps chromium
+
+      - name: Playwright (smoke, axe, drawer)
+        run: pnpm --filter site test:e2e
+
+      # Uses the runner's Google Chrome. Reports stay on the runner (upload target
+      # filesystem), not on Google's public temporary storage.
+      - name: Lighthouse CI
+        run: pnpm exec lhci autorun
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report
+          path: apps/site/playwright-report/
+          retention-days: 14
+
+      - name: Upload Lighthouse reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          retention-days: 14
+          include-hidden-files: true

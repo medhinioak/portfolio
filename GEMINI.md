@@ -27,6 +27,10 @@ Keep these rules in step with `CLAUDE.md`.
 - Accessibility target is WCAG 2.2 AA for every interactive UI component: keyboard
   navigation, visible focus states, screen reader labels, alt text, contrast in both
   light and dark themes, `prefers-reduced-motion`.
+- CI's `quality` job checks every built page: `pnpm --filter site test:e2e` (Playwright
+  smoke test, axe in both themes, drawer keyboard test) and `pnpm exec lhci autorun`
+  (Lighthouse at 0.95 or higher in all four categories). New interactive behaviour needs
+  an e2e test in `apps/site/e2e/`.
 - Conventional Commit titles; one topic per pull request.
 
 ## What to look for, in order

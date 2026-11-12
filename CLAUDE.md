@@ -10,6 +10,8 @@ AI roles and reviews: docs/ai-usage.md.
 - Site dev server: pnpm --filter site dev
 - Game playground: pnpm --filter game dev
 - Tests: pnpm test (one file: pnpm vitest run path/to/file.test.ts)
+- E2E, after pnpm build: pnpm --filter site test:e2e (Playwright smoke, axe, drawer);
+  Lighthouse: pnpm exec lhci autorun
 - Type check: pnpm -r typecheck
 - Lint: pnpm lint
 - Build: pnpm build

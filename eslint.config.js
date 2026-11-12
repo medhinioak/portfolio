@@ -23,7 +23,16 @@ const reactImports = {
 };
 
 export default tseslint.config(
-  { ignores: ['**/dist/', '**/.astro/', '**/coverage/'] },
+  {
+    ignores: [
+      '**/dist/',
+      '**/.astro/',
+      '**/coverage/',
+      '**/playwright-report/',
+      '**/test-results/',
+      '.lighthouseci/',
+    ],
+  },
   js.configs.recommended,
   tseslint.configs.recommended,
   astro.configs.recommended,
