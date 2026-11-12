@@ -1,0 +1,47 @@
+---
+/** Blog index: every published post, newest first, with the RSS link (issue #32). */
+import FeedIcon from '../../components/FeedIcon.astro';
+import PostCard from '../../components/PostCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../lib/get-posts';
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout
+  title="Blog · Medhini Oak"
+  description="PLACEHOLDER: one-sentence description of the Blog page"
+>
+  <div class="head">
+    <h1>Blog</h1>
+    <a class="button button-secondary button-small" href="/rss.xml">
+      <FeedIcon />
+      RSS
+    </a>
+  </div>
+  {posts.length > 0 ? (
+    <div class="posts">
+      {posts.map((post) => (
+        <PostCard post={post} headingLevel={2} />
+      ))}
+    </div>
+  ) : (
+    <p class="posts">No posts yet.</p>
+  )}
+</BaseLayout>
+
+<style>
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .posts {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+</style>

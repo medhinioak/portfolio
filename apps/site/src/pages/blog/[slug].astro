@@ -1,0 +1,220 @@
+---
+/** One page per published blog post: header, optional cover, Markdown body, previous/next and RSS (issue #32). */
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Arrow from '../../components/Arrow.astro';
+import FeedIcon from '../../components/FeedIcon.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../lib/get-posts';
+import { formatPostDate, isoDay, readingMinutes } from '../../lib/posts';
+import { neighbours } from '../../lib/projects';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => {
+    // The list is newest first, so the entry before is newer and the one after is older.
+    const { previous: newer, next: older } = neighbours(posts, post.id);
+    return { params: { slug: post.id }, props: { post, newer, older } };
+  });
+}) satisfies GetStaticPaths;
+
+const { post, newer, older } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, cover } = post.data;
+const { Content } = await render(post);
+const minutes = readingMinutes(post.body ?? '');
+---
+
+<BaseLayout title={`${title} · Medhini Oak`} description={description}>
+  <article class="post">
+    <header class="header">
+      <a class="button button-secondary button-small" href="/blog/">
+        <Arrow direction="left" />
+        All posts
+      </a>
+      <p class="meta muted">
+        <time datetime={isoDay(pubDate)}>{formatPostDate(pubDate)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{minutes} min read</span>
+        {updatedDate && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>
+              Updated{' '}
+              <time datetime={isoDay(updatedDate)}>
+                {formatPostDate(updatedDate)}
+              </time>
+            </span>
+          </>
+        )}
+      </p>
+      <h1 class="title-long">{title}</h1>
+      <p class="summary muted">{description}</p>
+      {tags.length > 0 && (
+        <ul class="chips" role="list" aria-label="Tags">
+          {tags.map((tag) => (
+            <li class="chip">{tag}</li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    {cover && (
+      <Image
+        class="cover"
+        src={cover.image}
+        alt={cover.alt}
+        loading="eager"
+        fetchpriority="high"
+        widths={[480, 736, 1472]}
+        sizes="(min-width: 48em) 46rem, calc(100vw - 2rem)"
+      />
+    )}
+
+    <div class="body">
+      <Content />
+    </div>
+
+    <footer class="end">
+      {(older || newer) && (
+        <nav class="pager" aria-label="More posts">
+          {older && (
+            <a
+              class="button button-secondary button-small"
+              href={`/blog/${older.id}/`}
+              aria-label={`Previous post: ${older.data.title}`}
+            >
+              <Arrow direction="left" />
+              Previous post
+            </a>
+          )}
+          {newer && (
+            <a
+              class="button button-secondary button-small next"
+              href={`/blog/${newer.id}/`}
+              aria-label={`Next post: ${newer.data.title}`}
+            >
+              Next post
+              <Arrow direction="right" />
+            </a>
+          )}
+        </nav>
+      )}
+      <a class="button button-primary button-small" href="/rss.xml">
+        <FeedIcon />
+        Subscribe with RSS
+      </a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .header {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+  }
+
+  /* Date · reading time · updated: the gap spaces the dots, whatever the markup's whitespace. */
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--space-2);
+  }
+
+  .summary {
+    font-size: var(--text-lg);
+  }
+
+  .cover {
+    width: 100%;
+    height: auto;
+    margin-top: var(--space-7);
+    border-radius: var(--radius);
+  }
+
+  /* The Markdown body: every element a post can use, at the text measure. */
+  .body {
+    margin-top: var(--space-7);
+  }
+
+  .body > :global(* + *) {
+    margin-top: var(--space-4);
+  }
+
+  .body > :global(:is(h2, h3):not(:first-child)) {
+    margin-top: var(--space-6);
+  }
+
+  .body :global(:is(ul, ol)) {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: var(--space-5);
+  }
+
+  .body :global(blockquote) {
+    max-width: var(--measure);
+    padding-left: var(--space-4);
+    border-left: var(--space-1) solid var(--color-accent);
+    font-style: italic;
+  }
+
+  /* Code blocks keep their lines and scroll sideways; tabindex comes from the rehype plugin. */
+  .body :global(pre) {
+    overflow-x: auto;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    line-height: 1.5;
+  }
+
+  .body :global(pre code) {
+    padding: 0;
+    background: none;
+    font-size: inherit;
+  }
+
+  .body :global(figure) {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .body :global(img) {
+    height: auto;
+    border-radius: var(--radius);
+  }
+
+  .body :global(figcaption) {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .end {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+  }
+
+  .pager {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    width: 100%;
+  }
+
+  .next {
+    margin-left: auto;
+  }
+
+  /* On a phone the buttons fill the column, as in the wireframe. */
+  @media (width < 48em) {
+    .end {
+      justify-items: stretch;
+    }
+
+    .pager .button {
+      flex: 1 1 100%;
+    }
+  }
+</style>

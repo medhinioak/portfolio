@@ -4,6 +4,7 @@ import { Font } from 'astro:assets';
 import ThemeToggle from '../components/ThemeToggle';
 import { email, mailtoHref } from '../lib/contact';
 import { isCurrentPage, type NavItem } from '../lib/nav';
+import { feedTitle } from '../lib/posts';
 import '../styles/global.css';
 
 interface Props {
@@ -17,20 +18,20 @@ const { title, description, showHeader = true } = Astro.props;
 const year = new Date().getFullYear();
 
 // Each page issue adds its own link when its route exists (issue #39, "Link rule").
-// Blog goes between Projects and Contact.
 const navItems: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about/' },
   { label: 'Projects', href: '/projects/' },
+  { label: 'Blog', href: '/blog/' },
   { label: 'Contact', href: '/#contact' },
 ];
 
 // Impressum and Privacy first, so both are one click from every page (issue #33).
-// RSS goes after the email when the blog exists.
 const footerLinks: NavItem[] = [
   { label: 'Impressum', href: '/impressum/' },
   { label: 'Privacy', href: '/privacy/' },
   { label: email, href: mailtoHref(email) },
+  { label: 'RSS', href: '/rss.xml' },
 ];
 
 const current = (href: string): 'page' | undefined =>
@@ -61,6 +62,12 @@ const current = (href: string): 'page' | undefined =>
     </script>
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={feedTitle}
+      href="/rss.xml"
+    />
     <Font
       cssVariable="--font-body"
       preload={[{ weight: 400, style: 'normal' }]}
