@@ -4,3 +4,10 @@ packages:
 allowBuilds:
   esbuild: true
   sharp: true
+# Security fixes for dev-only transitive dependencies whose parents still pin the
+# vulnerable major. Remove each once the parent allows the fixed version.
+overrides:
+  # Dependabot #22. get-uri (via @lhci/cli) asks for ^5.
+  basic-ftp: 6.2.4
+  # Dependabot #17. @typescript-eslint/typescript-estree asks for ^10.
+  'minimatch@>=7 <11.0.1': 11.0.7
