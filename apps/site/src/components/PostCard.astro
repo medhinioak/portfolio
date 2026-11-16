@@ -8,7 +8,7 @@ interface Props {
   post: CollectionEntry<'blog'>;
   /** 2 under the page's h1 (/blog), 3 under a section's h2 (Home). */
   headingLevel: 2 | 3;
-  /** Show the cover as a lazy thumbnail (/blog only). */
+  /** Show the cover as a lazy, decorative thumbnail (/blog only). */
   showCover?: boolean;
 }
 
@@ -22,7 +22,7 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
     <Image
       class="thumb"
       src={cover.image}
-      alt={cover.alt}
+      alt=""
       widths={[320, 640]}
       sizes="20rem"
     />

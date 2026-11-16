@@ -31,9 +31,13 @@ test('every page has a title, description, Open Graph tags and the right canonic
     expect(await content(page, 'meta[name="twitter:card"]')).toBe(
       'summary_large_image',
     );
-    expect(await content(page, 'meta[property="og:image"]')).toBe(
-      `${site}/og-default.png`,
-    );
+    // A blog post with a cover shares the cover (a built PNG); every other page the default.
+    const ogImage = await content(page, 'meta[property="og:image"]');
+    if ((await page.locator('img.cover').count()) > 0) {
+      expect(ogImage).toMatch(new RegExp(`^${site}/_astro/.+\\.png$`));
+    } else {
+      expect(ogImage).toBe(`${site}/og-default.png`);
+    }
 
     // The 404 page is served at any missing URL, so it has no URL of its own.
     const canonical = page.locator('link[rel="canonical"]');

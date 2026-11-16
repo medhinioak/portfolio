@@ -107,9 +107,17 @@ text); the focus ring is a non-text indicator and needs 3:1. All pairs pass.
 | Label on accent                      | 6.83          | 7.74          | 4.5    |
 | Focus ring (accent) vs background    | 6.44          | 7.74          | 3      |
 | Divider lines (surface on background) | 1.11         | 1.11          | none   |
+| Diagram: text on highlight tint (12 % highlight on background) | 13.60 | 12.32 | 4.5 |
+| Diagram: secondary text (text at 80 % opacity) on background / highlight tint | 8.75 / 7.79 | 10.39 / 8.43 | 4.5 |
+| Diagram: highlight box border vs its tint | 4.52 | 9.65 | 3 |
 
 Divider lines (header and footer borders) are decorative: they carry no information,
 so WCAG sets no minimum. They are meant to be quiet.
+
+The diagram rows are for the inline delivery diagram in the portfolio case study
+(`apps/site/src/content/projects/portfolio-site.md`). Its strokes and text are
+`currentColor` (`--color-text`) on `--color-bg`. The deploy box is the one highlight
+area: `--color-highlight` as the border and at 12 % opacity as the fill.
 
 Any new colour pair gets a row here before it is used.
 

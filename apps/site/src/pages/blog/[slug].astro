@@ -28,15 +28,18 @@ const minutes = readingMinutes(post.body ?? '');
 const site = Astro.site;
 if (!site) throw new Error('Set `site` in astro.config.mjs.');
 // The cover, as a PNG at 1200 px, is the post's Open Graph image; otherwise the site default.
-const shareImage = cover
-  ? {
-      path: (await getImage({ src: cover.image, format: 'png', width: 1200 }))
-        .src,
-      width: 1200,
-      height: Math.round((1200 * cover.image.height) / cover.image.width),
-      alt: cover.alt,
-    }
-  : ogImage;
+// Astro never upscales, so the declared size comes from the generated image itself.
+const coverPng =
+  cover && (await getImage({ src: cover.image, format: 'png', width: 1200 }));
+const shareImage =
+  cover && coverPng
+    ? {
+        path: coverPng.src,
+        width: Number(coverPng.attributes.width),
+        height: Number(coverPng.attributes.height),
+        alt: cover.alt,
+      }
+    : ogImage;
 const article = articleJsonLd({
   title,
   description,

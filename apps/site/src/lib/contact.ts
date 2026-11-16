@@ -13,6 +13,9 @@ export const mailSubject = 'Hello from medhinioak.dev';
 export const cvUrl =
   'https://drive.google.com/file/d/1sT2pfrSy8Ox0qNn72XHWaBPMrmt7NUlr/view?usp=drivesdk';
 
+/** This site's source code; other repository links are built from it. */
+export const repoUrl = 'https://github.com/medhinioak/portfolio';
+
 /** Channel links in the Contact section; the label names the destination. */
 export const channels = {
   github: { label: 'GitHub', href: 'https://github.com/medhinioak' },

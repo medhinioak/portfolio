@@ -5,7 +5,7 @@ import { Image } from 'astro:assets';
 import garlic from '../assets/garlic.png';
 import portrait from '../assets/about-portrait.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { cvUrl } from '../lib/contact';
+import { cvUrl, repoUrl } from '../lib/contact';
 
 interface Topic {
   label: string;
@@ -80,8 +80,7 @@ const databricksUrl =
   'https://credentials.databricks.com/d6f5c75e-95dc-461d-8b37-4d58330a45cf';
 const paperUrl =
   'https://link.springer.com/chapter/10.1007/978-981-16-3246-4_49';
-const aiUsageUrl =
-  'https://github.com/medhinioak/portfolio/blob/main/docs/ai-usage.md';
+const aiUsageUrl = `${repoUrl}/blob/main/docs/ai-usage.md`;
 ---
 
 <BaseLayout

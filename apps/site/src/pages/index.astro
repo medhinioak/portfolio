@@ -15,10 +15,9 @@ import {
   email,
   mailSubject,
   mailtoHref,
+  repoUrl,
 } from '../lib/contact';
 import { personJsonLd } from '../lib/seo';
-
-const sourceUrl = 'https://github.com/medhinioak/portfolio';
 
 const projects = (await getPublishedProjects()).slice(0, 2);
 const [latestPost] = await getPublishedPosts();
@@ -62,8 +61,8 @@ const person = personJsonLd(
       </p>
       <p>
         This site is my personal project, built like a serious piece of
-        engineering (the <a href={sourceUrl}>source is on GitHub</a>, if you
-        want to look under the hood). It's my showcase for everything I make,
+        engineering (the <a href={repoUrl}>source is on GitHub</a>, if you want
+        to look under the hood). It's my showcase for everything I make,
         technical or not, plus a blog about what I learn along the way. Poke
         around, and say hello if you like.
       </p>
