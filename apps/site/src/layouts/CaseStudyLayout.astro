@@ -54,18 +54,28 @@ const details = [
         </div>
       </dl>
 
-      <div class="row actions">
-        <a class="button button-primary" href={codeUrl}>
-          View code
-          <Arrow direction="right" />
-        </a>
-        {demoUrl && (
-          <a class="button button-secondary" href={demoUrl}>
-            Live demo
-            <Arrow direction="right" />
-          </a>
-        )}
-      </div>
+      {(codeUrl || demoUrl) && (
+        <div class="row actions">
+          {codeUrl && (
+            <a class="button button-primary" href={codeUrl}>
+              View code
+              <Arrow direction="right" />
+            </a>
+          )}
+          {demoUrl && (
+            <a
+              class:list={[
+                'button',
+                codeUrl ? 'button-secondary' : 'button-primary',
+              ]}
+              href={demoUrl}
+            >
+              Live demo
+              <Arrow direction="right" />
+            </a>
+          )}
+        </div>
+      )}
     </header>
 
     {hero && (
@@ -151,6 +161,17 @@ const details = [
   .case-study :global(figure img) {
     height: auto;
     border-radius: var(--radius);
+  }
+
+  /* Inline SVG diagrams use the body text scale, so they stay at their drawn width (460 px). */
+  .case-study :global(.diagram) {
+    max-width: 28.75rem;
+    margin-inline: auto;
+  }
+
+  .case-study :global(.diagram svg) {
+    width: 100%;
+    height: auto;
   }
 
   .case-study :global(figcaption) {

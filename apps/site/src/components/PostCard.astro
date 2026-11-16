@@ -1,5 +1,6 @@
 ---
-/** Blog post card shared by /blog and Home: date, title link and summary. */
+/** Blog post card shared by /blog and Home: optional cover thumbnail, date, title link and summary. */
+import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { formatPostDate, isoDay } from '../lib/posts';
 
@@ -7,14 +8,25 @@ interface Props {
   post: CollectionEntry<'blog'>;
   /** 2 under the page's h1 (/blog), 3 under a section's h2 (Home). */
   headingLevel: 2 | 3;
+  /** Show the cover as a lazy thumbnail (/blog only). */
+  showCover?: boolean;
 }
 
-const { post, headingLevel } = Astro.props;
-const { title, description, pubDate } = post.data;
+const { post, headingLevel, showCover = false } = Astro.props;
+const { title, description, pubDate, cover } = post.data;
 const Heading = headingLevel === 2 ? 'h2' : 'h3';
 ---
 
 <article class="card post-card">
+  {showCover && cover && (
+    <Image
+      class="thumb"
+      src={cover.image}
+      alt={cover.alt}
+      widths={[320, 640]}
+      sizes="20rem"
+    />
+  )}
   <p class="muted">
     <time datetime={isoDay(pubDate)}>{formatPostDate(pubDate)}</time>
   </p>
@@ -27,6 +39,13 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
 <style>
   .post-card {
     gap: var(--space-2);
+  }
+
+  .thumb {
+    width: 20rem;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius);
   }
 
   .title {

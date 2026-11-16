@@ -10,7 +10,7 @@ const posts = await getPublishedPosts();
 
 <BaseLayout
   title="Blog · Medhini Oak"
-  description="Things I want to share with the world, newest first. Also available as an RSS feed."
+  description="Notes on engineering, side projects and whatever I'm learning along the way."
 >
   <div class="head">
     <h1>Blog</h1>
@@ -22,7 +22,7 @@ const posts = await getPublishedPosts();
   {posts.length > 0 ? (
     <div class="posts">
       {posts.map((post) => (
-        <PostCard post={post} headingLevel={2} />
+        <PostCard post={post} headingLevel={2} showCover />
       ))}
     </div>
   ) : (

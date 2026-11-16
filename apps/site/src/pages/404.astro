@@ -1,22 +1,27 @@
 ---
 /** 404 page: no header, one centred block with a way home, and the footer (issue #29). */
+import gif from '../assets/404-animation.gif';
+import still from '../assets/404-still.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// The small GIF (with a still image under reduced motion) is added when the asset exists.
+// Plain .src, not <Image>: a transform could drop the GIF's animation frames.
 ---
 
 <BaseLayout
   title="Page not found · Medhini Oak"
-  description="This page doesn't exist or has moved. Head back to the home page of medhinioak.dev."
+  description="This page wandered off. Try the home page, the projects or the blog instead."
   showHeader={false}
   hasOwnUrl={false}
 >
   <div class="not-found">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset={still.src} />
+      <img class="art" src={gif.src} alt="" width="360" height="432" />
+    </picture>
     <p class="label muted">Error 404</p>
     <h1>Page not found</h1>
     <p>
-      PLACEHOLDER: one friendly line saying this page does not exist or has
-      moved.
+      This page wandered off. Garlic is investigating, but she's mostly napping.
     </p>
     <div class="row">
       <a class="button button-primary" href="/">
@@ -47,6 +52,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     justify-items: center;
     gap: var(--space-4);
     text-align: center;
+  }
+
+  /* 360 × 432 files at 2×, shown at 180 × 216. */
+  .art {
+    width: 11.25rem;
+    height: auto;
   }
 
   .not-found .row {

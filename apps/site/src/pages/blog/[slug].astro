@@ -1,7 +1,7 @@
 ---
 /** One page per published blog post: header, optional cover, Markdown body, previous/next and RSS (issue #32). */
 import type { GetStaticPaths } from 'astro';
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import { render } from 'astro:content';
 import Arrow from '../../components/Arrow.astro';
 import FeedIcon from '../../components/FeedIcon.astro';
@@ -27,11 +27,21 @@ const { Content } = await render(post);
 const minutes = readingMinutes(post.body ?? '');
 const site = Astro.site;
 if (!site) throw new Error('Set `site` in astro.config.mjs.');
+// The cover, as a PNG at 1200 px, is the post's Open Graph image; otherwise the site default.
+const shareImage = cover
+  ? {
+      path: (await getImage({ src: cover.image, format: 'png', width: 1200 }))
+        .src,
+      width: 1200,
+      height: Math.round((1200 * cover.image.height) / cover.image.width),
+      alt: cover.alt,
+    }
+  : ogImage;
 const article = articleJsonLd({
   title,
   description,
   url: new URL(Astro.url.pathname, site).href,
-  image: new URL(ogImage.path, site).href,
+  image: new URL(shareImage.path, site).href,
   siteUrl: new URL('/', site).href,
   pubDate,
   updatedDate,
@@ -42,6 +52,7 @@ const article = articleJsonLd({
   title={`${title} · Medhini Oak`}
   description={description}
   type="article"
+  image={shareImage}
   jsonLd={article}
 >
   <article class="post">

@@ -1,5 +1,5 @@
 /** Astro config: static output with React islands (ADR-0001), self-hosted fonts (ADR-0004). */
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig, envField, fontProviders } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -25,6 +25,17 @@ export default defineConfig({
   output: 'static',
   // Pages are directories (/about/); GitHub Pages redirects /about to /about/ (issue #34).
   trailingSlash: 'always',
+  env: {
+    schema: {
+      // The Impressum phone number, read at build time from the IMPRESSUM_PHONE
+      // secret (deploy) or apps/site/.env (local). Never committed. See docs/runbook.md.
+      IMPRESSUM_PHONE: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+    },
+  },
   integrations: [
     react(),
     // Leaves out the 404 page by itself.

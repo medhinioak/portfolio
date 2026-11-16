@@ -42,6 +42,12 @@ Needed once before the first deploy, and again if the repository is recreated.
      the `main` it lands on.
    - Block force pushes.
    Bypassing the ruleset as admin skips this protection, and that commit deploys anyway.
+6. Settings → Secrets and variables → Actions → new repository secret `IMPRESSUM_PHONE`:
+   the phone number for the Impressum, written as it should appear (spaces are fine; the
+   `tel:` link strips them). It is a secret so the number is never in the repository; the
+   deploy build reads it, and without it the Impressum shows a placeholder and the deploy
+   fails. CI and Dependabot builds don't get it and still pass. For local builds, put
+   `IMPRESSUM_PHONE=...` in `apps/site/.env` (git-ignored).
 
 ## Deploy manually
 

@@ -1,36 +1,119 @@
 ---
-/** About page: intro, things I love, how I use AI and what I do (issue #29). */
+/** About page: intro, things I love, how I use AI and what I do (issues #29, #42). */
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import garlic from '../assets/garlic.png';
+import portrait from '../assets/about-portrait.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { cvUrl } from '../lib/contact';
 
-// The wireframe's topics, as placeholders until the owner confirms the list.
-// A topic may later get an optional photo (astro:assets, EXIF stripped).
-const topics = [
-  'Puzzle games',
-  'Cats',
-  'Anime',
-  'K-pop',
-  '90s aesthetic',
-  'Cooking (plant-based)',
-  'Culture',
-].map((name) => ({
-  label: `PLACEHOLDER: ${name}`,
-  text: 'PLACEHOLDER: one or two lines about this.',
-}));
+interface Topic {
+  label: string;
+  text: string;
+  /** Optional photo, EXIF stripped; it sits in the card's bottom-right corner. */
+  photo?: { src: ImageMetadata; alt: string };
+}
 
+const topics: Topic[] = [
+  {
+    label: 'Puzzle games',
+    text: "Give me a puzzle and I'll lose an evening to it, happily. Nothing beats the moment it finally clicks.",
+  },
+  {
+    label: 'Cats',
+    text: "It's Garlic's world and I'm just living in it. She pays her rent in snuggles and meows, and that's the fuel I run on.",
+    photo: {
+      src: garlic,
+      alt: 'Garlic, an orange tabby cat with green eyes, lying down with her front paws crossed and looking at the camera.',
+    },
+  },
+  {
+    label: 'Anime',
+    text: 'Always another series on the watchlist, and the watchlist never gets shorter. Nana is my favourite, and it inspired me to be who I am.',
+  },
+  {
+    label: 'K culture',
+    text: 'Catchy choruses, sharp choreography and a playlist that keeps my focus sessions going.',
+  },
+  {
+    label: '90s aesthetic',
+    text: 'Pixels, chunky fonts and a soft spot for the look of the 90s. You may have noticed it on this site.',
+  },
+  {
+    label: 'Cooking (plant-based)',
+    text: 'Cooking is my happy place, and everything on my stove is plant-based. Dosa is my favourite food, and I can and have travelled across the world for it. One day the cooking might even happen live on stream.',
+  },
+  {
+    label: 'Ice skating',
+    text: "I'm enamoured by it and have absolutely no skills. I'll keep gliding anyway, or at least trying to stay upright.",
+  },
+];
+
+const jobs = [
+  {
+    title: 'Software and Cloud Intern, Audi AG',
+    dates: 'Sep 2025 – Feb 2026',
+    text: "I built a GenAI app for creative workflows that internal teams use in production, so it's a real tool and not a demo that lives on a slide. I also taught Python to listen for sounds that shouldn't be there (acoustic anomaly detection).",
+  },
+  {
+    title: 'Engineer II, McKinsey & Company (Build)',
+    dates: 'Jan 2020 – Aug 2024',
+    text: 'I worked on multiple client projects and wore a different hat on each one. My proudest work was a North American e-commerce platform, where I was the lead backend engineer and owned 20+ data pipelines moving 80,000+ records a day. My superpower was ownership: if something was broken, I made it my problem and kept going until it was solved.',
+  },
+];
+
+// AWS Machine Learning – Specialty expires on 24 Jan 2027: move it to resting then.
+const certsStanding = [
+  'AWS Certified Machine Learning – Specialty (valid until Jan 2027)',
+  'Microsoft Certified: Azure Data Fundamentals (2022)',
+  'Microsoft Certified: Azure AI Fundamentals (2022)',
+  'Microsoft MTA: Security Fundamentals (2018)',
+];
+const certsResting = [
+  'AWS Certified Solutions Architect – Associate (expired Dec 2024)',
+  'AWS Certified Cloud Practitioner (expired Dec 2024)',
+  'Databricks Certified Data Engineer Associate (expired Mar 2026)',
+];
+
+const credlyUrl = 'https://www.credly.com/users/medhini-oak/badges';
+const databricksUrl =
+  'https://credentials.databricks.com/d6f5c75e-95dc-461d-8b37-4d58330a45cf';
+const paperUrl =
+  'https://link.springer.com/chapter/10.1007/978-981-16-3246-4_49';
 const aiUsageUrl =
   'https://github.com/medhinioak/portfolio/blob/main/docs/ai-usage.md';
 ---
 
 <BaseLayout
   title="About · Medhini Oak"
-  description="Who I am, what I'm into outside of work and how this site was built with AI."
+  description="About Medhini: engineer, aspiring Twitch streamer, cat owner. Where I've worked, what I love and my certification graveyard."
 >
   <section class="section" aria-labelledby="about-title">
     <h1 id="about-title">About</h1>
     <div class="intro">
-      <p>PLACEHOLDER: 2–3 sentences on who I am.</p>
-      <p>PLACEHOLDER: 1–2 sentences on what this site is for.</p>
+      <Image
+        class="portrait"
+        src={portrait}
+        alt="Self-drawn chibi portrait of Medhini: a smiling face with messy light-brown hair and big brown eyes."
+        widths={[192, 384]}
+        sizes="12rem"
+        loading="eager"
+      />
+      <div class="intro-text">
+        <p>
+          I'm a nerd who's pushing 30 and living out my European dreams. Right
+          now that means a master's degree in Germany, with my best friend
+          Garlic (species: cat, age: 7 worldly years, wisdom: infinite) along
+          for the journey. Originally from Bangalore, a city that shaped who I
+          am. One day I'd like to be a Twitch streamer, probably making cooking
+          content, but for now I'm fascinated by AI and learning more
+          engineering every day.
+        </p>
+        <p>
+          This site is where my projects, my blog and the occasional cat
+          sighting live.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -38,9 +121,18 @@ const aiUsageUrl =
     <h2 id="love-title">Things I love</h2>
     <ul class="topics">
       {topics.map((topic) => (
-        <li class="card">
+        <li class:list={['card', { 'has-photo': Boolean(topic.photo) }]}>
           <h3>{topic.label}</h3>
           <p>{topic.text}</p>
+          {topic.photo && (
+            <Image
+              class="photo"
+              src={topic.photo.src}
+              alt={topic.photo.alt}
+              widths={[240, 480]}
+              sizes="15rem"
+            />
+          )}
         </li>
       ))}
     </ul>
@@ -48,9 +140,16 @@ const aiUsageUrl =
 
   <section class="section" aria-labelledby="ai-title">
     <h2 id="ai-title">How I use AI</h2>
-    <p>PLACEHOLDER: a few lines on my principles for using AI ethically.</p>
+    <p>
+      I treat AI as my personal superpower. It writes much of the code and
+      drafts wording from the facts I give it, and other AI models and automated
+      checks review its work. The tone and voice are all mine, and so are the
+      decisions: I approve every sentence and merge, and I supply every fact
+      about my own work, because an assistant should never invent my story. The
+      whole setup is written down in the open, including which tool does what.
+    </p>
     <a class="button button-secondary button-small" href={aiUsageUrl}>
-      How this site was built with AI
+      See how this site was built with AI
       <svg
         aria-hidden="true"
         viewBox="0 0 16 16"
@@ -65,7 +164,63 @@ const aiUsageUrl =
 
   <section class="section" aria-labelledby="work-title">
     <h2 id="work-title">What I do</h2>
-    <p>PLACEHOLDER: a short paragraph on my work and what I am looking for.</p>
+    <p>
+      I'm a software engineer who has worn the frontend, backend, data, cloud,
+      DevOps and AI hats, and I'm looking for my next role in Germany. Here's
+      the grown-up version of the story, paperwork included.
+    </p>
+
+    <div class="block">
+      <h3>Where I've worked</h3>
+      <ul class="plain">
+        {jobs.map((job) => (
+          <li>
+            <h4>{job.title}</h4>
+            <p class="muted">{job.dates}</p>
+            <p>{job.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>
+        My certification graveyard <span aria-hidden="true">🥀</span>
+      </h3>
+      <p>
+        Seven certifications collected, and some have already gone to the great
+        cloud in the sky.
+      </p>
+      <h4>Still standing</h4>
+      <ul>
+        {certsStanding.map((cert) => (
+          <li>{cert}</li>
+        ))}
+      </ul>
+      <h4>Resting in peace</h4>
+      <ul>
+        {certsResting.map((cert) => (
+          <li>{cert}</li>
+        ))}
+      </ul>
+      <p>
+        All of them are verifiable on <a href={credlyUrl}>Credly</a> and{' '}
+        <a href={databricksUrl}>Databricks</a>.
+      </p>
+    </div>
+
+    <div class="block">
+      <h3>Published</h3>
+      <p>
+        Ever tried to photograph something through a fence? My co-authors and I
+        worked on removing the fence from the picture afterwards. Our paper,
+        "Effectiveness of Connected Components Labelling Approach in Noise
+        Reduction for Image De-fencing", uses frequency analysis and connected
+        component labelling instead of a trained model. It was published by
+        Springer in 2021 as <a href={paperUrl}>a conference paper</a>.
+      </p>
+    </div>
+
     <div class="row">
       <a class="button button-primary" href={cvUrl}>
         Read my CV
@@ -91,9 +246,36 @@ const aiUsageUrl =
     margin-top: var(--space-7);
   }
 
+  /* The portrait sits above the text on a phone and beside it from 48em. */
   .intro {
     display: grid;
-    gap: var(--space-4);
+    gap: var(--space-5);
+  }
+
+  @media (width >= 48em) {
+    .intro {
+      grid-template-columns: auto 1fr;
+      align-items: start;
+    }
+  }
+
+  .portrait {
+    width: 12rem;
+    height: auto;
+  }
+
+  .intro-text,
+  .block,
+  .plain li {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .plain {
+    display: grid;
+    gap: var(--space-5);
+    padding: 0;
+    list-style: none;
   }
 
   .topics {
@@ -118,5 +300,19 @@ const aiUsageUrl =
   .topics li {
     max-width: none;
     align-content: start;
+  }
+
+  /* The photo's straight right and bottom edges meet the card's edges (no padding there). */
+  .has-photo {
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+
+  .photo {
+    justify-self: end;
+    width: min(60%, 15rem);
+    height: auto;
+    margin-right: calc(-1 * var(--space-5));
+    border-radius: 0;
   }
 </style>
