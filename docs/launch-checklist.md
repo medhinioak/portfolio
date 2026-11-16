@@ -5,9 +5,9 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 
 ## Performance
 
-- [ ] Lighthouse, mobile profile: at least 95 in all four categories on Home and on a blog post
+- [x] Lighthouse, mobile profile: at least 95 in all four categories on Home and on a blog post
 - [x] Core Web Vitals in the "good" range: LCP ≤ 2.5 s, CLS ≤ 0.1, INP ≤ 200 ms
-- [ ] Budget: Home under 300 KB transferred including fonts; a post under 250 KB before images
+- [x] Budget: Home under 300 KB transferred including fonts; a post under 250 KB before images
 - [x] Images responsive, with width and height; only the top image loads eagerly
 - [x] Fonts self-hosted, Latin subset, one weight of each font preloaded, `font-display: swap`
 - [x] Game JavaScript loads only on `/play`
@@ -104,3 +104,14 @@ tests and all 36 e2e tests, including axe in both themes on every page. No page
 scrolls sideways at 320, 390 or 640 px. Post 1 locally: Lighthouse 100 in all four
 categories, 144 KB transferred (10 KB of images). After the deploy, rerun the Lighthouse,
 axe and network checks on the live site, then tick the post rows.
+
+**Live check after the deploy of #60 (commit `e18181e`), 2026-11-16:**
+
+- Lighthouse (mobile, 3 runs each): 100 in all four categories on post 1, `/` and
+  `/blog/`. Post 1: LCP 1.06–1.17 s, CLS ≤ 0.03, TBT 0 ms, 144 KB transferred (10 KB
+  images, so 134 KB before images). Home: 209 KB.
+- Playwright against the live site (56 tests): axe in both themes, smoke, SEO and
+  sitemap on every page including post 1. Every page at 320 px and 1280 px requests
+  `medhinioak.dev` only and does not scroll sideways.
+- Post 1 is in `sitemap-0.xml` and `rss.xml`, with `og:type` article and its cover as
+  `og:image`. No `PLACEHOLDER:` marker on any page. No open Dependabot alerts.
