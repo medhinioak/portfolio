@@ -374,7 +374,13 @@ const current = (href: string): 'page' | undefined =>
 
   .theme-toggle {
     min-width: 11ch;
+    /* Relative, so the clipped box also holds the visually hidden part of the label. */
+    position: relative;
+    max-width: 100%;
     padding: var(--space-2) var(--space-3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* Only the label of the current mode shows (see ThemeToggle.tsx). */
@@ -408,6 +414,24 @@ const current = (href: string): 'page' | undefined =>
   }
 
   @media (width < 48em) {
+    /* With JavaScript the header is one row: the theme toggle shrinks and ends in an
+       ellipsis instead of wrapping to its own line. Its full label stays its name. */
+    .js .header-row {
+      flex-wrap: nowrap;
+    }
+
+    .js .wordmark {
+      flex: none;
+    }
+
+    .js .header-toggle {
+      min-width: 0;
+    }
+
+    .js .theme-toggle {
+      min-width: 0;
+    }
+
     /* Without JavaScript the nav stays a plain wrapped list under the wordmark. */
     .site-nav {
       order: 1;
