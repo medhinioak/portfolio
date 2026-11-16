@@ -50,8 +50,10 @@ const person = personJsonLd(
         Hi, I'm Medhini. Welcome to my corner of the web.
       </h1>
       <p class="role">
-        5 years as a software engineer · Open to roles in Germany
-        <span class="role-bar" aria-hidden="true"></span>
+        5 years as a software engineer · Open to roles in{' '}
+        <span class="role-end">
+          Germany<span class="role-bar" aria-hidden="true"></span>
+        </span>
       </p>
       <p>
         I'm a software engineer with five years of experience, and in that time
@@ -96,7 +98,10 @@ const person = personJsonLd(
             All posts
             <Arrow direction="right" />
           </a>
-          <a class="button button-secondary button-small" href="/rss.xml">
+          <a
+            class="button button-secondary button-small"
+            href="/blog/#subscribe"
+          >
             <FeedIcon />
             RSS
           </a>
@@ -192,19 +197,23 @@ const person = personJsonLd(
   }
 
   .role {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
     margin-top: calc(-1 * var(--space-2));
     font-family: var(--font-pixel);
     font-size: var(--text-lg);
     color: var(--color-muted);
   }
 
+  /* The last word and the cursor wrap together, so the cursor never sits alone. */
+  .role-end {
+    white-space: nowrap;
+  }
+
+  /* A terminal-style cursor resting on the baseline right after the last word. */
   .role-bar {
-    flex: none;
+    display: inline-block;
     width: var(--space-3);
     height: var(--space-1);
+    margin-left: var(--space-1);
     background: var(--color-highlight);
   }
 

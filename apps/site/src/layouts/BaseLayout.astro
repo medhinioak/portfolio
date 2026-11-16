@@ -54,7 +54,7 @@ const footerLinks: NavItem[] = [
   { label: 'Impressum', href: '/impressum/' },
   { label: 'Privacy', href: '/privacy/' },
   { label: email, href: mailtoHref(email) },
-  { label: 'RSS', href: '/rss.xml' },
+  { label: 'RSS', href: '/blog/#subscribe' },
 ];
 
 const current = (href: string): 'page' | undefined =>
@@ -563,8 +563,14 @@ const current = (href: string): 'page' | undefined =>
     list-style: none;
   }
 
+  /* A list of standalone links: no underline until hover (see global.css). */
   .footer-links a {
     display: inline-block;
     padding-block: var(--space-1);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
   }
 </style>

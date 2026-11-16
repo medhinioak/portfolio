@@ -1,11 +1,13 @@
 ---
-/** Blog index: every published post, newest first, with the RSS link (issue #32). */
+/** Blog index: every published post, newest first, and how to subscribe by RSS (#32, #35). */
 import FeedIcon from '../../components/FeedIcon.astro';
 import PostCard from '../../components/PostCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedPosts } from '../../lib/get-posts';
 
 const posts = await getPublishedPosts();
+// Browsers show the feed as raw XML, so every RSS link lands here instead (#35).
+const feedUrl = new URL('/rss.xml', Astro.site).href;
 ---
 
 <BaseLayout
@@ -14,7 +16,7 @@ const posts = await getPublishedPosts();
 >
   <div class="head">
     <h1>Blog</h1>
-    <a class="button button-secondary button-small" href="/rss.xml">
+    <a class="button button-secondary button-small" href="#subscribe">
       <FeedIcon />
       RSS
     </a>
@@ -28,7 +30,44 @@ const posts = await getPublishedPosts();
   ) : (
     <p class="posts">No posts yet.</p>
   )}
+  <section
+    id="subscribe"
+    class="card subscribe"
+    aria-labelledby="subscribe-title"
+  >
+    <h2 id="subscribe-title">Subscribe</h2>
+    <p>
+      To get new posts in a feed reader such as Feedly or NetNewsWire, add this
+      address:
+    </p>
+    <div class="feed-row">
+      <code class="feed-url">{feedUrl}</code>
+      <button
+        type="button"
+        class="button button-secondary button-small copy-feed"
+        data-feed-url={feedUrl}
+      >
+        Copy address
+      </button>
+      <span class="copy-status" role="status"></span>
+    </div>
+  </section>
 </BaseLayout>
+
+<script>
+  // Copies the feed address; the status line says whether it worked.
+  const button = document.querySelector<HTMLButtonElement>('.copy-feed');
+  const status = document.querySelector<HTMLElement>('.copy-status');
+  button?.addEventListener('click', async () => {
+    if (!status) return;
+    try {
+      await navigator.clipboard.writeText(button.dataset.feedUrl ?? '');
+      status.textContent = 'Copied.';
+    } catch {
+      status.textContent = 'Copy failed: select the address and copy it.';
+    }
+  });
+</script>
 
 <style>
   .head {
@@ -43,5 +82,26 @@ const posts = await getPublishedPosts();
     display: grid;
     gap: var(--space-4);
     margin-top: var(--space-6);
+  }
+
+  .subscribe {
+    margin-top: var(--space-6);
+  }
+
+  .feed-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* The address can be longer than a phone is wide. */
+  .feed-url {
+    overflow-wrap: anywhere;
+  }
+
+  /* Copying needs JavaScript; without it the address is still there to select. */
+  :global(html:not(.js)) .copy-feed {
+    display: none;
   }
 </style>

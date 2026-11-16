@@ -119,10 +119,27 @@ li {
   max-width: var(--measure);
 }
 
+/* Links in running text keep an underline (WCAG 1.4.1: the accent alone is under 3:1
+   against the text), but a thin, faded one that turns solid on hover. */
 a {
   color: var(--color-accent);
   text-decoration: underline;
-  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  text-underline-offset: 0.25em;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Links that stand alone, such as card titles, need no underline until hover. */
+.card :is(h2, h3) > a {
+  text-decoration: none;
+}
+
+.card :is(h2, h3) > a:hover {
+  text-decoration: underline;
 }
 
 code,

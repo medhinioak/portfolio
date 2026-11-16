@@ -80,7 +80,10 @@ Not chosen:
 
 - Highlight is for small marks: a cursor, a bullet, one word. Never the only way to
   show meaning, and never for large areas.
-- Links are accent-coloured and underlined in body text, so they don't rely on colour alone.
+- Links are accent-coloured and underlined in running text, so they don't rely on colour
+  alone (the accent is under 3:1 against the text). The underline is thin and faded and
+  turns solid on hover. Standalone links (card titles, the footer list) have no
+  underline until hover; their place makes them recognisable as links.
 
 ### Overlay
 
