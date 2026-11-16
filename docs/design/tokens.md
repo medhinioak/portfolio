@@ -172,7 +172,10 @@ a plain wrapped list under the wordmark. The page then follows the system theme.
 - **Toggle:** one button that cycles system → light → dark. It's a React island
   ([ADR-0001](../adr/0001-astro-with-react-islands.md)), a real `<button>`, keyboard
   operable, with the accent focus ring. Its accessible name states the current mode, for
-  example "Theme: system (dark). Change theme", and its visible label matches. The label
+  example "Theme: system (dark). Change theme", and its visible label matches. On phones
+  (below 48em) the visible label is only the mode word ("System"); "Theme:" stays in the
+  name. If even that doesn't fit, the label ends in an ellipsis, and with large text the
+  toggle wraps to its own line rather than widen the page. The label
   is right on the first frame: the server markup holds all three mode names and CSS shows
   the one matching `data-theme`, so hydration doesn't change its text or width (which used
   to make the header wrap and the page jump on phones). After a

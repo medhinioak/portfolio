@@ -418,6 +418,11 @@ const current = (href: string): 'page' | undefined =>
        line. Line breaking uses its 4rem minimum, so it only wraps when even that does
        not fit (large text), and the page never scrolls sideways. Its full label stays
        its accessible name. */
+    /* Narrower gaps leave room for the longest mode word ("System") at 320px. */
+    .js .header-row {
+      column-gap: var(--space-4);
+    }
+
     .js .header-toggle {
       display: flex;
       flex: 1 0 0;
@@ -427,6 +432,18 @@ const current = (href: string): 'page' | undefined =>
 
     .js .theme-toggle {
       min-width: 0;
+      padding-inline: var(--space-2);
+    }
+
+    /* Phones show only the mode word; screen readers still hear "Theme: …". The same
+       hiding as .visually-hidden; the button is its positioning box. */
+    .theme-toggle-prefix {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
 
     /* Without JavaScript the nav stays a plain wrapped list under the wordmark. */

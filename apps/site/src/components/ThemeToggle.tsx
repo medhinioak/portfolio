@@ -90,7 +90,8 @@ export default function ThemeToggle(): ReactElement {
   return (
     <>
       <button type="button" className="theme-toggle label" onClick={cycle}>
-        Theme:{' '}
+        {/* Hidden on phones (only the mode word shows); always part of the name. */}
+        <span className="theme-toggle-prefix">Theme: </span>
         {/* All three are in the server markup; CSS shows the one matching data-theme,
             which the head script sets before first paint. So the label is right on the
             first frame and does not change (or resize the header) on hydration. */}

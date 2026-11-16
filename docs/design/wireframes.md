@@ -37,7 +37,7 @@ from every page. The current page is underlined in the accent colour and marked
 `aria-current="page"`: Home on `/`, Projects on `/projects` and every case study, Blog
 on `/blog` and every post, About on `/about`. Contact is never marked, and no item is
 marked on other pages. The toggle reads "Theme: System", "Theme: Light" or
-"Theme: Dark" and announces its state.
+"Theme: Dark" (on phones only the mode word shows) and announces its state.
 
 **Header, phone.** A menu button, the wordmark and the theme toggle. The menu button
 opens a left drawer (see [Phone menu](#phone-menu)).
