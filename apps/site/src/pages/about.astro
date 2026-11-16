@@ -10,7 +10,7 @@ import { cvUrl, repoUrl } from '../lib/contact';
 interface Topic {
   label: string;
   text: string;
-  /** Optional photo, EXIF stripped; it sits in the card's bottom-right corner. */
+  /** Optional photo, EXIF stripped; it sits centred at the bottom of the card. */
   photo?: { src: ImageMetadata; alt: string };
 }
 
@@ -301,17 +301,16 @@ const aiUsageUrl = `${repoUrl}/blob/main/docs/ai-usage.md`;
     align-content: start;
   }
 
-  /* The photo's straight right and bottom edges meet the card's edges (no padding there). */
+  /* The photo's straight bottom edge meets the card's bottom edge (no padding there). */
   .has-photo {
     overflow: hidden;
     padding-bottom: 0;
   }
 
   .photo {
-    justify-self: end;
+    justify-self: center;
     width: min(60%, 15rem);
     height: auto;
-    margin-right: calc(-1 * var(--space-5));
     border-radius: 0;
   }
 </style>

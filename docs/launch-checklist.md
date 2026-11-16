@@ -61,7 +61,6 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 
 ## Backups
 
-- [ ] Repository mirrored to a second host
 - [ ] Original photos stored outside the repository
 - [ ] Recovery codes in a password manager
 - [ ] Restore tested once: clone, build, open locally

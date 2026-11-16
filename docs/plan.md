@@ -113,10 +113,9 @@ has unit tests; `pnpm --filter game dev` runs it without the site; `/play` is li
 ### Phase 4: Polish (January, optional)
 
 - [ ] Decide on analytics; update the privacy policy before adding anything
-- [ ] Third case study, Search Console, repository mirror, renewal reminders
+- [ ] Third case study, Search Console, renewal reminders
 
-**Done when:** the analytics decision is recorded, the third case study is live and a
-restore from the mirror has been tested once.
+**Done when:** the analytics decision is recorded and the third case study is live.
 
 ## Non-goals
 
@@ -125,6 +124,7 @@ restore from the mirror has been tested once.
 | Prompt-generated game boards | Needs a backend, LLM spend, moderation, image licensing | After the game is extracted |
 | Accounts, saved progress, leaderboards | Needs a database, login and a longer privacy policy | After Phase 4, only with a reason |
 | Multiplayer | Out of scope; needs servers and moderation | Not planned |
+| Repository mirror on a second host | Every local clone is a full copy of the history; owner decision in #35 | Not planned |
 | Comments, newsletter, form backend | Each collects personal data; `mailto:` is enough | Phase 4 at the earliest |
 | CMS or database | Markdown in git is cheaper and portable | Not planned |
 | German translation | Doubles every edit | Not planned |
