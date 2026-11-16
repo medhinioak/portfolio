@@ -1,8 +1,7 @@
 ---
 title: How I built my portfolio site in two weeks
 description: 'How I planned and built medhinioak.dev as a solo, part-time project run like a team project, with decision records, CI gates and AI assistants under review.'
-# PLACEHOLDER: set the real publication date when the post goes live.
-pubDate: 2026-11-12
+pubDate: 2026-11-16
 tags:
   - process
   - astro
@@ -10,8 +9,7 @@ tags:
 cover:
   image: ./building-my-portfolio-site-in-two-weeks/cover.png
   alt: 'Self-drawn chibi of Medhini jumping with one arm up, with the word “Hi!” beside her.'
-# Set draft to false only after the owner has re-read the whole post.
-draft: true
+draft: false
 ---
 
 I built this site for my friends first, and for the people who find me through YouTube or Twitch, or through a recruiter's inbox, second. It's a home for my projects, my blog and, eventually, a small game, and it's meant to feel like a tidy game menu, not a startup landing page. This is how I built it in about two weeks, solo, at 8–10 hours a week, with a master's degree and one very opinionated cat in the background.

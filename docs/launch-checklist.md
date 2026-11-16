@@ -11,7 +11,8 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 - [x] Images responsive, with width and height; only the top image loads eagerly
 - [x] Fonts self-hosted, Latin subset, one weight of each font preloaded, `font-display: swap`
 - [x] Game JavaScript loads only on `/play`
-- [ ] Long cache for hashed assets, short cache for HTML
+- [ ] Long cache for hashed assets, short cache for HTML **(should)** on GitHub Pages, which
+  sends `max-age=600` for every file; required with CloudFront in Phase 2
 
 ## Accessibility (WCAG 2.2 AA)
 
