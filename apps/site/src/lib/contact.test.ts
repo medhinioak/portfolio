@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mailtoHref } from './contact';
+import { mailtoHref, telHref } from './contact';
 
 describe('mailtoHref', () => {
   it('encodes characters that would break the query', () => {
@@ -16,5 +16,15 @@ describe('mailtoHref', () => {
 
   it('leaves out an empty subject', () => {
     expect(mailtoHref('me@example.com')).toBe('mailto:me@example.com');
+  });
+});
+
+describe('telHref', () => {
+  it('strips the spaces used for reading', () => {
+    expect(telHref('+49 30 1234 5678')).toBe('tel:+493012345678');
+  });
+
+  it('strips tabs and repeated spaces too', () => {
+    expect(telHref(' +49\t30  12 ')).toBe('tel:+493012');
   });
 });

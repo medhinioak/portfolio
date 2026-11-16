@@ -4,6 +4,8 @@ import Arrow from '../components/Arrow.astro';
 import FeedIcon from '../components/FeedIcon.astro';
 import PostCard from '../components/PostCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import heroGif from '../assets/hero-animation.gif';
+import heroStill from '../assets/hero-still.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPublishedPosts } from '../lib/get-posts';
 import { getPublishedProjects } from '../lib/get-projects';
@@ -13,6 +15,7 @@ import {
   email,
   mailSubject,
   mailtoHref,
+  repoUrl,
 } from '../lib/contact';
 import { personJsonLd } from '../lib/seo';
 
@@ -27,22 +30,46 @@ const person = personJsonLd(
 
 <BaseLayout
   title="Medhini Oak"
-  description="I'm Medhini Oak, a software engineer. Here you'll find case studies of my projects, my blog and how to get in touch."
+  description="Hi, I'm Medhini, a software engineer open to roles in Germany. Projects, a blog and the occasional cat sighting."
   jsonLd={person}
 >
   <section class="intro" aria-labelledby="intro-title">
-    <h1 id="intro-title">PLACEHOLDER: one-line headline</h1>
-    <p class="role">
-      PLACEHOLDER: short role line
-      <span class="role-bar" aria-hidden="true"></span>
-    </p>
-    <p>
-      PLACEHOLDER: 2–3 sentences on who I am, what I do and what I am looking
-      for.
-    </p>
-    <a class="button button-primary" href={cvUrl}>
-      Read my CV
-    </a>
+    {/* Plain .src, not <Image>: a transform could drop the GIF's frames. Top image, so not lazy. */}
+    <picture class="hero-art">
+      <source media="(prefers-reduced-motion: reduce)" srcset={heroStill.src} />
+      <img
+        src={heroGif.src}
+        alt=""
+        width="320"
+        height="428"
+        fetchpriority="high"
+      />
+    </picture>
+    <div class="intro-text">
+      <h1 id="intro-title">
+        Hi, I'm Medhini. Welcome to my corner of the web.
+      </h1>
+      <p class="role">
+        5 years as a software engineer · Open to roles in Germany
+        <span class="role-bar" aria-hidden="true"></span>
+      </p>
+      <p>
+        I'm a software engineer with five years of experience, and in that time
+        I've worn a lot of hats: frontend, backend, data, cloud, DevOps and AI.
+        Call me a jack of all trades, just one who keeps picking up new tricks
+        and has no plans to stop learning.
+      </p>
+      <p>
+        This site is my personal project, built like a serious piece of
+        engineering (the <a href={repoUrl}>source is on GitHub</a>, if you want
+        to look under the hood). It's my showcase for everything I make,
+        technical or not, plus a blog about what I learn along the way. Poke
+        around, and say hello if you like.
+      </p>
+      <a class="button button-primary" href={cvUrl}>
+        Read my CV
+      </a>
+    </div>
   </section>
 
   {projects.length > 0 && (
@@ -83,7 +110,10 @@ const person = personJsonLd(
 
   <section id="contact" class="contact" aria-labelledby="contact-title">
     <h2 id="contact-title">Contact</h2>
-    <p>PLACEHOLDER: one line inviting people to get in touch.</p>
+    <p>
+      Got a project, a question or a cat photo? My inbox is open, and I reply
+      faster than my CI runs.
+    </p>
     <div class="row">
       <a class="button button-primary" href={mailtoHref(email, mailSubject)}>
         Email me
@@ -110,7 +140,31 @@ const person = personJsonLd(
 </BaseLayout>
 
 <style>
-  .intro,
+  /* The art sits above the text on a phone and beside it from 48em. */
+  .intro {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (width >= 48em) {
+    .intro {
+      grid-template-columns: 1fr auto;
+      align-items: start;
+    }
+
+    .hero-art {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  /* 320 × 428 file at 2×, shown 160 px wide. */
+  .hero-art img {
+    width: 10rem;
+    height: auto;
+  }
+
+  .intro-text,
   .contact {
     display: grid;
     justify-items: start;

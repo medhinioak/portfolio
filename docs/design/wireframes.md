@@ -120,16 +120,18 @@ Order, top to bottom:
 1. **About.** Heading, an optional portrait (square) beside the text on desktop and
    above it on a phone, and a short intro.
 2. **Things I love.** A grid of cards, two columns on desktop and one on a phone: Puzzle
-   games, Cats, Anime, K-pop, 90s aesthetic, Cooking (plant-based), Culture. Each
-   card has a pixel-type label and one or two lines. A card may have an optional photo
-   (Cats shows one). The last card spans both columns on desktop. The topics are
-   placeholders: in the build each label is `PLACEHOLDER:` until the owner confirms it.
+   games, Cats, Anime, K culture, 90s aesthetic, Cooking (plant-based), Ice skating.
+   Each card has a pixel-type label and one or two lines. A card may have an optional
+   photo (Cats shows one). The last card spans both columns on desktop.
 3. **How I use AI.** A short paragraph on principles, and a button to a plain link to
    how the site was built with AI: `docs/ai-usage.md` on GitHub
    (`https://github.com/medhinioak/portfolio/blob/main/docs/ai-usage.md`), since the
    docs are not part of the built site.
-4. **What I do.** A short paragraph and three buttons: "Read my CV" (primary),
-   "See projects" and "Get in touch".
+4. **What I do.** A short intro; "Where I've worked" (role, employer, dates and a
+   line or two each); a certifications list in two groups, "Still standing" and
+   "Resting in peace", with links to verify them; "Published" (the paper, linked);
+   then three buttons: "Read my CV" (primary), "See projects" and "Get in touch".
+   The About screenshots below still show the earlier one-paragraph version.
 
 Screenshots: [light desktop](wireframes/about-light-desktop.png),
 [dark desktop](wireframes/about-dark-desktop.png),

@@ -21,6 +21,8 @@ interface Props {
   showHeader?: boolean;
   /** False for the 404 page: it is served at any missing URL, so it gets no canonical or og:url. */
   hasOwnUrl?: boolean;
+  /** Open Graph image (a path on this site); the default site image when left out. */
+  image?: { path: string; width: number; height: number; alt: string };
 }
 
 const {
@@ -30,11 +32,12 @@ const {
   jsonLd,
   showHeader = true,
   hasOwnUrl = true,
+  image = ogImage,
 } = Astro.props;
 if (!Astro.site) throw new Error('Set `site` in astro.config.mjs.');
 // trailingSlash: 'always' makes every page path end in a slash, as GitHub Pages serves it.
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImageUrl = new URL(ogImage.path, Astro.site).href;
+const ogImageUrl = new URL(image.path, Astro.site).href;
 const year = new Date().getFullYear();
 
 // Each page issue adds its own link when its route exists (issue #39, "Link rule").
@@ -80,6 +83,8 @@ const current = (href: string): 'page' | undefined =>
         root.dataset.theme = mode;
       })();
     </script>
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {hasOwnUrl && <link rel="canonical" href={canonical} />}
@@ -90,9 +95,9 @@ const current = (href: string): 'page' | undefined =>
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:width" content={String(ogImage.width)} />
-    <meta property="og:image:height" content={String(ogImage.height)} />
-    <meta property="og:image:alt" content={ogImage.alt} />
+    <meta property="og:image:width" content={String(image.width)} />
+    <meta property="og:image:height" content={String(image.height)} />
+    <meta property="og:image:alt" content={image.alt} />
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd && (
       <script

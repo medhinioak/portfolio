@@ -9,7 +9,7 @@ timeframe: 'Months, year' # shown in the details box
 team: 'Solo, or team size'
 context: 'Course, university or employer'
 stack: ['Skill', 'Skill']
-codeUrl: 'https://github.com/...'
+# codeUrl: 'https://github.com/...' # optional; leave out for a private repository
 # demoUrl: 'https://...' # optional; leave out when there is no live demo
 # hero: # optional; EXIF stripped, the file sits next to this one
 #   image: './<slug>/hero.png'

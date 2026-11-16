@@ -39,6 +39,9 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          # Shown only on the Impressum; never echoed. See docs/runbook.md.
+          IMPRESSUM_PHONE: ${{ secrets.IMPRESSUM_PHONE }}
 
       - name: Fail if a PLACEHOLDER marker is in the built site
         run: |

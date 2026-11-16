@@ -20,7 +20,8 @@ const projects = defineCollection({
       /** Course, university or employer. */
       context: z.string(),
       stack: z.array(z.string()),
-      codeUrl: z.url(),
+      /** Optional, like demoUrl: a private repository has no link. */
+      codeUrl: z.url().optional(),
       demoUrl: z.url().optional(),
       hero: z
         .object({

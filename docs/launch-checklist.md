@@ -38,6 +38,7 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 ## Legal and privacy
 
 - [ ] Impressum reachable from every page in one click
+- [ ] Repository secret `IMPRESSUM_PHONE` set, so the Impressum shows the phone number (never committed; see `runbook.md` → One-time setup)
 - [ ] Privacy policy reachable from every page in one click; states the host and its logs, legal basis, retention, visitor rights, no cookies, no third parties
 - [ ] Privacy policy mentions the stored theme preference, if stored
 - [ ] Network tab on every page type: all requests go to medhinioak.dev only

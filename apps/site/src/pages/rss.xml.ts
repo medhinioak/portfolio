@@ -10,7 +10,8 @@ export const GET: APIRoute = async ({ site }) => {
   const posts = await getPublishedPosts();
   return rss({
     title: feedTitle,
-    description: 'PLACEHOLDER: one-sentence description of the blog feed',
+    description:
+      'Posts from Medhini Oak on engineering, side projects and lessons learned along the way.',
     site,
     items: posts.map((post) => ({
       title: post.data.title,

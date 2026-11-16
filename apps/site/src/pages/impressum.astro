@@ -1,12 +1,17 @@
 ---
-/** Impressum (legal notice) under § 5 DDG and § 18 MStV (issue #33). */
+/** Impressum (legal notice) under § 5 DDG and § 18 MStV (issues #33, #42). */
+import { IMPRESSUM_PHONE } from 'astro:env/server';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { email, legalName, mailtoHref } from '../lib/contact';
+import { email, legalName, mailtoHref, telHref } from '../lib/contact';
+
+// The phone comes from the build environment, never from the repository. Without it
+// the marker below makes the deploy fail, while CI and Dependabot builds still pass.
+const phone = IMPRESSUM_PHONE?.trim();
 ---
 
 <BaseLayout
   title="Impressum · Medhini Oak"
-  description="Legal notice for medhinioak.dev under § 5 DDG: who is responsible for this site and how to contact me."
+  description="Legal notice for medhinioak.dev, with the contact details of the site's operator."
 >
   <div class="legal">
     <h1>Impressum</h1>
@@ -20,6 +25,10 @@ import { email, legalName, mailtoHref } from '../lib/contact';
       <dt>Email</dt>
       <dd>
         <a href={mailtoHref(email)}>{email}</a>
+      </dd>
+      <dt>Phone</dt>
+      <dd>
+        {phone ? <a href={telHref(phone)}>{phone}</a> : 'PLACEHOLDER: phone'}
       </dd>
     </dl>
   </div>
