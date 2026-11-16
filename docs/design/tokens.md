@@ -80,7 +80,10 @@ Not chosen:
 
 - Highlight is for small marks: a cursor, a bullet, one word. Never the only way to
   show meaning, and never for large areas.
-- Links are accent-coloured and underlined in body text, so they don't rely on colour alone.
+- Links are accent-coloured and underlined in running text, so they don't rely on colour
+  alone (the accent is under 3:1 against the text). The underline is thin and faded and
+  turns solid on hover. Standalone links (card titles, the footer list) have no
+  underline until hover; their place makes them recognisable as links.
 
 ### Overlay
 
@@ -107,9 +110,15 @@ text); the focus ring is a non-text indicator and needs 3:1. All pairs pass.
 | Label on accent                      | 6.83          | 7.74          | 4.5    |
 | Focus ring (accent) vs background    | 6.44          | 7.74          | 3      |
 | Divider lines (surface on background) | 1.11         | 1.11          | none   |
+| Link underline (accent at 45 %) on background / surface | 2.10 / 2.05 | 2.52 / 2.49 | none |
 | Diagram: text on highlight tint (12 % highlight on background) | 13.60 | 12.32 | 4.5 |
 | Diagram: secondary text (text at 80 % opacity) on background / highlight tint | 8.75 / 7.79 | 10.39 / 8.43 | 4.5 |
 | Diagram: highlight box border vs its tint | 4.52 | 9.65 | 3 |
+
+The link underline (`--color-accent` at 45 % via `color-mix()`, 1px) is what tells a link in
+running text apart from the text around it (WCAG 1.4.1). That criterion asks for a
+non-colour cue to be present; it sets no contrast for the underline itself, and 1.4.11
+does not cover text decoration. It turns solid accent on hover.
 
 Divider lines (header and footer borders) are decorative: they carry no information,
 so WCAG sets no minimum. They are meant to be quiet.
@@ -163,7 +172,10 @@ a plain wrapped list under the wordmark. The page then follows the system theme.
 - **Toggle:** one button that cycles system → light → dark. It's a React island
   ([ADR-0001](../adr/0001-astro-with-react-islands.md)), a real `<button>`, keyboard
   operable, with the accent focus ring. Its accessible name states the current mode, for
-  example "Theme: system (dark). Change theme", and its visible label matches. The label
+  example "Theme: system (dark). Change theme", and its visible label matches. On phones
+  (below 48em) the visible label is only the mode word ("System"); "Theme:" stays in the
+  name. If even that doesn't fit, the label ends in an ellipsis, and with large text the
+  toggle wraps to its own line rather than widen the page. The label
   is right on the first frame: the server markup holds all three mode names and CSS shows
   the one matching `data-theme`, so hydration doesn't change its text or width (which used
   to make the header wrap and the page jump on phones). After a

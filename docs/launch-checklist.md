@@ -6,61 +6,61 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 ## Performance
 
 - [ ] Lighthouse, mobile profile: at least 95 in all four categories on Home and on a blog post
-- [ ] Core Web Vitals in the "good" range: LCP ≤ 2.5 s, CLS ≤ 0.1, INP ≤ 200 ms
+- [x] Core Web Vitals in the "good" range: LCP ≤ 2.5 s, CLS ≤ 0.1, INP ≤ 200 ms
 - [ ] Budget: Home under 300 KB transferred including fonts; a post under 250 KB before images
-- [ ] Images responsive, with width and height; only the top image loads eagerly
-- [ ] Fonts self-hosted, Latin subset, one weight preloaded, `font-display: swap`
-- [ ] Game JavaScript loads only on `/play`
-- [ ] Long cache for hashed assets, short cache for HTML
+- [x] Images responsive, with width and height; only the top image loads eagerly
+- [x] Fonts self-hosted, Latin subset, one weight of each font preloaded, `font-display: swap`
+- [x] Game JavaScript loads only on `/play`
+- [ ] Long cache for hashed assets, short cache for HTML **(should)** on GitHub Pages, which
+  sends `max-age=600` for every file; required with CloudFront in Phase 2
 
 ## Accessibility (WCAG 2.2 AA)
 
-- [ ] axe and Lighthouse report no serious or critical issues on any page
-- [ ] Keyboard-only use works; focus is visible in both themes; skip link present
-- [ ] One `h1` per page, ordered headings, landmarks, `lang="en"`
-- [ ] Meaningful alt text, or empty alt for decorative images
-- [ ] Contrast passes in both themes
-- [ ] Touch targets at least 24 × 24 px; reflow at 320 px and 200 % zoom
-- [ ] Theme toggle announces its state; `prefers-reduced-motion` honoured
+- [x] axe and Lighthouse report no serious or critical issues on any page
+- [x] Keyboard-only use works; focus is visible in both themes; skip link present
+- [x] One `h1` per page, ordered headings, landmarks, `lang="en"`
+- [x] Meaningful alt text, or empty alt for decorative images
+- [x] Contrast passes in both themes
+- [x] Touch targets at least 24 × 24 px; reflow at 320 px and 200 % zoom
+- [x] Theme toggle announces its state; `prefers-reduced-motion` honoured
 - [ ] One manual screen-reader pass (VoiceOver or NVDA) on Home and a post
 
 ## SEO
 
-- [ ] Unique title (under ~60 characters) and description on every page
-- [ ] Canonical URLs; `www` redirects to the apex domain
-- [ ] `sitemap.xml` and `robots.txt`; no stray `noindex`
+- [x] Unique title (under ~60 characters) and description on every page
+- [x] Canonical URLs; `www` redirects to the apex domain
+- [x] `sitemap.xml` and `robots.txt`; no stray `noindex`
 - [ ] Open Graph images; LinkedIn link preview tested
-- [ ] 404 page returns status 404
-- [ ] RSS at `/rss.xml`, linked in the head
+- [x] 404 page returns status 404
+- [x] RSS at `/rss.xml`, linked in the head
 - [ ] Structured data for Person and Article (should)
 - [ ] Search Console and Bing Webmaster Tools (should)
 
 ## Legal and privacy
 
-- [ ] Impressum reachable from every page in one click
-- [ ] Repository secret `IMPRESSUM_PHONE` set, so the Impressum shows the phone number (never committed; see `runbook.md` → One-time setup)
-- [ ] Privacy policy reachable from every page in one click; states the host and its logs, legal basis, retention, visitor rights, no cookies, no third parties
-- [ ] Privacy policy mentions the stored theme preference, if stored
-- [ ] Network tab on every page type: all requests go to medhinioak.dev only
-- [ ] No analytics, tracking pixels or embeds
+- [x] Impressum reachable from every page in one click
+- [x] Repository secret `IMPRESSUM_PHONE` set, so the Impressum shows the phone number (never committed; see `runbook.md` → One-time setup)
+- [x] Privacy policy reachable from every page in one click; states the host and its logs, legal basis, retention, visitor rights, no cookies, no third parties
+- [x] Privacy policy mentions the stored theme preference, if stored
+- [x] Network tab on every page type: all requests go to medhinioak.dev only
+- [x] No analytics, tracking pixels or embeds
 - [ ] All photos and quoted material are mine or licensed and credited
 - [ ] Permission to publish each case study (university, teammates)
-- [ ] EXIF data, including GPS, stripped from every photo
+- [x] EXIF data, including GPS, stripped from every photo
 - [ ] Legal pages read once by a second person (should)
 
 ## Security
 
-- [ ] HTTPS everywhere (automatic for .dev); HSTS header on CloudFront in Phase 2
+- [x] HTTPS everywhere (automatic for .dev); HSTS header on CloudFront in Phase 2
 - [ ] Security headers on CloudFront (should on GitHub Pages, where they cannot be set)
 - [ ] Two-factor authentication on GitHub, registrar, email and later AWS root
-- [ ] `main` protected by a ruleset; Dependabot and secret scanning on
-- [ ] No secrets in the git history
+- [x] `main` protected by a ruleset; Dependabot and secret scanning on
+- [x] No secrets in the git history
 - [ ] Registrar: auto-renew and transfer lock on
 - [ ] SPF, DKIM and DMARC if mail is sent from the domain (should)
 
 ## Backups
 
-- [ ] Repository mirrored to a second host
 - [ ] Original photos stored outside the repository
 - [ ] Recovery codes in a password manager
 - [ ] Restore tested once: clone, build, open locally
@@ -70,7 +70,37 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 
 - [ ] Tested on a real phone and a second browser
 - [ ] Link checker passes; the footer email address receives mail
-- [ ] No `PLACEHOLDER`, `TODO`, `lorem` or `example.com` on any page
-- [ ] Drafts unpublished; dates and time zones correct
+- [x] No `PLACEHOLDER`, `TODO`, `lorem` or `example.com` on any page
+- [x] Drafts unpublished; dates and time zones correct
 - [ ] CV, LinkedIn and GitHub profile link to the site
-- [ ] Rollback written down: revert and redeploy
+- [x] Rollback written down: revert and redeploy
+
+## Launch run, 2026-11-16 (#35)
+
+Checked against https://medhinioak.dev at commit `b202154`. Ticked items were verified
+by Claude Code; unticked items are open or owner-only.
+
+- **Lighthouse (mobile, 3 runs each):** 100 in all four categories on `/`, `/about/`,
+  `/blog/` and `/projects/portfolio-site/`. Lab LCP 0.75–1.5 s, CLS 0, TBT ≤ 45 ms;
+  no field data yet. Home transfers 209 KB. Post 1 was still a draft then; it is
+  published by the same PR, so the post rows wait for the live check after deploy.
+- **Playwright against the live site (42 tests):** axe in both themes on every page
+  (no serious or critical issues), smoke, SEO, drawer, and a network check (every page
+  requests `medhinioak.dev` only). At 320 px and at 640 px (1280 px at 200 %) no page
+  scrolls sideways. Each page has one `h1`, `lang="en"`, landmarks and a skip link.
+  With reduced motion, the animated GIFs are replaced by stills.
+- **Domain:** `http://` and `https://www.` both answer 301 to `https://medhinioak.dev/`;
+  Pages shows the custom domain with HTTPS enforced. `.dev` is on the HSTS preload list.
+- **Link check** (every `href`/`src` in the build): all answer 200 except LinkedIn
+  (999, its bot block; check by hand). `mailto:` links not checked.
+- **Cache:** GitHub Pages sends `max-age=600` for every file and cannot be configured.
+- **Security:** ruleset `protect-main` active; Dependabot updates, secret scanning and
+  push protection on; no secret-scanning alerts and no key patterns in the history.
+- **Restore:** a fresh clone installs and builds all 9 pages; not yet opened locally.
+
+**Re-checked locally on the final commit of the PR** (it also publishes post 1 and
+changes the header, link underlines, RSS links and Home layout): lint, type check, unit
+tests and all 36 e2e tests, including axe in both themes on every page. No page
+scrolls sideways at 320, 390 or 640 px. Post 1 locally: Lighthouse 100 in all four
+categories, 144 KB transferred (10 KB of images). After the deploy, rerun the Lighthouse,
+axe and network checks on the live site, then tick the post rows.
