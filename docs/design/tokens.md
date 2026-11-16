@@ -110,9 +110,15 @@ text); the focus ring is a non-text indicator and needs 3:1. All pairs pass.
 | Label on accent                      | 6.83          | 7.74          | 4.5    |
 | Focus ring (accent) vs background    | 6.44          | 7.74          | 3      |
 | Divider lines (surface on background) | 1.11         | 1.11          | none   |
+| Link underline (accent at 45 %) on background / surface | 2.10 / 2.05 | 2.52 / 2.49 | none |
 | Diagram: text on highlight tint (12 % highlight on background) | 13.60 | 12.32 | 4.5 |
 | Diagram: secondary text (text at 80 % opacity) on background / highlight tint | 8.75 / 7.79 | 10.39 / 8.43 | 4.5 |
 | Diagram: highlight box border vs its tint | 4.52 | 9.65 | 3 |
+
+The link underline (`--color-accent` at 45 % via `color-mix()`, 1px) is what tells a link in
+running text apart from the text around it (WCAG 1.4.1). That criterion asks for a
+non-colour cue to be present; it sets no contrast for the underline itself, and 1.4.11
+does not cover text decoration. It turns solid accent on hover.
 
 Divider lines (header and footer borders) are decorative: they carry no information,
 so WCAG sets no minimum. They are meant to be quiet.

@@ -67,7 +67,7 @@ done early, ahead of Phase 1. Parking lot reviewed (all ideas kept); released as
 ### Phase 1: Content and launch (Nov 13–22)
 
 - [x] Home, About, Projects and two case studies (one template for all case studies)
-- [ ] Blog with RSS, and Post 1: "Building my portfolio site in two weeks"
+- [x] Blog with RSS, and Post 1: "Building my portfolio site in two weeks"
 - [x] Impressum and privacy policy
 - [x] SEO basics: titles, descriptions, canonical URLs, sitemap, Open Graph images
 - [ ] Work through [`launch-checklist.md`](launch-checklist.md) (medhinioak.dev already points at GitHub Pages with HTTPS enforced, done early in Phase 0)

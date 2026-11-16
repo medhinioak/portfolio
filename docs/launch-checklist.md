@@ -82,8 +82,8 @@ by Claude Code; unticked items are open or owner-only.
 
 - **Lighthouse (mobile, 3 runs each):** 100 in all four categories on `/`, `/about/`,
   `/blog/` and `/projects/portfolio-site/`. Lab LCP 0.75–1.5 s, CLS 0, TBT ≤ 45 ms;
-  no field data yet. Home transfers 209 KB. No post is live yet (post 1 is a draft), so
-  the post rows wait for it.
+  no field data yet. Home transfers 209 KB. Post 1 was still a draft then; it is
+  published by the same PR, so the post rows wait for the live check after deploy.
 - **Playwright against the live site (42 tests):** axe in both themes on every page
   (no serious or critical issues), smoke, SEO, drawer, and a network check (every page
   requests `medhinioak.dev` only). At 320 px and at 640 px (1280 px at 200 %) no page
@@ -97,3 +97,10 @@ by Claude Code; unticked items are open or owner-only.
 - **Security:** ruleset `protect-main` active; Dependabot updates, secret scanning and
   push protection on; no secret-scanning alerts and no key patterns in the history.
 - **Restore:** a fresh clone installs and builds all 9 pages; not yet opened locally.
+
+**Re-checked locally on the final commit of the PR** (it also publishes post 1 and
+changes the header, link underlines, RSS links and Home layout): lint, type check, unit
+tests and all 36 e2e tests, including axe in both themes on every page. No page
+scrolls sideways at 320, 390 or 640 px. Post 1 locally: Lighthouse 100 in all four
+categories, 144 KB transferred (10 KB of images). After the deploy, rerun the Lighthouse,
+axe and network checks on the live site, then tick the post rows.

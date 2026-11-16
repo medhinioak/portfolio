@@ -414,18 +414,15 @@ const current = (href: string): 'page' | undefined =>
   }
 
   @media (width < 48em) {
-    /* With JavaScript the header is one row: the theme toggle shrinks and ends in an
-       ellipsis instead of wrapping to its own line. Its full label stays its name. */
-    .js .header-row {
-      flex-wrap: nowrap;
-    }
-
-    .js .wordmark {
-      flex: none;
-    }
-
+    /* The theme toggle shrinks and ends in an ellipsis rather than wrapping to its own
+       line. Line breaking uses its 4rem minimum, so it only wraps when even that does
+       not fit (large text), and the page never scrolls sideways. Its full label stays
+       its accessible name. */
     .js .header-toggle {
-      min-width: 0;
+      display: flex;
+      flex: 1 0 0;
+      justify-content: flex-end;
+      min-width: 4rem;
     }
 
     .js .theme-toggle {

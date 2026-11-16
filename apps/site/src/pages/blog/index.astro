@@ -60,12 +60,17 @@ const feedUrl = new URL('/rss.xml', Astro.site).href;
   const status = document.querySelector<HTMLElement>('.copy-status');
   button?.addEventListener('click', async () => {
     if (!status) return;
+    // Cleared first and refilled a moment later, so a repeated result is announced again.
+    status.textContent = '';
+    let message = 'Copied.';
     try {
       await navigator.clipboard.writeText(button.dataset.feedUrl ?? '');
-      status.textContent = 'Copied.';
     } catch {
-      status.textContent = 'Copy failed: select the address and copy it.';
+      message = 'Copy failed: select the address and copy it.';
     }
+    setTimeout(() => {
+      status.textContent = message;
+    }, 100);
   });
 </script>
 
