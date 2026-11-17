@@ -19,7 +19,7 @@ and the owner has not confirmed it.
 | Pitch | "Ask yes/no questions and find the computer's secret animal before it finds yours." | Proposed wording |
 | Art style | Pixel art, **AI-assisted drafts, then edited by the owner** | Decided; see [Art plan](#art-plan) |
 | Animals | 24, all drawn from the start; Lion and Jellyfish replaced Gecko and Goldfish. The first 16 are the cut-line fallback ([ADR-0005](../adr/0005-deduction-game-with-board-packs.md)) | Decided |
-| Questions | A fixed list of 68 yes/no questions in five groups, with a **type-to-filter** box. No free-text questions: the answers come from the board data | Decided |
+| Questions | A fixed list of 68 yes/no questions in five groups, with a **type-to-filter** box. No free-text questions: the answers come from the board data. The owner confirmed the questions and answers on 2026-11-17 | Decided |
 | Ruled-out marks | Both: automatic, with manual override | Decided |
 | A wrong guess | Loses the turn; the game goes on | Decided |
 | Difficulty names | Breezy, Medium, Zoologist (ids `easy`, `medium`, `hard`) | Decided |
@@ -535,6 +535,3 @@ non-goals ([`plan.md`](../plan.md#non-goals)). Ideas go to
 ## Open questions
 
 1. Is the one-line pitch right? Change the wording in [Decisions](#decisions).
-2. Are the 68 questions and 24 animals right? Check the "Yes for" column and the
-   "How to read it" notes, change a value or swap an animal, then re-run the checks in
-   [the animals board](#the-animals-board).
