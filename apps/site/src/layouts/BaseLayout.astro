@@ -23,6 +23,8 @@ interface Props {
   hasOwnUrl?: boolean;
   /** Open Graph image (a path on this site); the default site image when left out. */
   image?: { path: string; width: number; height: number; alt: string };
+  /** True widens main to `--column-wide` (the game page); header and footer stay as they are. */
+  wide?: boolean;
 }
 
 const {
@@ -33,6 +35,7 @@ const {
   showHeader = true,
   hasOwnUrl = true,
   image = ogImage,
+  wide = false,
 } = Astro.props;
 if (!Astro.site) throw new Error('Set `site` in astro.config.mjs.');
 // trailingSlash: 'always' makes every page path end in a slash, as GitHub Pages serves it.
@@ -46,6 +49,7 @@ const navItems: NavItem[] = [
   { label: 'About', href: '/about/' },
   { label: 'Projects', href: '/projects/' },
   { label: 'Blog', href: '/blog/' },
+  { label: 'Play', href: '/play/' },
   { label: 'Contact', href: '/#contact' },
 ];
 
@@ -208,7 +212,7 @@ const current = (href: string): 'page' | undefined =>
         </dialog>
       </>
     )}
-    <main id="main" class="wrap" tabindex="-1">
+    <main id="main" class={wide ? 'wrap wrap-wide' : 'wrap'} tabindex="-1">
       <slot />
     </main>
     <footer class="site-footer">
