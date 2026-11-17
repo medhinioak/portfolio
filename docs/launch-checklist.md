@@ -63,7 +63,7 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 
 - [ ] Original photos stored outside the repository
 - [ ] Recovery codes in a password manager
-- [ ] Restore tested once: clone, build, open locally
+- [x] Restore tested once: clone, build, open locally
 - [ ] Calendar reminders: domain renewal, quarterly cost check, annual legal-page review
 
 ## Launch day
@@ -96,7 +96,10 @@ by Claude Code; unticked items are open or owner-only.
 - **Cache:** GitHub Pages sends `max-age=600` for every file and cannot be configured.
 - **Security:** ruleset `protect-main` active; Dependabot updates, secret scanning and
   push protection on; no secret-scanning alerts and no key patterns in the history.
-- **Restore:** a fresh clone installs and builds all 9 pages; not yet opened locally.
+- **Restore:** a fresh clone installs and builds all 9 pages. Opened locally on 2026-11-17
+  (commit `37bbf7f`, Node 22.23.4, pnpm 12.18.0): `pnpm install --frozen-lockfile`, `pnpm build`
+  and `astro preview` served every page with 200, an unknown path with 404, and `rss.xml`,
+  the sitemap, `robots.txt` and the Open Graph image.
 
 **Re-checked locally on the final commit of the PR** (it also publishes post 1 and
 changes the header, link underlines, RSS links and Home layout): lint, type check, unit
