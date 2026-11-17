@@ -1,9 +1,9 @@
 # Wireframes
 
-Status: draft for review · Owner: Medhini · Issue: #5 · Last updated: 2026-11-11
+Status: draft for review · Owner: Medhini · Issues: #5, #70 · Last updated: 2026-11-17
 
-Low-fidelity layouts for the five page types that need a design before the build:
-Home, About, a case study, a blog post and the 404 page. Colours, fonts and spacing
+Low-fidelity layouts for the page types that need a design before the build:
+Home, About, a case study, a blog post, the 404 page and the game page (`/play`). Colours, fonts and spacing
 come from [`tokens.md`](tokens.md); nothing here introduces a new style except where
 [Open items](#open-items) says so.
 
@@ -206,6 +206,83 @@ Screenshots: [light desktop](wireframes/404-light-desktop.png),
 [light phone](wireframes/404-light-phone.png),
 [dark phone](wireframes/404-dark-phone.png).
 
+## Play (`/play`)
+
+Purpose: the game page. The rules, the board and the keyboard model are in
+[`game/spec.md`](../game/spec.md); this section only shows the screens. The game is a
+React island between the normal site header and footer, and no nav item is current.
+Sprites are crossed boxes (32 x 32 pixel art, drawn at 64 px, or 32 px on the computer's
+board).
+
+**Start.** The 736 px text column. Heading and one-line pitch, a decorative strip of
+sprites, "How to play" in three steps, a difficulty radio group (the selected one is
+marked by its dot as well as its border), a line saying you take the first turn, a "Next:
+pick your animal" button, and a line saying the game runs in the browser and saves
+nothing.
+
+**Pick your animal.** The 24 animals as cards. The chosen one has a thick border, a tick
+and the words "your pick". "Start with the penguin" begins the game, "Surprise me" picks
+one at random and begins, "Back" returns to Start.
+
+**Turn.** About 1000 px wide on desktop so the boards and the questions sit side by side;
+one column on a phone, in the same order.
+
+1. **Turn banner.** "Your turn", with the computer's last move in full below it. It is
+   the game's live region. On the first turn it says "You go first."
+2. **Your animal.** Beside the banner on desktop, under it on a phone.
+3. **Mode buttons.** "Ask a question" and "Make a guess" (the active one is filled and
+   has a tick).
+4. **Your board.** 24 cards, 6 columns on desktop and 4 on a phone, with "11 of 24 still
+   in" and "Reset marks". A ruled-out card keeps its place: the sprite is blurred, the
+   border is dashed and the words "ruled out" show; the name stays sharp. The accent ring
+   is the focus state, shown on Zebra.
+5. **Computer's board.** What the computer thinks your animal could be (3 of 24 still
+   in), read-only, drawn as small chips below your board. On a phone a "Your board /
+   Computer's board" tab switch shows one at a time.
+6. **Questions.** A "Filter questions" box, group buttons (All, Type, Body, Looks,
+   Habitat, Behaviour) and a scrolling list of the 68 questions. Asked ones are disabled
+   and show their answer.
+7. **Game log.** Newest first, with the same text as the live region.
+
+The scenario shows "Is it a mammal?" (yes, 12 left) and "Can it fly?" (no, 11 left). The
+computer has asked about water and feathers, so it is down to Penguin, Duck and Flamingo.
+
+**Filtering.** The same screen with "legs" typed in the box: three questions are left,
+and a count says "3 of 68 questions match".
+
+**Guess confirmation.** "Make a guess" turns your board into guess mode and disables the
+questions. Choosing a card opens a dialog over the dimmed page ("Guess the tiger?", "Yes,
+guess the tiger", "Cancel"); focus starts on Cancel. Light only; dark follows the same
+rules.
+
+**End.** The 736 px text column. "Game over", the result heading ("You won!"), both secret
+animals, the stats (turns played, your questions, wrong guesses, difficulty), three
+buttons ("Play again", "Change difficulty", "Back to Home") and a collapsed game log. If
+the computer wins, the heading is "The computer won" and the line reads "It guessed your
+animal: the penguin."
+
+Screenshots, start: [light desktop](wireframes/play-start-light-desktop.png),
+[dark desktop](wireframes/play-start-dark-desktop.png),
+[light phone](wireframes/play-start-light-phone.png),
+[dark phone](wireframes/play-start-dark-phone.png).
+Pick your animal: [light desktop](wireframes/play-pick-light-desktop.png),
+[dark desktop](wireframes/play-pick-dark-desktop.png),
+[light phone](wireframes/play-pick-light-phone.png),
+[dark phone](wireframes/play-pick-dark-phone.png).
+Turn: [light desktop](wireframes/play-turn-light-desktop.png),
+[dark desktop](wireframes/play-turn-dark-desktop.png),
+[light phone](wireframes/play-turn-light-phone.png),
+[dark phone](wireframes/play-turn-dark-phone.png).
+Turn, computer's board on a phone: [light phone](wireframes/play-computer-light-phone.png).
+Turn, filtering questions: [light desktop](wireframes/play-filter-light-desktop.png),
+[light phone](wireframes/play-filter-light-phone.png).
+Guess confirmation: [light desktop](wireframes/play-guess-light-desktop.png),
+[light phone](wireframes/play-guess-light-phone.png).
+End: [light desktop](wireframes/play-end-light-desktop.png),
+[dark desktop](wireframes/play-end-dark-desktop.png),
+[light phone](wireframes/play-end-light-phone.png),
+[dark phone](wireframes/play-end-dark-phone.png).
+
 ## Decisions made while drawing
 
 | Decision | Why |
@@ -223,6 +300,10 @@ Screenshots: [light desktop](wireframes/404-light-desktop.png),
 | Long titles use Atkinson bold | Real case-study titles read badly in 22 px pixel type. |
 | About is a personal page, with "What I do" as one block | The audience is friends first. Experience and skills live in the CV and the case studies. |
 | The 404 has no header | A dead end should not offer a full nav; the footer keeps the legal links. |
+| Turn is wider than the text column | The board and the questions fit side by side on desktop. Start and End stay in the text column. |
+| A ruled-out card keeps its place; its sprite is blurred, with a dashed border and the words "ruled out", and the name stays sharp | The grid never reshuffles, the animal stays recognisable, and the text keeps its contrast. Blur alone is not enough, so the label stays. |
+| The game shows the computer's board as well as yours | You can see how close the computer is. It shows only what your answers told it. |
+| A turn banner shows whose turn it is and the computer's last move | The game log alone was too easy to miss. |
 
 An outside review of the Home layout was also considered. These suggestions were not
 adopted: a hero terminal graphic (it breaks the single column), invented metrics (they
