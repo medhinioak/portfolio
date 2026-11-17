@@ -26,22 +26,28 @@ the editing in any pixel editor:
 1. **Split** a sheet of AI drafts into one image per animal.
 2. **Draft**: remove the background, scale the animal to fit the 32 × 32 grid with its
    feet on the bottom row, map every pixel to the shared palette and mark the outline.
-3. The owner **edits** the draft PNG.
+3. The draft PNG is **edited** on the grid: noise removed, thin parts redrawn, colours
+   fixed. For the first 16 animals the owner asked Claude Code to do this, and she approves
+   every sprite in the pull request.
 4. **Export** the PNG to an SVG made of merged rectangles.
 
 Conventions:
 
 - **One shared palette** in `packages/game/src/boards/animals/palette.json`: the outline
-  plus up to 15 colours, picked from the drafts by median cut. The palette is
-  fixed once accepted, so every sprite is checked against the same colours.
+  plus 15 colours, picked by hand after the script's median cut gave five near-identical
+  darks and no pink. The palette is fixed once accepted, so every sprite is checked against
+  the same colours.
 - **The outline is the silhouette's edge pixels.** It uses one reserved colour in the PNG
   and `currentColor` in the SVG, so the sprite is outlined in `--game-text` in both
   themes when the card sets `color: var(--game-text)`. The outline, not the fills, carries
   the contrast, so a black panda or a white penguin reads on either background.
 - **Every sprite is drawn to fill the grid**, standing on the bottom row, facing left or
   right. Poses and outline weight follow from the grid, not from the drafts.
-- **Only the SVG files are shipped.** The PNG masters and the original AI images stay out
-  of `apps/site` and out of the built site.
+- **Masters are committed, originals are not.** The 32 × 32 PNG masters live in
+  `packages/game/art/animals/`, so a palette change can export every sprite again. The
+  original AI images stay outside the repository. Only the SVG files are shipped.
+- **Size limit: 2 KB gzipped per SVG.** That is what a visitor downloads. The `svg`
+  command warns above it and does not fail.
 
 ## Alternatives considered
 
@@ -60,11 +66,10 @@ Conventions:
 - Fitting every animal to the grid makes a mouse as tall as an elephant. The board shows
   names beside the sprites, so this is accepted; revisit if it confuses players.
 - Thin features (legs, tentacles, antennae) are lost at 32 px and are redrawn by hand.
-- The palette is not committed yet. The first one the script generated has five almost
-  identical dark colours and no pink, so the flamingo turns beige. It needs tuning by hand
-  (the file is a list of hex colours) before this ADR is accepted.
-- Exported drafts are 1.8 to 6.8 KB as plain text (at most 1.6 KB gzipped), against the
-  "about 2 KB" in #74. Hand-cleaned sprites have fewer rectangles and will be smaller; the
-  script warns above 2 KB and does not fail.
+- The first 16 sprites are edited by Claude Code, not drawn by the owner. That is a
+  change from [ADR-0012](0012-game-art-is-ai-assisted-pixel-art-edited-by-the-owner.md),
+  which relies on the owner's own edit to make each sprite hers. Her approval of every
+  sprite keeps her in charge, but it weakens that argument. If this is the way the art
+  will be made from now on, ADR-0012 should be superseded by a new ADR.
 - A shared 16-colour palette limits shading. Revisit if the set looks flat after editing,
   or if a palette change is needed: sprites are then exported again from their masters.

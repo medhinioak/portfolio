@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { blankImage } from './image.ts';
 import { GRID } from './sprite.ts';
-import { checkSprite, SVG_SIZE_TARGET, spriteToSvg } from './svg.ts';
+import {
+  checkSprite,
+  gzippedSize,
+  spriteToSvg,
+  SVG_SIZE_LIMIT,
+} from './svg.ts';
 
 const palette = { outline: '#1b1a23', colours: ['#ff0000', '#00aa00'] };
 
@@ -76,7 +81,7 @@ describe('spriteToSvg', () => {
     const svg = spriteToSvg(sprite(), palette);
     // The ring is 4 rectangles at most, the block 1, the dot 1.
     expect(svg.match(/M\d+ \d+h/g)?.length).toBeLessThanOrEqual(6);
-    expect(svg.length).toBeLessThan(SVG_SIZE_TARGET);
+    expect(gzippedSize(svg)).toBeLessThan(SVG_SIZE_LIMIT);
   });
 
   it('is a plain SVG with no script, metadata or embedded image', () => {

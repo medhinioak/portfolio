@@ -12,7 +12,12 @@ import {
   type Palette,
 } from './palette.ts';
 import { draftSprite, fitSprite, splitSheet } from './sprite.ts';
-import { checkSprite, spriteToSvg, SVG_SIZE_TARGET } from './svg.ts';
+import {
+  checkSprite,
+  gzippedSize,
+  spriteToSvg,
+  SVG_SIZE_LIMIT,
+} from './svg.ts';
 
 /** The colour that stands for the outline in sprite PNGs: the site's light-theme text colour. */
 const OUTLINE = '#1b1a23';
@@ -92,9 +97,10 @@ function main(): void {
         continue;
       }
       const svg = spriteToSvg(image, palette);
-      if (svg.length > SVG_SIZE_TARGET) {
+      const size = gzippedSize(svg);
+      if (size > SVG_SIZE_LIMIT) {
         console.warn(
-          `${file}: ${svg.length} bytes, over the ${SVG_SIZE_TARGET} byte target`,
+          `${file}: ${size} bytes gzipped, over the ${SVG_SIZE_LIMIT} byte limit`,
         );
       }
       writeFileSync(join(path(out), `${nameOf(file)}.svg`), svg);
