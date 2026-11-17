@@ -216,8 +216,9 @@
 }
 
 .tt-option input {
-  width: 1.5rem;
-  height: 1.5rem;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
   margin: 0;
   accent-color: var(--game-accent);
 }
@@ -543,6 +544,106 @@
 
 .tt-details .tt-log {
   padding: 0 1rem;
+}
+
+/* Skip link: off screen until it has keyboard focus. */
+.tt-skip {
+  position: absolute;
+  left: -100vw;
+}
+
+.tt-skip:focus {
+  position: static;
+  align-self: start;
+  justify-self: start;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--game-accent);
+  border-radius: var(--game-radius);
+  background: var(--game-bg);
+  color: var(--game-accent);
+}
+
+/* The board switch exists for phones only. */
+.tt-board-switch {
+  display: none;
+}
+
+/*
+ * Phone layout, below the site's 48em breakpoint (docs/design/tokens.md, Breakpoint):
+ * one column in the same order, 4 cards per row, one board at a time.
+ */
+@media (width < 48em) {
+  .tt-top,
+  .tt-columns,
+  .tt-reveals {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tt-title {
+    font-size: 1.75rem;
+  }
+
+  .tt-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .tt-chips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tt-board-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .tt-phone-hidden {
+    display: none;
+  }
+
+  .tt-board__head {
+    flex-wrap: wrap;
+  }
+
+  .tt-strip {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  /* Still a whole multiple of the 32 px grid. */
+  .tt-reveal .tt-sprite {
+    width: 64px;
+    height: 64px;
+  }
+
+  .tt-card__name {
+    font-size: 0.75rem;
+    overflow-wrap: anywhere;
+  }
+
+  .tt-list {
+    max-height: 20rem;
+  }
+}
+
+/* Narrow phones (320 px): just enough room for a 64 px sprite in each of 4 cards. */
+@media (width < 23em) {
+  .tt-grid {
+    gap: 0.25rem;
+  }
+
+  .tt-card {
+    padding-inline: 0;
+  }
+
+  .tt-card__name,
+  .tt-card__note {
+    font-size: 0.65rem;
+  }
+
+  .tt-button {
+    padding: 0 0.75rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

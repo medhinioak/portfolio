@@ -22,7 +22,7 @@ export function StartScreen({
 }: StartScreenProps): ReactElement {
   return (
     <section className="tt-column" aria-labelledby="tt-title">
-      <h1 id="tt-title" className="tt-title">
+      <h1 id="tt-title" className="tt-title" tabIndex={-1} data-focus-start>
         Tail Trail
       </h1>
       <p className="tt-lead">

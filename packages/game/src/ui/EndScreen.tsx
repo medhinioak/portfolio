@@ -1,5 +1,5 @@
 /** The end screen: who won, both animals, the stats and what to do next. */
-import { useEffect, useRef, type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import type { Character } from '../engine/board';
 import { gameResult, type GameState } from '../engine/game';
 import { DIFFICULTY_LABELS } from './labels';
@@ -34,7 +34,7 @@ function Reveal({
   );
 }
 
-/** Focus moves to the result heading when the game ends (spec: Focus). */
+/** Game.tsx moves focus to the result heading when the game ends (spec: Focus). */
 export function EndScreen({
   game,
   log,
@@ -42,9 +42,6 @@ export function EndScreen({
   onPlayAgain,
   onChangeDifficulty,
 }: EndScreenProps): ReactElement {
-  const heading = useRef<HTMLHeadingElement>(null);
-  useEffect(() => heading.current?.focus(), []);
-
   const result = gameResult(game);
   const find = (id: string): Character | undefined =>
     game.pack.characters.find((c) => c.id === id);
@@ -55,7 +52,7 @@ export function EndScreen({
   return (
     <section className="tt-column" aria-labelledby="tt-end-title">
       <p className="tt-small">Game over</p>
-      <h1 id="tt-end-title" ref={heading} className="tt-title" tabIndex={-1}>
+      <h1 id="tt-end-title" data-focus-start className="tt-title" tabIndex={-1}>
         {playerWon ? 'You won!' : 'The computer won'}
       </h1>
       <p>

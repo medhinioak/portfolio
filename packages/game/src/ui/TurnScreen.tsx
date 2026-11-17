@@ -1,5 +1,5 @@
 /** The turn screen: banner, your animal, both boards, the questions and the log. */
-import { useRef, useState, type ReactElement } from 'react';
+import { useId, useRef, useState, type ReactElement } from 'react';
 import type { Character } from '../engine/board';
 import { answersFor, type GameState } from '../engine/game';
 import { Board } from './Board';
@@ -8,7 +8,7 @@ import { GameLog } from './GameLog';
 import { GuessDialog } from './GuessDialog';
 import { QuestionPicker } from './QuestionPicker';
 import { Sprite } from './Sprite';
-import type { GameView } from './useGame';
+import { FIRST_TURN, type GameView } from './useGame';
 
 /** Props for {@link TurnScreen}. */
 export interface TurnScreenProps {
@@ -20,7 +20,11 @@ export interface TurnScreenProps {
 export function TurnScreen({ view, game }: TurnScreenProps): ReactElement {
   const { pack } = game;
   const [pending, setPending] = useState<Character | null>(null);
+  // Phones show one board at a time; desktop always shows both (spec: Layout).
+  const [phoneBoard, setPhoneBoard] = useState<'yours' | 'computer'>('yours');
   const banner = useRef<HTMLDivElement>(null);
+  const filterBox = useRef<HTMLInputElement>(null);
+  const questionsId = useId();
   const yourTurn = game.turn === 'player';
   const guessing = view.mode === 'guess' && yourTurn;
   const yourAnimal = pack.characters.find((c) => c.id === game.player.secret);
@@ -39,11 +43,10 @@ export function TurnScreen({ view, game }: TurnScreenProps): ReactElement {
       </h1>
 
       <div className="tt-top">
-        <div ref={banner} className="tt-banner" role="status" tabIndex={-1}>
+        {/* Shows what the live region in Game.tsx says; not live itself, so nothing is read twice. */}
+        <div ref={banner} className="tt-banner" tabIndex={-1} data-focus-start>
           <p className="tt-banner__turn">{heading}</p>
-          <p>
-            {view.log[0] ?? 'You go first. Ask a question or make a guess.'}
-          </p>
+          <p>{view.log[0] ?? FIRST_TURN}</p>
         </div>
         {yourAnimal && (
           <div className="tt-yours">
@@ -72,7 +75,11 @@ export function TurnScreen({ view, game }: TurnScreenProps): ReactElement {
               className="tt-button tt-mode"
               aria-pressed={guessing}
               disabled={!yourTurn}
-              onClick={() => view.setMode('guess')}
+              onClick={() => {
+                view.setMode('guess');
+                // The cards to guess must be on screen on a phone too.
+                setPhoneBoard('yours');
+              }}
             >
               {guessing && '✓ '}Make a guess
             </button>
@@ -84,23 +91,61 @@ export function TurnScreen({ view, game }: TurnScreenProps): ReactElement {
             </p>
           )}
 
-          <Board
-            pack={pack}
-            candidates={game.player.candidates}
-            marks={view.marks}
-            guessing={guessing}
-            onPress={(c) => (guessing ? setPending(c) : view.flipMark(c.id))}
-            onResetMarks={view.resetMarks}
-          />
-          <ComputerBoard pack={pack} candidates={game.computer.candidates} />
+          <a
+            className="tt-skip"
+            href={`#${questionsId}`}
+            onClick={(e) => {
+              e.preventDefault();
+              filterBox.current?.focus();
+            }}
+          >
+            Skip to the questions
+          </a>
+          <div
+            className="tt-board-switch"
+            role="group"
+            aria-label="Board to show"
+          >
+            <button
+              type="button"
+              className="tt-button tt-button--small"
+              aria-pressed={phoneBoard === 'yours'}
+              onClick={() => setPhoneBoard('yours')}
+            >
+              Your board
+            </button>
+            <button
+              type="button"
+              className="tt-button tt-button--small"
+              aria-pressed={phoneBoard === 'computer'}
+              onClick={() => setPhoneBoard('computer')}
+            >
+              Computer&apos;s board
+            </button>
+          </div>
+          <div className={phoneBoard === 'yours' ? '' : 'tt-phone-hidden'}>
+            <Board
+              pack={pack}
+              candidates={game.player.candidates}
+              marks={view.marks}
+              guessing={guessing}
+              onPress={(c) => (guessing ? setPending(c) : view.flipMark(c.id))}
+              onResetMarks={view.resetMarks}
+            />
+          </div>
+          <div className={phoneBoard === 'computer' ? '' : 'tt-phone-hidden'}>
+            <ComputerBoard pack={pack} candidates={game.computer.candidates} />
+          </div>
         </div>
 
-        <div className="tt-side">
+        <div className="tt-side" id={questionsId}>
           <QuestionPicker
             attributes={pack.attributes}
             answers={answers}
             disabled={!yourTurn || guessing}
+            filterRef={filterBox}
             onAsk={view.ask}
+            onAnnounce={view.announce}
           />
           <section aria-labelledby="tt-log-title">
             <h2 id="tt-log-title" className="tt-heading">
