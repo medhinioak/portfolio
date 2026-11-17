@@ -1,0 +1,555 @@
+/*
+ * Tail Trail styles. Colours, fonts and the radius come only from the --game-* custom
+ * properties, which the site (or the playground) sets on a parent (docs/game/spec.md,
+ * Theming). Every class starts with tt- so the site's styles cannot collide with it.
+ */
+
+.tt-game {
+  color: var(--game-text);
+  background: var(--game-bg);
+  font-family: var(--game-font-body);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.tt-game *,
+.tt-game *::before,
+.tt-game *::after {
+  box-sizing: border-box;
+}
+
+.tt-game :focus-visible {
+  outline: 2px solid var(--game-accent);
+  outline-offset: 2px;
+}
+
+.tt-game p,
+.tt-game ol,
+.tt-game ul,
+.tt-game dl,
+.tt-game figure {
+  margin: 0;
+}
+
+/* Layout: Start, Pick and End use the text column; Turn is wider. */
+.tt-column {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.tt-turn {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 63rem;
+  margin: 0 auto;
+}
+
+.tt-top {
+  display: grid;
+  grid-template-columns: 1fr 15rem;
+  gap: 1rem;
+}
+
+.tt-columns {
+  display: grid;
+  grid-template-columns: 1fr 21rem;
+  gap: 2rem;
+  align-items: start;
+}
+
+.tt-main,
+.tt-side {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+/* Type */
+.tt-title,
+.tt-heading,
+.tt-button,
+.tt-banner__turn,
+.tt-label,
+.tt-small,
+.tt-list__group,
+.tt-card__name,
+.tt-card__note,
+.tt-chip,
+.tt-option__name,
+.tt-details summary {
+  font-family: var(--game-font-heading);
+}
+
+.tt-title {
+  margin: 0;
+  font-size: 2.25rem;
+  line-height: 1.2;
+}
+
+.tt-heading {
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.3;
+}
+
+.tt-lead {
+  color: var(--game-muted);
+  font-size: 1.4rem;
+}
+
+.tt-muted,
+.tt-small {
+  color: var(--game-muted);
+}
+
+.tt-small,
+.tt-label {
+  font-size: 0.875rem;
+}
+
+.tt-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.tt-steps {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+/* Buttons */
+.tt-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0 1.5rem;
+  border: 2px solid var(--game-text);
+  border-radius: var(--game-radius);
+  background: var(--game-surface);
+  color: var(--game-text);
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tt-button--primary {
+  border-color: var(--game-accent);
+  background: var(--game-accent);
+  color: var(--game-on-accent);
+}
+
+.tt-button--small {
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+}
+
+.tt-button[aria-pressed='true'] {
+  border-color: var(--game-accent);
+  background: var(--game-accent);
+  color: var(--game-on-accent);
+}
+
+.tt-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.tt-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--game-accent);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Start */
+.tt-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.tt-difficulty {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tt-difficulty legend {
+  margin-bottom: 0.75rem;
+  padding: 0;
+}
+
+.tt-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--game-muted);
+  border-radius: var(--game-radius);
+  cursor: pointer;
+}
+
+.tt-option:has(input:checked) {
+  border-color: var(--game-accent);
+  background: var(--game-surface);
+}
+
+.tt-option input {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  accent-color: var(--game-accent);
+}
+
+.tt-option__name,
+.tt-option__description {
+  display: block;
+}
+
+.tt-option__description {
+  color: var(--game-muted);
+  font-size: 1rem;
+}
+
+/* Cards (Pick and your board) */
+.tt-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.tt-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 7.5rem;
+  padding: 0.5rem 0.25rem;
+  border: 2px solid var(--game-muted);
+  border-radius: var(--game-radius);
+  background: var(--game-surface);
+  color: var(--game-text);
+  cursor: pointer;
+}
+
+.tt-card__name {
+  font-size: 0.85rem;
+}
+
+.tt-card__note {
+  color: var(--game-muted);
+  font-size: 0.75rem;
+}
+
+.tt-card--out {
+  border-style: dashed;
+  background: var(--game-bg);
+}
+
+/* The ruled-out look: only the sprite blurs; the name stays sharp. */
+.tt-card--out .tt-sprite,
+.tt-chip--out .tt-sprite {
+  filter: blur(2px);
+}
+
+.tt-card--picked {
+  border: 3px solid var(--game-accent);
+}
+
+.tt-sprite {
+  display: block;
+  flex: none;
+  background: var(--game-bg);
+  color: var(--game-text);
+}
+
+/* Turn: banner and your animal */
+.tt-banner {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem 1.5rem;
+  border-left: 6px solid var(--game-accent);
+  border-radius: var(--game-radius);
+  background: var(--game-surface);
+}
+
+.tt-banner__turn {
+  font-size: 1.4rem;
+}
+
+.tt-yours {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--game-radius);
+  background: var(--game-surface);
+}
+
+.tt-yours p {
+  display: grid;
+}
+
+.tt-yours__name {
+  font-size: 1.4rem;
+}
+
+.tt-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.tt-notice {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--game-accent);
+  background: var(--game-surface);
+}
+
+.tt-board {
+  display: grid;
+  gap: 1rem;
+}
+
+.tt-board__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+}
+
+/* The computer's board */
+.tt-computer {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.tt-chips {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.tt-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 2px solid var(--game-muted);
+  border-radius: var(--game-radius);
+  background: var(--game-surface);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.tt-chip--out {
+  border-style: dashed;
+  background: var(--game-bg);
+}
+
+.tt-chip__name,
+.tt-chip__note {
+  display: block;
+}
+
+.tt-chip--out .tt-chip__note {
+  color: var(--game-muted);
+}
+
+/* Questions */
+.tt-questions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.tt-filter input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0 1rem;
+  border: 2px solid var(--game-text);
+  border-radius: var(--game-radius);
+  background: var(--game-bg);
+  color: var(--game-text);
+  font: inherit;
+}
+
+.tt-filter input::placeholder {
+  color: var(--game-muted);
+  opacity: 1;
+}
+
+.tt-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tt-list {
+  display: grid;
+  gap: 0.5rem;
+  max-height: 25rem;
+  overflow-y: auto;
+  padding: 0.5rem;
+  border: 2px solid var(--game-muted);
+  border-radius: var(--game-radius);
+}
+
+.tt-list > div {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.tt-list__group {
+  margin: 0;
+  color: var(--game-muted);
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+
+.tt-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--game-text);
+  border-radius: var(--game-radius);
+  background: var(--game-surface);
+  color: var(--game-text);
+  font: inherit;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tt-question:disabled {
+  border-style: dashed;
+  border-color: var(--game-muted);
+  background: var(--game-bg);
+  color: var(--game-muted);
+  cursor: not-allowed;
+}
+
+.tt-question__answer {
+  flex: none;
+  color: var(--game-text);
+}
+
+/* Game log */
+.tt-log {
+  display: grid;
+  padding: 0;
+  list-style: none;
+}
+
+.tt-log li {
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--game-surface);
+}
+
+/* Guess confirmation */
+.tt-dialog {
+  max-width: 28rem;
+  padding: 1.5rem;
+  border: 2px solid var(--game-text);
+  border-radius: var(--game-radius);
+  background: var(--game-bg);
+  color: var(--game-text);
+  font-family: var(--game-font-body);
+}
+
+.tt-dialog[open] {
+  display: grid;
+  gap: 1rem;
+}
+
+.tt-dialog::backdrop {
+  background: var(--game-text);
+  opacity: 0.4;
+}
+
+/* End */
+.tt-reveals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.tt-reveal {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border-radius: var(--game-radius);
+  background: var(--game-surface);
+}
+
+.tt-reveal__name {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.tt-stats > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--game-surface);
+}
+
+.tt-stats dt {
+  color: var(--game-muted);
+}
+
+.tt-stats dd {
+  margin: 0;
+}
+
+.tt-details {
+  border: 2px solid var(--game-text);
+  border-radius: var(--game-radius);
+}
+
+.tt-details summary {
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.tt-details .tt-log {
+  padding: 0 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-game *,
+  .tt-game *::before,
+  .tt-game *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

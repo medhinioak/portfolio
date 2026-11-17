@@ -1,64 +1,43 @@
-/// <reference types="vite/client" />
-/** Playground: a contact sheet of the animal sprites in light and dark. */
-import { StrictMode } from 'react';
+/** Playground: plays the game without the site (`pnpm --filter game dev`). */
+import { StrictMode, useState, type ReactElement } from 'react';
 import { createRoot } from 'react-dom/client';
-import { animalsBoard } from '../src/index';
-import './contact-sheet.css';
+import { Game } from '../src/index';
+import './playground.css';
 
-const files = import.meta.glob<string>('../src/boards/animals/sprites/*.svg', {
-  eager: true,
-  query: '?raw',
-  import: 'default',
-});
+type Theme = 'system' | 'light' | 'dark';
+const next: Record<Theme, Theme> = {
+  system: 'light',
+  light: 'dark',
+  dark: 'system',
+};
 
-/** Returns the SVG markup for a sprite name, or undefined while it is still missing. */
-function spriteSvg(name: string): string | undefined {
-  return files[`../src/boards/animals/sprites/${name}.svg`];
-}
-
-/** One sprite drawn inline, so its outline takes the colour of the panel. */
-function Sprite(props: {
-  svg: string;
-  alt: string;
-  size: number;
-  blurred?: boolean;
-}): React.JSX.Element {
+/** A theme button like the site's, so both themes can be checked here. */
+function Playground(): ReactElement {
+  const [theme, setTheme] = useState<Theme>('system');
+  const change = (): void => {
+    const value = next[theme];
+    setTheme(value);
+    if (value === 'system') {
+      delete document.documentElement.dataset.theme;
+    } else {
+      document.documentElement.dataset.theme = value;
+    }
+  };
   return (
-    <span
-      className={props.blurred ? 'sprite blurred' : 'sprite'}
-      role="img"
-      aria-label={props.alt}
-      style={{ width: props.size, height: props.size }}
-      dangerouslySetInnerHTML={{ __html: props.svg }}
-    />
-  );
-}
-
-/** One theme's panel: every animal at 64 px, 32 px and 64 px blurred (the ruled-out look). */
-function Panel(props: { theme: 'light' | 'dark' }): React.JSX.Element {
-  return (
-    <section className={`panel ${props.theme}`}>
-      <h2>{props.theme === 'light' ? 'Light' : 'Dark'}</h2>
-      <div className="cards">
-        {animalsBoard.characters.map((character) => {
-          const svg = spriteSvg(character.sprite);
-          return (
-            <div className="card" key={character.id}>
-              {svg ? (
-                <div className="sizes">
-                  <Sprite svg={svg} alt={character.alt} size={64} />
-                  <Sprite svg={svg} alt="" size={32} />
-                  <Sprite svg={svg} alt="" size={64} blurred />
-                </div>
-              ) : (
-                <div className="missing">no sprite yet</div>
-              )}
-              <span>{character.name}</span>
-            </div>
-          );
-        })}
+    <>
+      <div className="playground-bar">
+        <button type="button" onClick={change}>
+          Theme: {theme}
+        </button>
       </div>
-    </section>
+      <main>
+        <Game
+          seed={new URLSearchParams(location.search).get('seed') ?? undefined}
+          onGameStart={(info) => console.info('onGameStart', info)}
+          onGameEnd={(result) => console.info('onGameEnd', result)}
+        />
+      </main>
+    </>
   );
 }
 
@@ -66,19 +45,8 @@ const container = document.getElementById('root');
 if (!container) {
   throw new Error('Missing #root element');
 }
-
 createRoot(container).render(
   <StrictMode>
-    <main>
-      <h1>Sprite contact sheet</h1>
-      <p className="note">
-        Each animal at 64 px (the board), 32 px (the computer&apos;s board) and
-        blurred 2 px (ruled out), in both themes.
-      </p>
-      <div className="panels">
-        <Panel theme="light" />
-        <Panel theme="dark" />
-      </div>
-    </main>
+    <Playground />
   </StrictMode>,
 );

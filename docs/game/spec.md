@@ -455,6 +455,7 @@ interface GameProps {
   seed?: string | number; // fixes the random choices; default: random
   onGameStart?: (info: { difficulty: Difficulty; packId: string }) => void;
   onGameEnd?: (result: GameResult) => void;
+  homeHref?: string; // where "Back to Home" links; default: '/'
 }
 
 type Difficulty = 'easy' | 'medium' | 'hard';
@@ -531,8 +532,8 @@ runs without the site.
   5. `pnpm --filter game sprites svg <pngs...> --palette palette.json --out <dir>` exports
      the SVGs and fails if a PNG is not 32 × 32 or uses a colour outside the palette. It
      warns when an SVG is over 2 KB gzipped, the size limit for a sprite.
-  `pnpm --filter game dev` opens a contact sheet of every sprite in light and dark, at 64 px,
-  32 px and blurred 2 px ([screenshot](sprite-contact-sheet.png)).
+  `pnpm --filter game dev` serves a contact sheet of every sprite at `/contact-sheet.html`,
+  in light and dark, at 64 px, 32 px and blurred 2 px ([screenshot](sprite-contact-sheet.png)).
   The outline colour is written as `currentColor`, so a sprite is outlined in
   `--game-text` when the card sets `color: var(--game-text)`.
 - **Checklist for each sprite.** Original (not copied from or imitating an existing

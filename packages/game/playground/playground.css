@@ -1,0 +1,43 @@
+/*
+ * Playground defaults for the game's --game-* properties. The site sets these from its
+ * own tokens (docs/game/spec.md, Theming); the values here copy
+ * apps/site/src/styles/global.css, because the game may not import from the site (ADR-0002).
+ */
+:root {
+  color-scheme: light dark;
+
+  --game-bg: light-dark(#fbf8f3, #14131c);
+  --game-surface: light-dark(#f1ece2, #1f1d2b);
+  --game-text: light-dark(#1b1a23, #f1eee6);
+  --game-muted: light-dark(#5a5766, #a8a4b5);
+  --game-accent: light-dark(#5b3fd1, #a99bff);
+  --game-on-accent: light-dark(#ffffff, #14131c);
+  --game-highlight: light-dark(#b93a00, #5eead4);
+  /* The site's font files live in apps/site; the playground uses system fonts. */
+  --game-font-heading: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --game-font-body: system-ui, sans-serif;
+  --game-radius: 4px;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 1rem 1rem 3rem;
+  background: var(--game-bg);
+  color: var(--game-text);
+  font-family: var(--game-font-body);
+}
+
+.playground-bar {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 63rem;
+  margin: 0 auto 1rem;
+}
