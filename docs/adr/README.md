@@ -17,5 +17,5 @@ Start from [`0000-template.md`](0000-template.md).
 | [0009](0009-gemini-pr-review-on-request.md)                        | Run the Gemini PR review on request only                           | Accepted                                   |
 | [0010](0010-no-syntax-highlighting-at-launch.md) | Show code blocks without syntax highlighting at launch | Proposed |
 | [0011](0011-build-the-game-before-the-aws-move.md) | Build the game before the AWS move | Accepted |
-| [0012](0012-game-art-is-ai-assisted-pixel-art-edited-by-the-owner.md) | Make the game art as AI-assisted pixel art, edited by the owner | Proposed |
-| [0013](0013-players-ask-from-a-fixed-list-of-questions-with-a-filter.md) | Players ask from a fixed list of questions, with a filter | Proposed |
+| [0012](0012-game-art-is-ai-assisted-pixel-art-edited-by-the-owner.md) | Make the game art as AI-assisted pixel art, edited by the owner | Accepted |
+| [0013](0013-players-ask-from-a-fixed-list-of-questions-with-a-filter.md) | Players ask from a fixed list of questions, with a filter | Accepted |

@@ -16,7 +16,7 @@ and the owner has not confirmed it.
 | Topic | Decision | Status |
 |---|---|---|
 | Name | **Tail Trail**. Original; must not imitate "Guess Who?" (a third-party trademark) | Decided |
-| Pitch | "Ask yes/no questions and find the computer's secret animal before it finds yours." | Proposed wording |
+| Pitch | "Ask yes/no questions and find the computer's secret animal before it finds yours." | Decided |
 | Art style | Pixel art, **AI-assisted drafts, then edited by the owner** | Decided; see [Art plan](#art-plan) |
 | Animals | 24, all drawn from the start; Lion and Jellyfish replaced Gecko and Goldfish. The first 16 are the cut-line fallback ([ADR-0005](../adr/0005-deduction-game-with-board-packs.md)) | Decided |
 | Questions | A fixed list of 68 yes/no questions in five groups, with a **type-to-filter** box. No free-text questions: the answers come from the board data. The owner confirmed the questions and answers on 2026-11-17 | Decided |
@@ -534,4 +534,4 @@ non-goals ([`plan.md`](../plan.md#non-goals)). Ideas go to
 
 ## Open questions
 
-1. Is the one-line pitch right? Change the wording in [Decisions](#decisions).
+None at the moment.

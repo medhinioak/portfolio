@@ -1,6 +1,6 @@
 # ADR-0013: Players ask from a fixed list of questions, with a filter
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-11-17
 - Decider: Medhini
 - Review: Claude (project chat), 2026-11-17

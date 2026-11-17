@@ -1,6 +1,6 @@
 # ADR-0012: Make the game art as AI-assisted pixel art, edited by the owner
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-11-17
 - Decider: Medhini
 - Review: Claude (project chat), 2026-11-17
