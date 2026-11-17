@@ -24,6 +24,19 @@ test('/play hydrates the game and starts a round with the keyboard', async ({
   );
 });
 
+test('/play draws the pixel-art sprites, not the placeholder box', async ({
+  page,
+}) => {
+  await page.goto('/play/');
+  const strip = page.locator('.tt-strip .tt-sprite');
+  await expect(strip).toHaveCount(8);
+  // Placeholders are a rect and a cross; the sprites are filled paths only.
+  await expect(page.locator('.tt-sprite rect')).toHaveCount(0);
+  await expect(strip.first().locator('path[fill="currentColor"]')).toHaveCount(
+    1,
+  );
+});
+
 test('/play fits a 320px phone without scrolling sideways', async ({
   page,
 }) => {
