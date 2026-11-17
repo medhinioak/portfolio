@@ -1,9 +1,9 @@
 # Wireframes
 
-Status: draft for review · Owner: Medhini · Issue: #5 · Last updated: 2026-11-11
+Status: draft for review · Owner: Medhini · Issues: #5, #70 · Last updated: 2026-11-17
 
-Low-fidelity layouts for the five page types that need a design before the build:
-Home, About, a case study, a blog post and the 404 page. Colours, fonts and spacing
+Low-fidelity layouts for the page types that need a design before the build:
+Home, About, a case study, a blog post, the 404 page and the game page (`/play`). Colours, fonts and spacing
 come from [`tokens.md`](tokens.md); nothing here introduces a new style except where
 [Open items](#open-items) says so.
 
@@ -206,6 +206,60 @@ Screenshots: [light desktop](wireframes/404-light-desktop.png),
 [light phone](wireframes/404-light-phone.png),
 [dark phone](wireframes/404-dark-phone.png).
 
+## Play (`/play`)
+
+Purpose: the game page. The rules, the board and the keyboard model are in
+[`game/spec.md`](../game/spec.md); this section only shows the screens. The game is a
+React island between the normal site header and footer, and no nav item is current.
+Sprites are crossed boxes (32 x 32 pixel art, drawn at 64 px, or 56 px on a phone).
+
+**Start.** The 736 px text column. Heading and one-line pitch, a decorative strip of
+sprites, "How to play" in three steps, a difficulty radio group (the selected one is
+marked by its dot as well as its border), a "Start game" button, a line saying the game
+runs in the browser and saves nothing, and the art credit line.
+
+**Turn.** About 1000 px wide on desktop so the board and the questions sit side by
+side; one column on a phone, in the same order.
+
+1. **Your animal** and the status: "Your turn", "8 of 24 animals still in" and a "Reset
+   marks" button.
+2. **Mode buttons.** "Ask a question" and "Make a guess" (the active one is filled and
+   has a tick).
+3. **Board.** 24 cards, 6 columns on desktop and 4 on a phone. A card is normal,
+   ruled out (dashed border, struck-through name, an X badge and the words "ruled
+   out") or focused (the accent ring, shown on Zebra).
+4. **Questions.** The 12 questions as buttons. Asked ones are disabled and show their
+   answer.
+5. **Game log.** Newest first, with the same text as the live region.
+
+The scenario shows two questions asked, "fur" (yes, 9 left) and "fly" (no, 8 left).
+
+**Guess confirmation.** "Make a guess" turns the board into guess mode and disables
+the questions. Choosing a card opens a dialog over the dimmed page ("Guess the tiger?",
+"Yes, guess the tiger", "Cancel"); focus starts on Cancel. Light only; dark follows the
+same rules.
+
+**End.** The 736 px text column. "Game over", the result heading ("You won!"), both secret
+animals, the stats (turns played, your questions, wrong guesses, difficulty), three
+buttons ("Play again", "Change difficulty", "Back to Home") and a collapsed game log. If
+the computer wins, the heading is "The computer won" and the line reads "It guessed
+your animal: the penguin."
+
+Screenshots, start: [light desktop](wireframes/play-start-light-desktop.png),
+[dark desktop](wireframes/play-start-dark-desktop.png),
+[light phone](wireframes/play-start-light-phone.png),
+[dark phone](wireframes/play-start-dark-phone.png).
+Turn: [light desktop](wireframes/play-turn-light-desktop.png),
+[dark desktop](wireframes/play-turn-dark-desktop.png),
+[light phone](wireframes/play-turn-light-phone.png),
+[dark phone](wireframes/play-turn-dark-phone.png).
+Guess confirmation: [light desktop](wireframes/play-guess-light-desktop.png),
+[light phone](wireframes/play-guess-light-phone.png).
+End: [light desktop](wireframes/play-end-light-desktop.png),
+[dark desktop](wireframes/play-end-dark-desktop.png),
+[light phone](wireframes/play-end-light-phone.png),
+[dark phone](wireframes/play-end-dark-phone.png).
+
 ## Decisions made while drawing
 
 | Decision | Why |
@@ -223,6 +277,8 @@ Screenshots: [light desktop](wireframes/404-light-desktop.png),
 | Long titles use Atkinson bold | Real case-study titles read badly in 22 px pixel type. |
 | About is a personal page, with "What I do" as one block | The audience is friends first. Experience and skills live in the CV and the case studies. |
 | The 404 has no header | A dead end should not offer a full nav; the footer keeps the legal links. |
+| Turn is wider than the text column | The board and the questions fit side by side on desktop. Start and End stay in the text column. |
+| A ruled-out card is shown by a dashed border, a struck-through name, an X badge and a label, not by dimming | Dimmed text would lose contrast, and dimming alone is not enough. |
 
 An outside review of the Home layout was also considered. These suggestions were not
 adopted: a hero terminal graphic (it breaks the single column), invented metrics (they
