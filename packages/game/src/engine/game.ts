@@ -119,7 +119,7 @@ export function askQuestion(state: GameState, attributeId: string): GameState {
   const mine = state[side];
   const agree = new Set(
     state.pack.characters
-      .filter((c) => c.values[attributeId] === answer)
+      .filter((c) => (c.values[attributeId] === true) === answer)
       .map((c) => c.id),
   );
   return {
