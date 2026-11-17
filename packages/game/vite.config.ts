@@ -11,6 +11,6 @@ export default defineConfig({
   },
   test: {
     root: '.',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'tools/**/*.test.ts'],
   },
 });

@@ -9,16 +9,21 @@
     "dev": "vite",
     "build": "vite build",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p src/engine"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p src/engine && tsc --noEmit -p tools",
+    "sprites": "node tools/sprites/cli.ts"
   },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/pngjs": "6.0.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.3.0",
+    "jpeg-js": "0.4.4",
+    "pngjs": "7.0.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "typescript": "6.0.3",
