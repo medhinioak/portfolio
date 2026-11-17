@@ -173,6 +173,8 @@ minimum. For the record, the fills against `--color-surface` (`#F1ECE2` light, `
 - `--column`: 46rem (736px), the width of the page column from the wireframes. Header,
   main and footer align with it, with a `--space-4` gutter on each side. (`68ch` in the
   body font is about 790px, so the column, not `--measure`, limits lines on desktop.)
+- `--column-wide`: 63rem (1008px), the main column on `/play` only (`.wrap-wide`), so the
+  game's Turn screen fits its boards beside the questions. Header and footer keep `--column`.
 - Control heights: `--control-height` 48px (buttons), `--control-height-small` 44px
   (small buttons, the menu, Close and theme buttons). Both are above the 24 × 24 px
   minimum target size of WCAG 2.2.

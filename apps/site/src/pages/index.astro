@@ -1,5 +1,5 @@
 ---
-/** Home page: intro with the CV link, Projects, the latest post, then Contact (issues #29, #30, #32). */
+/** Home page: intro with the CV link, Projects, the latest post, the game teaser, then Contact (issues #29, #30, #32, #77). */
 import Arrow from '../components/Arrow.astro';
 import FeedIcon from '../components/FeedIcon.astro';
 import PostCard from '../components/PostCard.astro';
@@ -111,7 +111,17 @@ const person = personJsonLd(
     </section>
   )}
 
-  <!-- The game teaser waits for Phase 2. -->
+  {/* Plain links only: the game's JavaScript loads on /play, not here. */}
+  <section class="game-teaser" aria-labelledby="game-title">
+    <h2 id="game-title">Tail Trail</h2>
+    <p>
+      Ask yes/no questions and find the computer's secret animal before it finds
+      yours.
+    </p>
+    <a class="button button-primary" href="/play/">
+      Play Tail Trail
+    </a>
+  </section>
 
   <section id="contact" class="contact" aria-labelledby="contact-title">
     <h2 id="contact-title">Contact</h2>
@@ -175,6 +185,7 @@ const person = personJsonLd(
   }
 
   .intro-text,
+  .game-teaser,
   .contact {
     display: grid;
     justify-items: start;
@@ -189,8 +200,16 @@ const person = personJsonLd(
 
   .projects,
   .blog,
+  .game-teaser,
   .contact {
     margin-top: var(--space-7);
+  }
+
+  /* The dashed box of the wireframe (docs/design/wireframes.md, Home item 4). */
+  .game-teaser {
+    padding: var(--space-5);
+    border: 2px dashed var(--color-muted);
+    border-radius: var(--radius);
   }
 
   .section-head {

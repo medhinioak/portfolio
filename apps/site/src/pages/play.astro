@@ -1,0 +1,32 @@
+---
+/** The game page: Tail Trail as a React island, themed from the site's tokens (issue #77, docs/game/spec.md). */
+import { Game } from 'game';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Tail Trail · Medhini Oak"
+  description="Tail Trail, a small browser game: ask yes/no questions and find the computer's secret animal before it finds yours."
+  wide
+>
+  {/* The game brings its own h1 on every screen. Server-rendered, so the start screen shows before the script loads. */}
+  <div class="play">
+    <Game client:load homeHref="/" />
+  </div>
+</BaseLayout>
+
+<style>
+  /* The game reads only these properties from the site (docs/game/spec.md, Theming). */
+  .play {
+    --game-bg: var(--color-bg);
+    --game-surface: var(--color-surface);
+    --game-text: var(--color-text);
+    --game-muted: var(--color-muted);
+    --game-accent: var(--color-accent);
+    --game-on-accent: var(--color-on-accent);
+    --game-highlight: var(--color-highlight);
+    --game-font-heading: var(--font-pixel);
+    --game-font-body: var(--font-body);
+    --game-radius: var(--radius);
+  }
+</style>
