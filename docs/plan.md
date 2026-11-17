@@ -70,14 +70,19 @@ done early, ahead of Phase 1. Parking lot reviewed (all ideas kept); released as
 - [x] Blog with RSS, and Post 1: "Building my portfolio site in two weeks"
 - [x] Impressum and privacy policy
 - [x] SEO basics: titles, descriptions, canonical URLs, sitemap, Open Graph images
-- [ ] Work through [`launch-checklist.md`](launch-checklist.md) (medhinioak.dev already points at GitHub Pages with HTTPS enforced, done early in Phase 0)
-- [ ] Link the site from CV, LinkedIn and GitHub profile
+- [x] Work through [`launch-checklist.md`](launch-checklist.md) (medhinioak.dev already points at GitHub Pages with HTTPS enforced, done early in Phase 0)
+- [x] Link the site from CV, LinkedIn and GitHub profile
 
 **Done when:** the site is live on medhinioak.dev over HTTPS; Lighthouse (mobile) is
 at least 95 in all four categories on Home and a post; axe reports no serious or
 critical issues; every "must" item in the launch checklist is ticked.
 
 **Cut line:** if the second case study is not drafted by Nov 19, launch with one.
+
+**Outcome (2026-11-17):** all items done; both case studies shipped. Every "must" item in
+the launch checklist is ticked on the live site; the "(should)" items wait for Phase 2
+or 4. Lighthouse (mobile) 100 in all four categories on Home and Post 1; axe clean.
+Parking lot reviewed; released as v0.1.
 
 ### Phase 2: AWS and Terraform (Nov 23 – Dec 6)
 
