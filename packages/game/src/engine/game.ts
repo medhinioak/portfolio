@@ -102,6 +102,17 @@ export function askedQuestions(state: GameState, side: Side): string[] {
   );
 }
 
+/** The answers `side` has been given so far, by question id. */
+export function answersFor(state: GameState, side: Side): Map<string, boolean> {
+  return new Map(
+    state.history.flatMap((m) =>
+      m.side === side && m.kind === 'ask'
+        ? [[m.attributeId, m.answer] as const]
+        : [],
+    ),
+  );
+}
+
 /** The side to move asks a question; the true answer rules out the cards that disagree. */
 export function askQuestion(state: GameState, attributeId: string): GameState {
   assertInPlay(state);

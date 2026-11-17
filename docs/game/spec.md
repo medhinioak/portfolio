@@ -455,6 +455,7 @@ interface GameProps {
   seed?: string | number; // fixes the random choices; default: random
   onGameStart?: (info: { difficulty: Difficulty; packId: string }) => void;
   onGameEnd?: (result: GameResult) => void;
+  homeHref?: string; // where "Back to Home" links; default: '/'
 }
 
 type Difficulty = 'easy' | 'medium' | 'hard';
