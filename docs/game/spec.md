@@ -533,9 +533,13 @@ runs without the site.
   3. `pnpm --filter game sprites draft <images...> --palette palette.json --out <dir>`
      makes the 32 × 32 draft PNGs: background removed, animal fitted to the grid and
      standing on the bottom row, colours mapped to the palette, edge pixels marked as the outline.
-  4. The owner edits the PNGs in a pixel editor, using only palette colours and the outline colour.
+  4. The PNGs (the masters, kept in `packages/game/art/animals/`) are edited in a pixel
+     editor or by script, using only palette colours and the outline colour.
   5. `pnpm --filter game sprites svg <pngs...> --palette palette.json --out <dir>` exports
-     the SVGs and fails if a PNG is not 32 × 32 or uses a colour outside the palette.
+     the SVGs and fails if a PNG is not 32 × 32 or uses a colour outside the palette. It
+     warns when an SVG is over 2 KB gzipped, the size limit for a sprite.
+  `pnpm --filter game dev` serves a contact sheet of every sprite at `/contact-sheet.html`,
+  in light and dark, at 64 px, 32 px and blurred 2 px ([screenshot](sprite-contact-sheet.png)).
   The outline colour is written as `currentColor`, so a sprite is outlined in
   `--game-text` when the card sets `color: var(--game-text)`.
 - **Checklist for each sprite.** Original (not copied from or imitating an existing

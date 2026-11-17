@@ -124,6 +124,39 @@ export function applyPalette(image: Image, colours: Rgb[]): Image {
   return { ...image, data };
 }
 
+/** Replaces pixels that have at most one same-coloured neighbour with the colour most common around them. */
+export function despeckle(image: Image): Image {
+  const { width, height } = image;
+  const data = new Uint8Array(image.data);
+  const colourAt = (x: number, y: number): string | null => {
+    if (x < 0 || y < 0 || x >= width || y >= height) return null;
+    const i = (y * width + x) * 4;
+    return image.data[i + 3] === 0
+      ? null
+      : `${image.data[i]},${image.data[i + 1]},${image.data[i + 2]}`;
+  };
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const own = colourAt(x, y);
+      if (own === null) continue;
+      const around = new Map<string, number>();
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          const colour = dx === 0 && dy === 0 ? null : colourAt(x + dx, y + dy);
+          if (colour !== null)
+            around.set(colour, (around.get(colour) ?? 0) + 1);
+        }
+      }
+      if ((around.get(own) ?? 0) > 1 || around.size === 0) continue;
+      const [best] = [...around.entries()].sort(
+        (a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1),
+      )[0];
+      data.set([...best.split(',').map(Number), 255], (y * width + x) * 4);
+    }
+  }
+  return { width, height, data };
+}
+
 /** Paints the silhouette's edge pixels (filled pixels beside an empty one or the border). */
 export function markOutline(image: Image, outline: Rgb): Image {
   const { width, height } = image;
@@ -152,7 +185,10 @@ export function markOutline(image: Image, outline: Rgb): Image {
 
 /** Makes the 32 × 32 draft of one animal from a large source image. */
 export function draftSprite(source: Image, fills: Rgb[], outline: Rgb): Image {
-  return markOutline(applyPalette(fitSprite(source), fills), outline);
+  return markOutline(
+    despeckle(applyPalette(fitSprite(source), fills)),
+    outline,
+  );
 }
 
 /**
