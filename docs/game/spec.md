@@ -15,13 +15,14 @@ and the owner has not confirmed it.
 
 | Topic | Decision | Status |
 |---|---|---|
-| Name | `PLACEHOLDER: game name`. Original; must not imitate "Guess Who?" (a third-party trademark) | Open |
+| Name | **Tail Trail**. Original; must not imitate "Guess Who?" (a third-party trademark) | Decided |
+| Pitch | "Ask yes/no questions and find the computer's secret animal before it finds yours." | Proposed wording |
 | Art style | Pixel art, **AI-assisted drafts, then edited by the owner** | Decided; see [Art plan](#art-plan) |
 | Animals | 24, all drawn from the start; Lion and Jellyfish replaced Gecko and Goldfish. The first 16 are the cut-line fallback ([ADR-0005](../adr/0005-deduction-game-with-board-packs.md)) | Decided |
 | Questions | A fixed list of 68 yes/no questions in five groups, with a **type-to-filter** box. No free-text questions: the answers come from the board data | Decided |
 | Ruled-out marks | Both: automatic, with manual override | Decided |
 | A wrong guess | Loses the turn; the game goes on | Decided |
-| Difficulty names | `PLACEHOLDER: easy name`, `PLACEHOLDER: medium name`, `PLACEHOLDER: hard name` (ids `easy`, `medium`, `hard`) | Open |
+| Difficulty names | Breezy, Medium, Zoologist (ids `easy`, `medium`, `hard`) | Decided |
 | Who starts | The player. A turn banner above the board says whose turn it is and what the computer just did | Decided |
 | Your animal | The player picks it, or taps "Surprise me" for a random one. The computer's animal is random | Decided |
 | Computer's board | The player can see the computer's own board: the animals it still thinks yours could be | Decided |
@@ -288,7 +289,7 @@ never a useless one):
 | `hard` | 0 | Always the best question |
 
 These are starting values to tune while play-testing; the names shown to the player are
-`PLACEHOLDER: easy name`, `PLACEHOLDER: medium name`, `PLACEHOLDER: hard name`.
+Breezy (`easy`), Medium (`medium`) and Zoologist (`hard`).
 ADR-0005 allows a cut to two difficulties: drop `medium`.
 
 **Fairness.** The computer reads only the answers it has been given, never the player's
@@ -493,11 +494,10 @@ runs without the site.
 - **Format.** One SVG file per animal, made of square pixels, in
   `packages/game/src/boards/animals/sprites/<id>.svg`. The pack's `sprite` field is the
   file name without `.svg`.
-- **Process.** Drafts may be made with an AI image tool and are then redrawn or edited
-  by the owner on the pixel grid. The finished sprite is the owner's. This is a
-  decision about how the art is made, so it is recorded in
-  [ADR-0012](../adr/0012-game-art-is-ai-assisted-pixel-art-edited-by-the-owner.md), and
-  the tool used goes into [`ai-usage.md`](../ai-usage.md) once it is chosen.
+- **Process.** Drafts may be made with AI assistance and are then redrawn or edited by
+  the owner on the pixel grid. The finished sprite is the owner's. This is a decision
+  about how the art is made, so it is recorded in
+  [ADR-0012](../adr/0012-game-art-is-ai-assisted-pixel-art-edited-by-the-owner.md).
 - **Checklist for each sprite.** Original (not copied from or imitating an existing
   character or brand, as ADR-0005 requires); the tool's terms allow the use; readable
   at 64 px wide; still recognisable with a 2 px blur (the ruled-out look) and at 32 px
@@ -534,9 +534,7 @@ non-goals ([`plan.md`](../plan.md#non-goals)). Ideas go to
 
 ## Open questions
 
-1. The game's name, the one-line pitch and the three difficulty names.
+1. Is the one-line pitch right? Change the wording in [Decisions](#decisions).
 2. Are the 68 questions and 24 animals right? Check the "Yes for" column and the
    "How to read it" notes, change a value or swap an animal, then re-run the checks in
    [the animals board](#the-animals-board).
-3. Which AI image tool the drafts come from, and its terms.
-4. Wording of the art credit line on the game page.

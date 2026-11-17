@@ -217,8 +217,8 @@ board).
 **Start.** The 736 px text column. Heading and one-line pitch, a decorative strip of
 sprites, "How to play" in three steps, a difficulty radio group (the selected one is
 marked by its dot as well as its border), a line saying you take the first turn, a "Next:
-pick your animal" button, a line saying the game runs in the browser and saves nothing,
-and the art credit line.
+pick your animal" button, and a line saying the game runs in the browser and saves
+nothing.
 
 **Pick your animal.** The 24 animals as cards. The chosen one has a thick border, a tick
 and the words "your pick". "Start with the penguin" begins the game, "Surprise me" picks

@@ -20,9 +20,8 @@ their terms and in how they were trained.
 
 Draft each animal sprite with an AI image tool, then redraw or edit it by hand on the
 32 × 32 pixel grid, so the published sprite is the owner's work. The owner approves every
-sprite. The tool, its terms and the date go into [`ai-usage.md`](../ai-usage.md) once the
-tool is chosen. The checklist for each sprite is in [`game/spec.md`](../game/spec.md#art-plan):
-original, allowed by the tool's terms, readable at 80 px wide, with alt text.
+sprite. The checklist for each sprite is in [`game/spec.md`](../game/spec.md#art-plan):
+original, allowed by the tool's terms, readable at 64 px wide, with alt text.
 
 ## Alternatives considered
 
@@ -36,11 +35,7 @@ original, allowed by the tool's terms, readable at 80 px wide, with alt text.
 ## Consequences
 
 - The art is faster to make, so all 24 animals are realistic.
-- A tool's terms and its training data are a real choice, not a detail. Picking the tool
-  is a step in the art issue, and the choice is recorded.
 - The pixel-grid edit is what makes each sprite the owner's; skipping it for a sprite
   breaks this decision.
-- The game page should say how the art was made (a short credit line); the wording is
-  decided with the interface.
-- Revisit if the tool's terms change, if a sprite cannot be made original, or if hand
-  drawing turns out to be as fast.
+- Revisit if a sprite cannot be made original, or if hand drawing turns out to be as
+  fast.
