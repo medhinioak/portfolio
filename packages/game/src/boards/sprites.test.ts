@@ -4,9 +4,6 @@ import { describe, expect, it } from 'vitest';
 import palette from './animals/palette.json';
 import { animalsBoard } from './index';
 
-/** The animals the first release must have sprites for: the cut line (spec, Art plan). */
-const REQUIRED = 16;
-
 const files = import.meta.glob<string>('./animals/sprites/*.svg', {
   eager: true,
   query: '?raw',
@@ -27,14 +24,14 @@ function longHex(colour: string): string {
 }
 
 describe('animal sprites', () => {
-  it('exist for the first 16 animals, and for no name that is not on the board', () => {
+  it('exist for every animal, and for no name that is not on the board', () => {
     const names = animalsBoard.characters.map((c) => c.sprite);
-    expect(names.slice(0, REQUIRED).filter((n) => !sprites.has(n))).toEqual([]);
+    expect(names.filter((n) => !sprites.has(n))).toEqual([]);
     expect([...sprites.keys()].filter((n) => !names.includes(n))).toEqual([]);
   });
 
   it('have alt text that describes the picture', () => {
-    for (const character of animalsBoard.characters.slice(0, REQUIRED)) {
+    for (const character of animalsBoard.characters) {
       expect(character.alt, character.id).toMatch(/^Pixel art of .{10,}\.$/);
     }
   });

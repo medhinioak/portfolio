@@ -27,7 +27,7 @@ the editing in any pixel editor:
 2. **Draft**: remove the background, scale the animal to fit the 32 × 32 grid with its
    feet on the bottom row, map every pixel to the shared palette and mark the outline.
 3. The draft PNG is **edited** on the grid: noise removed, thin parts redrawn, colours
-   fixed. For the first 16 animals the owner asked Claude Code to do this, and she approves
+   fixed. For all 24 animals the owner asked Claude Code to do this, and she approves
    every sprite in the pull request.
 4. **Export** the PNG to an SVG made of merged rectangles.
 
@@ -66,7 +66,7 @@ Conventions:
 - Fitting every animal to the grid makes a mouse as tall as an elephant. The board shows
   names beside the sprites, so this is accepted; revisit if it confuses players.
 - Thin features (legs, tentacles, antennae) are lost at 32 px and are redrawn by hand.
-- The first 16 sprites are edited by Claude Code, not drawn by the owner. That is a
+- All 24 sprites are edited by Claude Code, not drawn by the owner. That is a
   change from [ADR-0012](0012-game-art-is-ai-assisted-pixel-art-edited-by-the-owner.md),
   which relies on the owner's own edit to make each sprite hers. Her approval of every
   sprite keeps her in charge, but it weakens that argument. If this is the way the art

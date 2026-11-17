@@ -1633,7 +1633,7 @@
       "id": "rabbit",
       "name": "Rabbit",
       "sprite": "rabbit",
-      "alt": "Pixel art of a rabbit.",
+      "alt": "Pixel art of a white rabbit sitting and facing front, with tall ears that are pink inside.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -1709,7 +1709,7 @@
       "id": "elephant",
       "name": "Elephant",
       "sprite": "elephant",
-      "alt": "Pixel art of an elephant.",
+      "alt": "Pixel art of a grey elephant facing left, with a curled trunk and a large pink ear.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -1785,7 +1785,7 @@
       "id": "ostrich",
       "name": "Ostrich",
       "sprite": "ostrich",
-      "alt": "Pixel art of an ostrich.",
+      "alt": "Pixel art of an ostrich facing left, with a long pink neck, a black body, white wing and tail feathers, and long legs.",
       "values": {
         "mammal": false,
         "bird": true,
@@ -1861,7 +1861,7 @@
       "id": "lion",
       "name": "Lion",
       "sprite": "lion",
-      "alt": "Pixel art of a lion.",
+      "alt": "Pixel art of a lion sitting and facing front, with a big orange mane and a tail with a red tuft.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -1937,7 +1937,7 @@
       "id": "jellyfish",
       "name": "Jellyfish",
       "sprite": "jellyfish",
-      "alt": "Pixel art of a jellyfish.",
+      "alt": "Pixel art of a jellyfish with a pale blue dome, a pink rim and long trailing tentacles.",
       "values": {
         "mammal": false,
         "bird": false,
@@ -2013,7 +2013,7 @@
       "id": "dolphin",
       "name": "Dolphin",
       "sprite": "dolphin",
-      "alt": "Pixel art of a dolphin.",
+      "alt": "Pixel art of a blue-grey dolphin leaping, facing left, with a white belly and a curved tail.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -2089,7 +2089,7 @@
       "id": "octopus",
       "name": "Octopus",
       "sprite": "octopus",
-      "alt": "Pixel art of an octopus.",
+      "alt": "Pixel art of an orange octopus with a round head, two dark eyes and curling arms.",
       "values": {
         "mammal": false,
         "bird": false,
@@ -2165,7 +2165,7 @@
       "id": "bat",
       "name": "Bat",
       "sprite": "bat",
-      "alt": "Pixel art of a bat.",
+      "alt": "Pixel art of a brown bat facing front, with pink-lined ears, small fangs and dark spread wings.",
       "values": {
         "mammal": true,
         "bird": false,
