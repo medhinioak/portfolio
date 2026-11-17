@@ -1,5 +1,6 @@
 /** The turn screen: banner, your animal, both boards, the questions and the log. */
 import { useId, useRef, useState, type ReactElement } from 'react';
+import { flushSync } from 'react-dom';
 import type { Character } from '../engine/board';
 import { answersFor, type GameState } from '../engine/game';
 import { Board } from './Board';
@@ -164,8 +165,12 @@ export function TurnScreen({ view, game }: TurnScreenProps): ReactElement {
           view.setMode('ask');
         }}
         onConfirm={(c) => {
-          setPending(null);
-          view.guess(c.id);
+          // Render the guess first: the banner must show its result when focus arrives,
+          // because focus is what reads it (spec: Focus, Announcements).
+          flushSync(() => {
+            setPending(null);
+            view.guess(c.id);
+          });
           // A wrong guess keeps this screen; focus goes to the banner (spec: Focus).
           banner.current?.focus();
         }}
