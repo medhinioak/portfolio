@@ -97,6 +97,10 @@ the board (at least one yes and one no). Those last two make every board winnabl
 questions alone. The full rule list is in the spec,
 [Board pack schema](../../docs/game/spec.md#board-pack-schema).
 
+Sprites are looked up by name in `src/boards/animals/sprites/` only, since the animals
+board is the only pack so far. A second pack needs its own sprites folder and a change in
+`src/ui/Sprite.tsx`; until then its cards show a crossed placeholder box.
+
 ## How the computer chooses
 
 The computer keeps a list of the animals yours could still be, and removes those that
