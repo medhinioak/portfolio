@@ -6,6 +6,29 @@ Newest first. Each entry has the same fields so it can be skimmed:
 
 Status is one of: _fixed_, _workaround_ (remove when the upstream fix lands), _open_.
 
+## Site
+
+### Site icon missing from the browser tab
+
+- **Seen:** 2026-11-17, issue #80, Chrome 157 on Mac (light and dark) and a phone browser,
+  also in a private window.
+- **Symptom:** no icon in the tab on medhinioak.dev, although `/favicon.ico` answers `200`
+  with `image/vnd.microsoft.icon`, is a valid ICO (16, 32 and 48 px, opaque light
+  background) and every page links to it. A fresh Chrome profile shows it.
+- **Cause:** browser state, not the site. Before #59 (deployed 2026-11-16) `/favicon.ico`
+  was a 404. Chrome keeps an in-memory list of favicon URLs that failed and doesn't
+  request them again until it restarts; incognito windows share that list. The owner's
+  Chrome had been running since 2026-11-14. Reproduced against a local server: after one
+  404, Chrome made no favicon request on reload, on new pages or in an off-the-record
+  context, then fetched it as soon as it restarted, or at once when the `href` changed.
+  `sizes="48x48"` and the icon's colours were ruled out: Chrome stores the 16 and 32 px
+  frames regardless, and the icon has its own background.
+- **Fix:** link `/favicon.ico?v=2`, a URL no browser has seen fail, and list all three
+  sizes (`BaseLayout.astro`). The smoke test checks every page links the icon and that it
+  is served as an ICO. Quitting Chrome fully (Cmd+Q) also clears it locally.
+- **Status:** _fixed_ in Chrome (reproduced and verified locally). The phone browser
+  was not tested; the new URL should clear a remembered failure there too.
+
 ## Gemini PR review
 
 ### Review fails on every Dependabot PR: "No authentication method provided"

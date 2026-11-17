@@ -83,7 +83,12 @@ const current = (href: string): 'page' | undefined =>
         root.dataset.theme = mode;
       })();
     </script>
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <!--
+      ?v=2: Chrome remembers a favicon URL that once failed (it was 404 before #59) and
+      won't fetch it again until restarted. A new URL is fetched at once. Bump it if the
+      icon is ever missing again (docs/troubleshooting.md, #80).
+    -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{title}</title>
     <meta name="description" content={description} />

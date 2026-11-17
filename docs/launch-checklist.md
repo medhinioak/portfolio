@@ -5,14 +5,14 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 
 ## Performance
 
-- [ ] Lighthouse, mobile profile: at least 95 in all four categories on Home and on a blog post
+- [x] Lighthouse, mobile profile: at least 95 in all four categories on Home and on a blog post
 - [x] Core Web Vitals in the "good" range: LCP ≤ 2.5 s, CLS ≤ 0.1, INP ≤ 200 ms
-- [ ] Budget: Home under 300 KB transferred including fonts; a post under 250 KB before images
+- [x] Budget: Home under 300 KB transferred including fonts; a post under 250 KB before images
 - [x] Images responsive, with width and height; only the top image loads eagerly
 - [x] Fonts self-hosted, Latin subset, one weight of each font preloaded, `font-display: swap`
 - [x] Game JavaScript loads only on `/play`
 - [ ] Long cache for hashed assets, short cache for HTML **(should)** on GitHub Pages, which
-  sends `max-age=600` for every file; required with CloudFront in Phase 2
+  sends `max-age=600` for every file; required with CloudFront in Phase 3
 
 ## Accessibility (WCAG 2.2 AA)
 
@@ -23,14 +23,14 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 - [x] Contrast passes in both themes
 - [x] Touch targets at least 24 × 24 px; reflow at 320 px and 200 % zoom
 - [x] Theme toggle announces its state; `prefers-reduced-motion` honoured
-- [ ] One manual screen-reader pass (VoiceOver or NVDA) on Home and a post
+- [x] One manual screen-reader pass (VoiceOver or NVDA) on Home and a post
 
 ## SEO
 
 - [x] Unique title (under ~60 characters) and description on every page
 - [x] Canonical URLs; `www` redirects to the apex domain
 - [x] `sitemap.xml` and `robots.txt`; no stray `noindex`
-- [ ] Open Graph images; LinkedIn link preview tested
+- [x] Open Graph images; LinkedIn link preview tested
 - [x] 404 page returns status 404
 - [x] RSS at `/rss.xml`, linked in the head
 - [ ] Structured data for Person and Article (should)
@@ -44,35 +44,35 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 - [x] Privacy policy mentions the stored theme preference, if stored
 - [x] Network tab on every page type: all requests go to medhinioak.dev only
 - [x] No analytics, tracking pixels or embeds
-- [ ] All photos and quoted material are mine or licensed and credited
-- [ ] Permission to publish each case study (university, teammates)
+- [x] All photos and quoted material are mine or licensed and credited
+- [x] Permission to publish each case study (university, teammates)
 - [x] EXIF data, including GPS, stripped from every photo
 - [ ] Legal pages read once by a second person (should)
 
 ## Security
 
-- [x] HTTPS everywhere (automatic for .dev); HSTS header on CloudFront in Phase 2
+- [x] HTTPS everywhere (automatic for .dev); HSTS header on CloudFront in Phase 3
 - [ ] Security headers on CloudFront (should on GitHub Pages, where they cannot be set)
-- [ ] Two-factor authentication on GitHub, registrar, email and later AWS root
+- [x] Two-factor authentication on GitHub, registrar, email and later AWS root
 - [x] `main` protected by a ruleset; Dependabot and secret scanning on
 - [x] No secrets in the git history
-- [ ] Registrar: auto-renew and transfer lock on
+- [x] Registrar: auto-renew and transfer lock on
 - [ ] SPF, DKIM and DMARC if mail is sent from the domain (should)
 
 ## Backups
 
-- [ ] Original photos stored outside the repository
-- [ ] Recovery codes in a password manager
-- [ ] Restore tested once: clone, build, open locally
-- [ ] Calendar reminders: domain renewal, quarterly cost check, annual legal-page review
+- [x] Original photos stored outside the repository
+- [x] Recovery codes in a password manager
+- [x] Restore tested once: clone, build, open locally
+- [x] Calendar reminders: domain renewal, quarterly cost check, annual legal-page review
 
 ## Launch day
 
-- [ ] Tested on a real phone and a second browser
-- [ ] Link checker passes; the footer email address receives mail
+- [x] Tested on a real phone and a second browser
+- [x] Link checker passes; the footer email address receives mail
 - [x] No `PLACEHOLDER`, `TODO`, `lorem` or `example.com` on any page
 - [x] Drafts unpublished; dates and time zones correct
-- [ ] CV, LinkedIn and GitHub profile link to the site
+- [x] CV, LinkedIn and GitHub profile link to the site
 - [x] Rollback written down: revert and redeploy
 
 ## Launch run, 2026-11-16 (#35)
@@ -96,7 +96,10 @@ by Claude Code; unticked items are open or owner-only.
 - **Cache:** GitHub Pages sends `max-age=600` for every file and cannot be configured.
 - **Security:** ruleset `protect-main` active; Dependabot updates, secret scanning and
   push protection on; no secret-scanning alerts and no key patterns in the history.
-- **Restore:** a fresh clone installs and builds all 9 pages; not yet opened locally.
+- **Restore:** a fresh clone installs and builds all 9 pages. Opened locally on 2026-11-17
+  (commit `37bbf7f`, Node 22.23.4, pnpm 12.18.0): `pnpm install --frozen-lockfile`, `pnpm build`
+  and `astro preview` served every page with 200, an unknown path with 404, and `rss.xml`,
+  the sitemap, `robots.txt` and the Open Graph image.
 
 **Re-checked locally on the final commit of the PR** (it also publishes post 1 and
 changes the header, link underlines, RSS links and Home layout): lint, type check, unit
@@ -104,3 +107,14 @@ tests and all 36 e2e tests, including axe in both themes on every page. No page
 scrolls sideways at 320, 390 or 640 px. Post 1 locally: Lighthouse 100 in all four
 categories, 144 KB transferred (10 KB of images). After the deploy, rerun the Lighthouse,
 axe and network checks on the live site, then tick the post rows.
+
+**Live check after the deploy of #60 (commit `e18181e`), 2026-11-16:**
+
+- Lighthouse (mobile, 3 runs each): 100 in all four categories on post 1, `/` and
+  `/blog/`. Post 1: LCP 1.06–1.17 s, CLS ≤ 0.03, TBT 0 ms, 144 KB transferred (10 KB
+  images, so 134 KB before images). Home: 209 KB.
+- Playwright against the live site (56 tests): axe in both themes, smoke, SEO and
+  sitemap on every page including post 1. Every page at 320 px and 1280 px requests
+  `medhinioak.dev` only and does not scroll sideways.
+- Post 1 is in `sitemap-0.xml` and `rss.xml`, with `og:type` article and its cover as
+  `og:image`. No `PLACEHOLDER:` marker on any page. No open Dependabot alerts.

@@ -39,7 +39,7 @@ lives in its own package so it can become a standalone project later.
 Home, About, Projects with two case studies, Blog with one post and RSS, Contact (a
 section on Home with an email button and plain links to my channels, reached from the
 nav), Impressum, Privacy, 404. The game page (`/play`)
-ships in Phase 3, not before.
+ships in Phase 2, not before.
 
 ## Phases
 
@@ -70,8 +70,8 @@ done early, ahead of Phase 1. Parking lot reviewed (all ideas kept); released as
 - [x] Blog with RSS, and Post 1: "Building my portfolio site in two weeks"
 - [x] Impressum and privacy policy
 - [x] SEO basics: titles, descriptions, canonical URLs, sitemap, Open Graph images
-- [ ] Work through [`launch-checklist.md`](launch-checklist.md) (medhinioak.dev already points at GitHub Pages with HTTPS enforced, done early in Phase 0)
-- [ ] Link the site from CV, LinkedIn and GitHub profile
+- [x] Work through [`launch-checklist.md`](launch-checklist.md) (medhinioak.dev already points at GitHub Pages with HTTPS enforced, done early in Phase 0)
+- [x] Link the site from CV, LinkedIn and GitHub profile
 
 **Done when:** the site is live on medhinioak.dev over HTTPS; Lighthouse (mobile) is
 at least 95 in all four categories on Home and a post; axe reports no serious or
@@ -79,28 +79,20 @@ critical issues; every "must" item in the launch checklist is ticked.
 
 **Cut line:** if the second case study is not drafted by Nov 19, launch with one.
 
-### Phase 2: AWS and Terraform (Nov 23 – Dec 6)
+**Outcome (2026-11-17):** all items done; both case studies shipped. Every "must" item in
+the launch checklist is ticked on the live site; the "(should)" items wait for Phase 3
+or 4. Lighthouse (mobile) 100 in all four categories on Home and Post 1; axe clean.
+Parking lot reviewed; released as v0.1.
 
-- [ ] AWS account on the Paid plan, root MFA, budget alerts at €5 and €8
-- [ ] `infra/bootstrap` (state bucket, GitHub OIDC role), then `infra/site`
-- [ ] Test on the CloudFront address, then move DNS; keep GitHub Pages for a week as fallback
-- [ ] Deploy workflow syncs to S3 and invalidates CloudFront; `infra-plan.yml` on infra PRs
-- [ ] `docs/architecture.md` and `docs/runbook.md`
-- [ ] Post 2: "From GitHub Pages to AWS with Terraform for about $2 a month"
+### Phase 2: The game (Nov 18 – Dec 13, hard stop Dec 20)
 
-**Done when:** the stack can be destroyed and recreated from the repository; the site
-is served by CloudFront with HTTPS and HSTS; a push to `main` deploys with no stored
-AWS keys; a test budget alert arrived; the first month's forecast is under €5.
+Swapped with the AWS phase on 2026-11-17 ([ADR-0011](adr/0011-build-the-game-before-the-aws-move.md)).
 
-**Cut line:** if Terraform does not work by Dec 3, stay on GitHub Pages, move the rest
-to January and start the game.
-
-### Phase 3: The game (Dec 7–27, hard stop Jan 10)
-
-- [ ] Week 1: board pack schema, deduction engine with tests, computer question picker, first 16 animals
+- [ ] Game spec and `/play` wireframe in `docs/` (rules, turn flow, board pack schema, difficulties, name)
+- [ ] Week 1: board pack schema and validator, deduction engine with tests, computer question picker, first 16 animals
 - [ ] Week 2: React + SVG interface, a full round, two difficulties
 - [ ] Week 3: keyboard and screen-reader play, phone layout, playground, package README, `/play`
-- [ ] Post 3: "How a computer picks which question to ask"
+- [ ] Post 2: "How a computer picks which question to ask"
 
 **Checkpoint (about 10 hours in):** if a complete round is not playable, cut to 16
 animals and two difficulties.
@@ -108,7 +100,26 @@ animals and two difficulties.
 **Done when:** the game is playable on desktop, phone and keyboard alone; the engine
 has unit tests; `pnpm --filter game dev` runs it without the site; `/play` is live.
 
-**Hard stop:** if it is not live by Jan 10, publish what exists with an honest README.
+**Hard stop:** if it is not live by Dec 20, publish what exists with an honest README
+and start Phase 3.
+
+### Phase 3: AWS and Terraform (Dec 14 – Jan 3)
+
+Starts the day after the game ships, and no later than Dec 21.
+
+- [ ] AWS account on the Paid plan, root MFA, budget alerts at €5 and €8
+- [ ] `infra/bootstrap` (state bucket, GitHub OIDC role), then `infra/site`
+- [ ] Test on the CloudFront address, then move DNS; keep GitHub Pages for a week as fallback
+- [ ] Deploy workflow syncs to S3 and invalidates CloudFront; `infra-plan.yml` on infra PRs
+- [ ] `docs/architecture.md`, and AWS sections in `docs/runbook.md`
+- [ ] Post 3: "From GitHub Pages to AWS with Terraform for about $2 a month"
+
+**Done when:** the stack can be destroyed and recreated from the repository; the site
+is served by CloudFront with HTTPS and HSTS; a push to `main` deploys with no stored
+AWS keys; a test budget alert arrived; the first month's forecast is under €5.
+
+**Cut line:** if Terraform does not work by Dec 31, stay on GitHub Pages and finish
+the move in January, ahead of Phase 4.
 
 ### Phase 4: Polish (January, optional)
 
