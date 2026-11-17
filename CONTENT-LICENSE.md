@@ -1,6 +1,6 @@
 # Content licence
 
-Copyright (c) 2026 [Medhini PRakash Oak]. All rights reserved.
+Copyright (c) 2026 [Medhini Prakash Oak]. All rights reserved.
 
 This covers all written content, photos, drawings, the avatar and the
 game artwork in this repository, including:
