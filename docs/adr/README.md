@@ -16,3 +16,4 @@ Start from [`0000-template.md`](0000-template.md).
 | [0008](0008-upgrade-to-astro-7.md)                                 | Upgrade the site to Astro 7                                        | Proposed                                   |
 | [0009](0009-gemini-pr-review-on-request.md)                        | Run the Gemini PR review on request only                           | Accepted                                   |
 | [0010](0010-no-syntax-highlighting-at-launch.md) | Show code blocks without syntax highlighting at launch | Proposed |
+| [0011](0011-build-the-game-before-the-aws-move.md) | Build the game before the AWS move | Accepted |
