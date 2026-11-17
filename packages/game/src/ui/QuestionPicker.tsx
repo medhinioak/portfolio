@@ -49,6 +49,10 @@ export function QuestionPicker({
 
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
+  // Once a move is made (ask or guess), a count still waiting to be said is stale.
+  useEffect(() => {
+    if (disabled) clearTimeout(timer.current);
+  }, [disabled]);
 
   /** Changes the filter, then says the new count once typing pauses (spec: Announcements). */
   function changeFilter(nextText: string, nextGroup: string): void {
