@@ -2,6 +2,13 @@
 export { clamp } from './engine/clamp';
 export { validateBoardPack } from './engine/validate';
 export {
+  bestQuestions,
+  computerMove,
+  randomChance,
+  usefulQuestions,
+} from './engine/computer';
+export type { ComputerMove } from './engine/computer';
+export {
   askedQuestions,
   askQuestion,
   createGame,

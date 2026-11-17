@@ -291,6 +291,9 @@ random number generator. This is the maximum expected information of
 [ADR-0005](../adr/0005-deduction-game-with-board-packs.md), for yes/no questions.
 
 **Guessing.** When one candidate is left, the computer guesses it. Otherwise it asks.
+If no question left can tell the remaining candidates apart (only possible when two
+animals have the same answers, which the validator rejects for complete rows), it
+guesses one of them at random.
 
 **Difficulty** changes only how often the computer ignores the best question. With
 probability `randomChance` per turn it picks a random useful question instead (still
