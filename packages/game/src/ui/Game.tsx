@@ -1,5 +1,5 @@
 /** The game component, a React island on /play (docs/game/spec.md, Package API). */
-import type { ReactElement } from 'react';
+import { useEffect, useRef, type ReactElement } from 'react';
 import { animalsBoard } from '../boards';
 import type { BoardPack } from '../engine/board';
 import type { Difficulty, GameResult } from '../engine/game';
@@ -32,8 +32,24 @@ export function Game({
 }: GameProps): ReactElement {
   const view = useGame(pack, seed, { onGameStart, onGameEnd });
   const { screen, game } = view;
+  const root = useRef<HTMLDivElement>(null);
+  const shownScreen = useRef(screen);
+
+  // A new screen replaces the old one's controls, so focus would fall to the page body.
+  // Move it to the new screen's start instead; never on page load (spec: Focus).
+  useEffect(() => {
+    // Comparing screens, not counting renders, stays right when StrictMode runs effects twice.
+    if (shownScreen.current === screen) return;
+    shownScreen.current = screen;
+    root.current?.querySelector<HTMLElement>('[data-focus-start]')?.focus();
+  }, [screen]);
+
   return (
-    <div className="tt-game">
+    <div ref={root} className="tt-game">
+      {/* The game's one polite live region; it stays mounted on every screen. */}
+      <p className="tt-sr-only" role="status">
+        {view.announcement}
+      </p>
       {screen === 'start' && (
         <StartScreen
           pack={pack}

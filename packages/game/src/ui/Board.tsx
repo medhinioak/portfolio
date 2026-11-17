@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 import type { BoardPack, Character } from '../engine/board';
 import { countStillIn, isRuledOut, type ManualMarks } from '../engine/marks';
 import { Card } from './Card';
+import { useCardGrid } from './gridKeys';
 
 /** Props for {@link Board}. */
 export interface BoardProps {
@@ -26,6 +27,7 @@ export function Board({
 }: BoardProps): ReactElement {
   const ids = pack.characters.map((c) => c.id);
   const left = countStillIn(ids, candidates, marks);
+  const grid = useCardGrid(ids.length);
   return (
     <section className="tt-board" aria-labelledby="tt-board-title">
       <div className="tt-board__head">
@@ -42,11 +44,19 @@ export function Board({
           Reset marks
         </button>
       </div>
-      <div className="tt-grid">
-        {pack.characters.map((c) => (
+      <div
+        ref={grid.ref}
+        className="tt-grid"
+        role="group"
+        aria-labelledby="tt-board-title"
+        onKeyDown={grid.onKeyDown}
+        onFocus={grid.onFocus}
+      >
+        {pack.characters.map((c, i) => (
           <Card
             key={c.id}
             character={c}
+            tabIndex={grid.tabIndexFor(i)}
             ruledOut={isRuledOut(c.id, candidates, marks)}
             guessing={guessing}
             onPress={onPress}

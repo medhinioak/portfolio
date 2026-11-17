@@ -335,15 +335,17 @@ announcing the player's turn first. Nothing is timed for the player (WCAG 2.2.1)
 on desktop): the banner and your animal across the top; on the left the mode buttons,
 your board and the computer's board; on the right the questions and the game log. On a
 phone everything is one column in the same order, and a "Your board / Computer's board"
-tab switch shows one board at a time.
+switch shows one board at a time. The switch is a pair of toggle buttons (`aria-pressed`),
+not ARIA tabs: it exists only below the 48em breakpoint, and tab roles cannot change with
+a media query.
 
 ### The turn banner
 
 A banner at the top of the Turn screen is the main signal of whose turn it is. It shows
 "Your turn" (or "Computer's turn" while the computer thinks) and, below it, the last move
 in full: "The computer asked: Does it have feathers? The answer is yes." On the first
-turn it reads "You go first. Ask a question or make a guess." The banner is the game's
-live region ([Announcements](#announcements)); the log keeps the history.
+turn it reads "You go first. Ask a question or make a guess." The banner shows what the
+game's live region says ([Announcements](#announcements)); the log keeps the history.
 
 ### The board
 
@@ -362,7 +364,7 @@ animal could be, with the same blur for the ones it has ruled out. It is read-on
 list of 24 entries ("Penguin, still in", "Frog, ruled out") and not a tab stop, with a
 "3 of 24 still in" count. It shows only what the computer has been told by your answers,
 so it never reveals more than the computer knows. On a phone it sits behind the
-"Computer's board" tab.
+"Computer's board" switch.
 
 ### Ruled-out marks
 
@@ -407,13 +409,17 @@ users do not have to pass 24 cards. There are no single-character shortcuts.
 
 ### Announcements
 
-The turn banner is one polite live region (`role="status"`). It announces every game event
-in order, and the log shows the same text:
+The game has one polite live region (`role="status"`), visually hidden at the game's root
+so it stays mounted from the first screen to the last (the winning move is still read
+when the Turn screen is replaced). It announces every game event in order; the turn
+banner shows the same text without being live itself, and the log keeps it:
 
 - "You asked: Does it have fur or hair? The answer is yes. 10 of 24 animals are still in."
 - "The computer asked: Can it fly? The answer is no."
-- "Computer's turn." (when the player has asked or guessed wrong)
-- "You guessed Tiger. That is not it. You lose this turn."
+- "Computer's turn." (when the player has asked or guessed wrong) and "Your turn." (after
+  the computer's question), each at the end of the move's sentence
+- "You guessed Tiger. That is not it. You lose this turn." (read once, when focus moves to the
+  banner; the same goes for "You go first." at the start)
 - "You won. The computer's animal was the tiger." (also moves focus to the result
   heading)
 - "3 of 68 questions match legs." (from the filter box, as you type, after a short pause)

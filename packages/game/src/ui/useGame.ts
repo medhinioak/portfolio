@@ -18,6 +18,9 @@ import { createRandom, type Random } from '../engine/random';
 /** How long the computer waits before its move, so a screen reader finishes first (spec: Pace). */
 export const COMPUTER_PAUSE_MS = 600;
 
+/** What the banner says when a game starts; focus moves to it, so it is read then. */
+export const FIRST_TURN = 'You go first. Ask a question or make a guess.';
+
 /** The four screens of the game. */
 export type Screen = 'start' | 'pick' | 'turn' | 'over';
 
@@ -40,6 +43,10 @@ export interface GameView {
   mode: Mode;
   /** Every move in words, newest first. */
   log: string[];
+  /** The latest text for the game's one polite live region. */
+  announcement: string;
+  /** Says `text` through the live region (for example the filter count). */
+  announce: (text: string) => void;
   chooseDifficulty: (difficulty: Difficulty) => void;
   goToPick: () => void;
   goToStart: () => void;
@@ -65,16 +72,34 @@ export function useGame(
   const [marks, setMarks] = useState<ManualMarks>({});
   const [mode, setMode] = useState<Mode>('ask');
   const [log, setLog] = useState<string[]>([]);
+  const [announcement, setAnnouncement] = useState('');
+
+  /** Puts `text` in the live region; a repeat gets a different invisible ending so it is read again. */
+  function announce(text: string): void {
+    setAnnouncement((last) => (last === text ? `${text}\u00a0` : text));
+  }
   // The latest callbacks, so the computer's timer never calls an old one.
   const latest = useRef(callbacks);
   latest.current = callbacks;
 
-  /** Shows the state after a move: log it, and end the game if someone won. */
-  function apply(next: GameState): void {
+  /**
+   * Shows the state after a move: log it, announce it, and end the game if someone won.
+   * `quiet` skips the announcement when focus moves to the banner, which reads the same text.
+   */
+  function apply(next: GameState, quiet = false): void {
     const move = next.history.at(-1);
     setGame(next);
     if (move) {
-      setLog((entries) => [describeMove(next, move), ...entries]);
+      const text = describeMove(next, move);
+      setLog((entries) => [text, ...entries]);
+      // Then whose turn it is, in the order the spec lists (Announcements).
+      const turn =
+        next.winner !== null
+          ? ''
+          : next.turn === 'computer'
+            ? " Computer's turn."
+            : ' Your turn.';
+      if (!quiet) announce(text + turn);
     }
     const result = gameResult(next);
     if (result) {
@@ -107,6 +132,8 @@ export function useGame(
     marks,
     mode,
     log,
+    announcement,
+    announce,
     chooseDifficulty: setDifficulty,
     goToPick: () => setScreen('pick'),
     goToStart: () => setScreen('start'),
@@ -118,18 +145,24 @@ export function useGame(
       setScreen('turn');
       latest.current.onGameStart?.({ difficulty, packId: pack.id });
     },
-    ask: (attributeId) => game && apply(askQuestion(game, attributeId)),
+    ask: (attributeId) => {
+      if (game) apply(askQuestion(game, attributeId));
+    },
     guess: (characterId) => {
       if (game) {
         setMode('ask');
         // A wrong guess rules the card out for sure, so it replaces a manual "still in".
         setMarks((m) => ({ ...m, [characterId]: true }));
-        apply(makeGuess(game, characterId));
+        const next = makeGuess(game, characterId);
+        // A wrong guess moves focus to the banner, which reads it (spec: Focus).
+        apply(next, next.winner === null);
       }
     },
-    flipMark: (characterId) =>
-      game &&
-      setMarks((m) => toggleMark(characterId, game.player.candidates, m)),
+    flipMark: (characterId) => {
+      if (game) {
+        setMarks((m) => toggleMark(characterId, game.player.candidates, m));
+      }
+    },
     resetMarks: () => setMarks({}),
     setMode,
   };
