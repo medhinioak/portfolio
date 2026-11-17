@@ -2,7 +2,8 @@
 
 Ideas that are not in the plan. Reviewed at every phase gate: promote, keep or drop.
 
-Last review: Phase 0 gate, 2026-11-11. All ideas kept as they are.
+Last review: Phase 1 gate, 2026-11-17. Dropped as done: per-post Open Graph images (posts use
+their cover) and the Gemini debugging post material (covered in Post 1). All other ideas kept.
 
 | Idea | Added | Notes |
 |---|---|---|
@@ -15,7 +16,5 @@ Last review: Phase 0 gate, 2026-11-11. All ideas kept as they are.
 | Remove the Gemini `tools.core` workaround | 2026-11-11 | When run-gemini-cli#532 is fixed; see `troubleshooting.md` |
 | Fail the Gemini job when its output has an `error` | 2026-11-11 | Today a broken review shows green (run-gemini-cli#519) |
 | TypeScript 7 | 2026-11-11 | When typescript-eslint and @astrojs/check support it |
-| Post material: debugging the Gemini review workflow | 2026-11-11 | Notes in `troubleshooting.md`; fits Post 1 |
 | Share the Markdown body and pager styles between posts and case studies | 2026-11-12 | Copied in `blog/[slug].astro` and `CaseStudyLayout.astro` (#32 review); one `.prose` rule set |
-| Per-post Open Graph images | 2026-11-12 | Every page uses `og-default.png` at launch (#34); a post could pass its cover image |
 | Reflow with text at 200 % on a 320–390 px screen | 2026-11-16 | Footer email, the post's table, card padding and button rows overflow. Stricter than WCAG 1.4.10 (320 px at normal text); found in the #35 review |

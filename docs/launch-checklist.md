@@ -23,14 +23,14 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 - [x] Contrast passes in both themes
 - [x] Touch targets at least 24 × 24 px; reflow at 320 px and 200 % zoom
 - [x] Theme toggle announces its state; `prefers-reduced-motion` honoured
-- [ ] One manual screen-reader pass (VoiceOver or NVDA) on Home and a post
+- [x] One manual screen-reader pass (VoiceOver or NVDA) on Home and a post
 
 ## SEO
 
 - [x] Unique title (under ~60 characters) and description on every page
 - [x] Canonical URLs; `www` redirects to the apex domain
 - [x] `sitemap.xml` and `robots.txt`; no stray `noindex`
-- [ ] Open Graph images; LinkedIn link preview tested
+- [x] Open Graph images; LinkedIn link preview tested
 - [x] 404 page returns status 404
 - [x] RSS at `/rss.xml`, linked in the head
 - [ ] Structured data for Person and Article (should)
@@ -44,8 +44,8 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 - [x] Privacy policy mentions the stored theme preference, if stored
 - [x] Network tab on every page type: all requests go to medhinioak.dev only
 - [x] No analytics, tracking pixels or embeds
-- [ ] All photos and quoted material are mine or licensed and credited
-- [ ] Permission to publish each case study (university, teammates)
+- [x] All photos and quoted material are mine or licensed and credited
+- [x] Permission to publish each case study (university, teammates)
 - [x] EXIF data, including GPS, stripped from every photo
 - [ ] Legal pages read once by a second person (should)
 
@@ -53,26 +53,26 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 
 - [x] HTTPS everywhere (automatic for .dev); HSTS header on CloudFront in Phase 3
 - [ ] Security headers on CloudFront (should on GitHub Pages, where they cannot be set)
-- [ ] Two-factor authentication on GitHub, registrar, email and later AWS root
+- [x] Two-factor authentication on GitHub, registrar, email and later AWS root
 - [x] `main` protected by a ruleset; Dependabot and secret scanning on
 - [x] No secrets in the git history
-- [ ] Registrar: auto-renew and transfer lock on
+- [x] Registrar: auto-renew and transfer lock on
 - [ ] SPF, DKIM and DMARC if mail is sent from the domain (should)
 
 ## Backups
 
-- [ ] Original photos stored outside the repository
-- [ ] Recovery codes in a password manager
+- [x] Original photos stored outside the repository
+- [x] Recovery codes in a password manager
 - [x] Restore tested once: clone, build, open locally
-- [ ] Calendar reminders: domain renewal, quarterly cost check, annual legal-page review
+- [x] Calendar reminders: domain renewal, quarterly cost check, annual legal-page review
 
 ## Launch day
 
-- [ ] Tested on a real phone and a second browser
-- [ ] Link checker passes; the footer email address receives mail
+- [x] Tested on a real phone and a second browser
+- [x] Link checker passes; the footer email address receives mail
 - [x] No `PLACEHOLDER`, `TODO`, `lorem` or `example.com` on any page
 - [x] Drafts unpublished; dates and time zones correct
-- [ ] CV, LinkedIn and GitHub profile link to the site
+- [x] CV, LinkedIn and GitHub profile link to the site
 - [x] Rollback written down: revert and redeploy
 
 ## Launch run, 2026-11-16 (#35)
