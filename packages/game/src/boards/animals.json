@@ -417,7 +417,7 @@
       "id": "cat",
       "name": "Cat",
       "sprite": "cat",
-      "alt": "Pixel art of a cat.",
+      "alt": "Pixel art of a tabby cat sitting and facing front, with its tail curled up on the right.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -493,7 +493,7 @@
       "id": "tiger",
       "name": "Tiger",
       "sprite": "tiger",
-      "alt": "Pixel art of a tiger.",
+      "alt": "Pixel art of a tiger's face: orange with dark stripes and a cream muzzle.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -569,7 +569,7 @@
       "id": "zebra",
       "name": "Zebra",
       "sprite": "zebra",
-      "alt": "Pixel art of a zebra.",
+      "alt": "Pixel art of a zebra facing left, with black and white stripes.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -645,7 +645,7 @@
       "id": "giraffe",
       "name": "Giraffe",
       "sprite": "giraffe",
-      "alt": "Pixel art of a giraffe.",
+      "alt": "Pixel art of a yellow giraffe with orange spots and a long neck.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -721,7 +721,7 @@
       "id": "deer",
       "name": "Deer",
       "sprite": "deer",
-      "alt": "Pixel art of a deer.",
+      "alt": "Pixel art of a brown fawn with white spots and small antlers, facing right.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -797,7 +797,7 @@
       "id": "goat",
       "name": "Goat",
       "sprite": "goat",
-      "alt": "Pixel art of a goat.",
+      "alt": "Pixel art of a white goat with horns and a small beard, facing right.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -873,7 +873,7 @@
       "id": "panda",
       "name": "Panda",
       "sprite": "panda",
-      "alt": "Pixel art of a panda.",
+      "alt": "Pixel art of a giant panda sitting, with black arms, legs and eye patches.",
       "values": {
         "mammal": true,
         "bird": false,
@@ -949,7 +949,7 @@
       "id": "penguin",
       "name": "Penguin",
       "sprite": "penguin",
-      "alt": "Pixel art of a penguin.",
+      "alt": "Pixel art of a penguin with a dark back, white belly, orange beak and orange feet.",
       "values": {
         "mammal": false,
         "bird": true,
@@ -1025,7 +1025,7 @@
       "id": "eagle",
       "name": "Eagle",
       "sprite": "eagle",
-      "alt": "Pixel art of an eagle.",
+      "alt": "Pixel art of a bald eagle perched, with a white head, yellow beak and dark body.",
       "values": {
         "mammal": false,
         "bird": true,
@@ -1101,7 +1101,7 @@
       "id": "parrot",
       "name": "Parrot",
       "sprite": "parrot",
-      "alt": "Pixel art of a parrot.",
+      "alt": "Pixel art of a red parrot with blue and yellow wing feathers.",
       "values": {
         "mammal": false,
         "bird": true,
@@ -1177,7 +1177,7 @@
       "id": "duck",
       "name": "Duck",
       "sprite": "duck",
-      "alt": "Pixel art of a duck.",
+      "alt": "Pixel art of a mallard duck facing left, with a green head, yellow bill and brown body.",
       "values": {
         "mammal": false,
         "bird": true,
@@ -1253,7 +1253,7 @@
       "id": "flamingo",
       "name": "Flamingo",
       "sprite": "flamingo",
-      "alt": "Pixel art of a flamingo.",
+      "alt": "Pixel art of a pink flamingo standing on one leg, with a long curved neck.",
       "values": {
         "mammal": false,
         "bird": true,
@@ -1329,7 +1329,7 @@
       "id": "crocodile",
       "name": "Crocodile",
       "sprite": "crocodile",
-      "alt": "Pixel art of a crocodile.",
+      "alt": "Pixel art of a green crocodile with a long snout, facing left.",
       "values": {
         "mammal": false,
         "bird": false,
@@ -1405,7 +1405,7 @@
       "id": "frog",
       "name": "Frog",
       "sprite": "frog",
-      "alt": "Pixel art of a frog.",
+      "alt": "Pixel art of a green frog sitting, with big round eyes.",
       "values": {
         "mammal": false,
         "bird": false,
@@ -1481,7 +1481,7 @@
       "id": "shark",
       "name": "Shark",
       "sprite": "shark",
-      "alt": "Pixel art of a shark.",
+      "alt": "Pixel art of a blue-grey shark with a white belly and a dorsal fin, facing left.",
       "values": {
         "mammal": false,
         "bird": false,
@@ -1557,7 +1557,7 @@
       "id": "bee",
       "name": "Bee",
       "sprite": "bee",
-      "alt": "Pixel art of a bee.",
+      "alt": "Pixel art of a round bee with yellow and black stripes and small wings.",
       "values": {
         "mammal": false,
         "bird": false,
