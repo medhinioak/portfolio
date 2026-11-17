@@ -2,7 +2,7 @@
 
 How the site gets deployed, and what to do when something goes wrong.
 This covers Phase 1 hosting on GitHub Pages ([ADR-0003](adr/0003-github-pages-first-then-aws.md)).
-Phase 2 adds AWS.
+Phase 3 adds AWS ([ADR-0011](adr/0011-build-the-game-before-the-aws-move.md)).
 
 ## How deploy works
 

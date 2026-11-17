@@ -64,7 +64,7 @@ The site is live on medhinioak.dev with light and dark themes, a CI pipeline and
     <text x="127.5" y="548" opacity=".8">HTTPS enforced</text>
     <text x="127.5" y="565" opacity=".8">static files, no server</text>
     <text x="332.5" y="508" font-size="14" font-weight="700">AWS</text>
-    <text x="332.5" y="526" font-weight="700">planned, Phase 2</text>
+    <text x="332.5" y="526" font-weight="700">planned, Phase 3</text>
     <text x="332.5" y="548" opacity=".8">private S3 bucket</text>
     <text x="332.5" y="565" opacity=".8">CloudFront + ACM cert</text>
     <text x="332.5" y="582" opacity=".8">Terraform · Route 53</text>
@@ -100,7 +100,7 @@ The site is live on medhinioak.dev with light and dark themes, a CI pipeline and
   <line x1="127" y1="600" x2="127" y2="638" marker-end="url(#pd-arrow)"/>
   <line x1="332" y1="600" x2="332" y2="638" marker-end="url(#pd-arrow)" stroke-dasharray="6 5"/>
 </svg>
-<figcaption>How a change reaches the site: one automated path, and the guard that stops unfinished pages. The AWS branch (dashed) is planned for Phase 2.</figcaption>
+<figcaption>How a change reaches the site: one automated path, and the guard that stops unfinished pages. The AWS branch (dashed) is planned for Phase 3.</figcaption>
 </figure>
 
 ## What I learned

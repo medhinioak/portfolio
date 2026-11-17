@@ -12,7 +12,7 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 - [x] Fonts self-hosted, Latin subset, one weight of each font preloaded, `font-display: swap`
 - [x] Game JavaScript loads only on `/play`
 - [ ] Long cache for hashed assets, short cache for HTML **(should)** on GitHub Pages, which
-  sends `max-age=600` for every file; required with CloudFront in Phase 2
+  sends `max-age=600` for every file; required with CloudFront in Phase 3
 
 ## Accessibility (WCAG 2.2 AA)
 
@@ -51,7 +51,7 @@ for Phase 4. Run the checks against medhinioak.dev, not only locally.
 
 ## Security
 
-- [x] HTTPS everywhere (automatic for .dev); HSTS header on CloudFront in Phase 2
+- [x] HTTPS everywhere (automatic for .dev); HSTS header on CloudFront in Phase 3
 - [ ] Security headers on CloudFront (should on GitHub Pages, where they cannot be set)
 - [ ] Two-factor authentication on GitHub, registrar, email and later AWS root
 - [x] `main` protected by a ruleset; Dependabot and secret scanning on

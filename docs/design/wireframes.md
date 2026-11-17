@@ -101,7 +101,7 @@ Order, top to bottom:
    image; the second shows the text-only layout.
 3. **Blog.** Heading with "All posts" and "RSS" buttons. One card with the date, a
    bold title link and a one-line summary.
-4. **Game teaser.** A dashed box, reserved for Phase 3 (`/play`). Not shown at launch.
+4. **Game teaser.** A dashed box, reserved for Phase 2 (`/play`). Not shown at launch.
 5. **Contact.** One line, then "Email me" (primary, a `mailto:` link with a prefilled
    subject), GitHub and LinkedIn. Under them the address as plain text, for people
    without a mail app. Then a "Videos and streams" sub-heading with YouTube and Twitch.
