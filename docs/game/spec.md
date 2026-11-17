@@ -83,6 +83,7 @@ characters look like ([ADR-0005](../adr/0005-deduction-game-with-board-packs.md)
 /** A yes/no question about every character. Only booleans for now. */
 interface Attribute {
   id: string; // 'fur'
+  group: string; // 'Body': the UI groups and filters questions by it
   question: string; // 'Does it have fur or hair?'
   type: 'boolean';
 }
@@ -111,13 +112,26 @@ the first, each with a path and a code, and never throws on bad input:
 
 1. `id`, `name` and `version` are present and well-typed.
 2. Attribute ids are unique, and so are character ids.
-3. Every attribute has a non-empty `question` and the type `boolean`.
+3. Every attribute has a non-empty `question`, a non-empty `group` and the type `boolean`.
 4. Every character has a value for every attribute, and no values for unknown attributes.
 5. Every character has a non-empty `name`, `sprite` and `alt`.
 6. No two characters have identical values for all attributes.
 7. Every attribute splits the board: at least one character answers yes and at least
    one answers no.
 8. There are at least 2 characters and at least 1 attribute.
+
+Each problem has one of these codes:
+
+| Rule | Codes |
+|---|---|
+| 1 | `invalid_type`: the pack, a field or an entry has the wrong type (`version` is an integer from 1) |
+| 2 | `duplicate_id` |
+| 3 | `empty_question`, `empty_group`, `invalid_attribute_type` |
+| 4 | `missing_value`, `unknown_value`, `invalid_value` (not `true` or `false`) |
+| 5 | `empty_field` |
+| 6 | `duplicate_character` |
+| 7 | `no_split` |
+| 8 | `too_few_characters`, `too_few_attributes` |
 
 Rules 6 and 7 together are what make a board winnable by questions alone: every
 animal can be told apart from every other.
