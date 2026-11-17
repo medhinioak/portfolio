@@ -65,6 +65,8 @@ export function QuestionPicker({
 
   /** Asks, then moves focus to the filter box: the asked button is now disabled. */
   function ask(id: string): void {
+    // A count still waiting to be said would replace the move's announcement.
+    clearTimeout(timer.current);
     onAsk(id);
     filterRef.current?.focus();
   }
