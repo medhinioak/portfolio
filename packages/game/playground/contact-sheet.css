@@ -1,0 +1,78 @@
+/* Playground only. The --game-* values below copy the light and dark colours in docs/design/tokens.md. */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #888;
+}
+main {
+  padding: 16px;
+}
+h1 {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+  color: #fff;
+}
+p.note {
+  margin: 0 0 16px;
+  color: #fff;
+}
+.panels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.panel {
+  flex: 1 1 560px;
+  padding: 16px;
+  background: var(--game-surface);
+  color: var(--game-text);
+}
+.panel.light {
+  --game-surface: #f1ece2;
+  --game-text: #1b1a23;
+}
+.panel.dark {
+  --game-surface: #1f1d2b;
+  --game-text: #f1eee6;
+}
+.panel h2 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(184px, 1fr));
+  gap: 12px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+}
+.sizes {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.sprite {
+  display: block;
+}
+.sprite svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.sprite.blurred {
+  filter: blur(2px);
+}
+.missing {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 2px dashed currentColor;
+  font-size: 0.7rem;
+  text-align: center;
+}

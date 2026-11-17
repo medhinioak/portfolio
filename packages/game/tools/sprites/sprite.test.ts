@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   applyPalette,
   cropToContent,
+  despeckle,
   fitToGrid,
   markOutline,
   removeBackground,
@@ -72,6 +73,28 @@ describe('applyPalette', () => {
     const image = drawImage(['a.b'], { a: [210, 40, 40], b: [30, 30, 40] });
     expect(readRows(applyPalette(image, [RED, DARK]), colours)).toEqual([
       'r.d',
+    ]);
+  });
+});
+
+describe('despeckle', () => {
+  it('replaces a lone pixel with the colour around it and keeps lines and areas', () => {
+    const image = drawImage(
+      ['dddd.', 'ddrd.', 'dddd.', '.....', 'rrr..'],
+      colours,
+    );
+    expect(readRows(despeckle(image), colours)).toEqual([
+      'dddd.',
+      'dddd.',
+      'dddd.',
+      '.....',
+      'rrr..',
+    ]);
+  });
+
+  it('leaves an isolated pixel with no neighbours alone', () => {
+    expect(readRows(despeckle(drawImage(['.r.'], colours)), colours)).toEqual([
+      '.r.',
     ]);
   });
 });

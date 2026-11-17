@@ -130,6 +130,41 @@ area: `--color-highlight` as the border and at 12 % opacity as the fill.
 
 Any new colour pair gets a row here before it is used.
 
+### Sprite palette
+
+Game sprites use one palette of 15 fill colours plus an outline
+([ADR-0014](../adr/0014-sprites-are-32-by-32-png-masters-exported-to-svg.md),
+`packages/game/src/boards/animals/palette.json`). A sprite is a picture, so the rule is
+1.4.11 (non-text contrast, 3:1) for the part that shows its shape. The outline is one pixel
+wide around the whole silhouette and is `currentColor`, which the game sets to
+`--game-text`, on `--game-surface`. Every sprite therefore has the same edge contrast in both
+themes, whatever its fill colours.
+
+| Pair                                      | Light | Dark  | Needed |
+| ----------------------------------------- | ----- | ----- | ------ |
+| Outline (text colour) on surface          | 14.64 | 14.27 | 3      |
+
+The fills sit inside the outline and are not the only cue for the shape, so they have no
+minimum. For the record, the fills against `--color-surface` (`#F1ECE2` light, `#1F1D2B` dark):
+
+| Fill      | Light | Dark  |
+| --------- | ----- | ----- |
+| `#2C2840` | 12.01 | 1.17  |
+| `#5B3A2E` | 8.54  | 1.65  |
+| `#9C5C34` | 4.47  | 3.15  |
+| `#D9A468` | 1.89  | 7.46  |
+| `#E2702C` | 2.71  | 5.19  |
+| `#F0BE3A` | 1.47  | 9.56  |
+| `#CC3A35` | 4.22  | 3.33  |
+| `#EC92AD` | 1.92  | 7.31  |
+| `#3F74C8` | 3.93  | 3.58  |
+| `#6B7FA3` | 3.44  | 4.09  |
+| `#C3CBDB` | 1.38  | 10.16 |
+| `#5F5C70` | 5.49  | 2.56  |
+| `#3D7A45` | 4.38  | 3.21  |
+| `#86C06A` | 1.83  | 7.69  |
+| `#FBF1E2` | 1.05  | 14.80 |
+
 ## Spacing, shape and focus
 
 - Spacing on a 4px base: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px,

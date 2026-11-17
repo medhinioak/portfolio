@@ -1,10 +1,16 @@
 /** Checks a finished 32 × 32 sprite PNG against the palette and exports it as an SVG. */
+import { gzipSync } from 'node:zlib';
 import type { Image } from './image.ts';
 import { GRID } from './sprite.ts';
 import { rgbToHex, type Palette } from './palette.ts';
 
-/** The size an exported sprite should stay under, in bytes (issue #74: about 2 KB). */
-export const SVG_SIZE_TARGET = 2048;
+/** The size an exported sprite should stay under, in gzipped bytes (ADR-0014). */
+export const SVG_SIZE_LIMIT = 2048;
+
+/** Returns the size of an SVG in bytes after gzip, which is what a visitor downloads. */
+export function gzippedSize(svg: string): number {
+  return gzipSync(svg, { level: 9 }).length;
+}
 
 function pixelHex(image: Image, x: number, y: number): string | null {
   const i = (y * image.width + x) * 4;
