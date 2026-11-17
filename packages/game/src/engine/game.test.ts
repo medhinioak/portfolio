@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { animalsBoard } from '../boards';
 import type { BoardPack } from './board';
 import {
+  answersFor,
   askedQuestions,
   askQuestion,
   createGame,
@@ -348,5 +349,19 @@ describe('a full round on the animals board', () => {
       }
       expect(moves).toBeLessThan(500);
     }
+  });
+});
+
+describe('answersFor', () => {
+  it("keeps each side's own answers apart", () => {
+    let state = smallGame('cat', 'duck');
+    state = askQuestion(state, 'fur'); // player: is the duck furry? no
+    state = askQuestion(state, 'fur'); // computer: is the cat furry? yes
+    state = askQuestion(state, 'flies'); // player: does the duck fly? yes
+    expect([...answersFor(state, 'player')]).toEqual([
+      ['fur', false],
+      ['flies', true],
+    ]);
+    expect([...answersFor(state, 'computer')]).toEqual([['fur', true]]);
   });
 });
