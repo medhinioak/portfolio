@@ -19,3 +19,4 @@ Start from [`0000-template.md`](0000-template.md).
 | [0011](0011-build-the-game-before-the-aws-move.md) | Build the game before the AWS move | Accepted |
 | [0012](0012-game-art-is-ai-assisted-pixel-art-edited-by-the-owner.md) | Make the game art as AI-assisted pixel art, edited by the owner | Accepted |
 | [0013](0013-players-ask-from-a-fixed-list-of-questions-with-a-filter.md) | Players ask from a fixed list of questions, with a filter | Accepted |
+| [0014](0014-sprites-are-32-by-32-png-masters-exported-to-svg.md) | Keep sprites as 32 × 32 PNG masters and export them to SVG | Proposed |

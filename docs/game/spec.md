@@ -515,6 +515,22 @@ runs without the site.
   the owner on the pixel grid. The finished sprite is the owner's. This is a decision
   about how the art is made, so it is recorded in
   [ADR-0012](../adr/0012-game-art-is-ai-assisted-pixel-art-edited-by-the-owner.md).
+- **Workflow.** Proposed in [ADR-0014](../adr/0014-sprites-are-32-by-32-png-masters-exported-to-svg.md).
+  Each sprite has a 32 × 32 PNG master that uses only the shared palette
+  (`packages/game/src/boards/animals/palette.json`); the SVG is exported from it. From the
+  repository root, with the original images kept outside the repository:
+  1. `pnpm --filter game sprites split <sheet> --names a,b,c --out <dir>` cuts a sheet of
+     drafts into one image per animal, in reading order.
+  2. `pnpm --filter game sprites palette <images...> --out palette.json` picks the shared
+     palette. It is run once; the result is committed.
+  3. `pnpm --filter game sprites draft <images...> --palette palette.json --out <dir>`
+     makes the 32 × 32 draft PNGs: background removed, animal fitted to the grid and
+     standing on the bottom row, colours mapped to the palette, edge pixels marked as the outline.
+  4. The owner edits the PNGs in a pixel editor, using only palette colours and the outline colour.
+  5. `pnpm --filter game sprites svg <pngs...> --palette palette.json --out <dir>` exports
+     the SVGs and fails if a PNG is not 32 × 32 or uses a colour outside the palette.
+  The outline colour is written as `currentColor`, so a sprite is outlined in
+  `--game-text` when the card sets `color: var(--game-text)`.
 - **Checklist for each sprite.** Original (not copied from or imitating an existing
   character or brand, as ADR-0005 requires); the tool's terms allow the use; readable
   at 64 px wide; still recognisable with a 2 px blur (the ruled-out look) and at 32 px
