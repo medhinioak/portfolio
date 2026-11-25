@@ -18,3 +18,4 @@ their cover) and the Gemini debugging post material (covered in Post 1). All oth
 | TypeScript 7 | 2026-11-11 | When typescript-eslint and @astrojs/check support it |
 | Share the Markdown body and pager styles between posts and case studies | 2026-11-12 | Copied in `blog/[slug].astro` and `CaseStudyLayout.astro` (#32 review); one `.prose` rule set |
 | Reflow with text at 200 % on a 320–390 px screen | 2026-11-16 | Footer email, the post's table, card padding and button rows overflow. Stricter than WCAG 1.4.10 (320 px at normal text); found in the #35 review |
+| Content-Security-Policy through Astro's `security.csp` | 2026-11-25 | Hash-based policy in a `<meta>` tag; no header CSP without `unsafe-inline` ([ADR-0015](adr/0015-aws-architecture-and-terraform-conventions.md), point 4). Check how `is:inline` scripts are hashed |
